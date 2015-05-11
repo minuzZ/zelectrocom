@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{0C17DAC1-E3F3-4FC6-A262-058E8AA9392B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E1068F9B-337C-4880-BD22-3415B2D5E205}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{FD076993-1004-4AEB-A5BC-ABF62CB96A87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZelectroCom.Core", "Libraries\ZelectroCom.Core\ZelectroCom.Core.csproj", "{76781784-A46F-4981-99C1-DEF7872F7D80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZelectroCom.Data", "Libraries\ZelectroCom.Data\ZelectroCom.Data.csproj", "{34C6F24E-10A2-4A28-882D-0EFBFE45FC07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZelectroCom.Services", "Libraries\ZelectroCom.Services\ZelectroCom.Services.csproj", "{2A2EE2A9-D33A-49BB-948B-96AF769D4F22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZelectroCom.Tests", "Tests\ZelectroCom.Tests\ZelectroCom.Tests.csproj", "{4CCBADBA-89BC-46C1-94AA-AF3036EB3744}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZelectroCom.Web", "Presentation\ZelectroCom.Web\ZelectroCom.Web.csproj", "{799EC894-2F69-47BE-9D11-7BFF35144BAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76781784-A46F-4981-99C1-DEF7872F7D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76781784-A46F-4981-99C1-DEF7872F7D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76781784-A46F-4981-99C1-DEF7872F7D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76781784-A46F-4981-99C1-DEF7872F7D80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34C6F24E-10A2-4A28-882D-0EFBFE45FC07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34C6F24E-10A2-4A28-882D-0EFBFE45FC07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34C6F24E-10A2-4A28-882D-0EFBFE45FC07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34C6F24E-10A2-4A28-882D-0EFBFE45FC07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A2EE2A9-D33A-49BB-948B-96AF769D4F22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A2EE2A9-D33A-49BB-948B-96AF769D4F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A2EE2A9-D33A-49BB-948B-96AF769D4F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A2EE2A9-D33A-49BB-948B-96AF769D4F22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CCBADBA-89BC-46C1-94AA-AF3036EB3744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CCBADBA-89BC-46C1-94AA-AF3036EB3744}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CCBADBA-89BC-46C1-94AA-AF3036EB3744}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CCBADBA-89BC-46C1-94AA-AF3036EB3744}.Release|Any CPU.Build.0 = Release|Any CPU
+		{799EC894-2F69-47BE-9D11-7BFF35144BAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{799EC894-2F69-47BE-9D11-7BFF35144BAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{799EC894-2F69-47BE-9D11-7BFF35144BAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{799EC894-2F69-47BE-9D11-7BFF35144BAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{799EC894-2F69-47BE-9D11-7BFF35144BAB} = {FD076993-1004-4AEB-A5BC-ABF62CB96A87}
+		{4CCBADBA-89BC-46C1-94AA-AF3036EB3744} = {E1068F9B-337C-4880-BD22-3415B2D5E205}
+		{76781784-A46F-4981-99C1-DEF7872F7D80} = {0C17DAC1-E3F3-4FC6-A262-058E8AA9392B}
+		{34C6F24E-10A2-4A28-882D-0EFBFE45FC07} = {0C17DAC1-E3F3-4FC6-A262-058E8AA9392B}
+		{2A2EE2A9-D33A-49BB-948B-96AF769D4F22} = {0C17DAC1-E3F3-4FC6-A262-058E8AA9392B}
+	EndGlobalSection
+EndGlobal
