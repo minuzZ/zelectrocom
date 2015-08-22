@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>jQuery.Grid</id>
+    <version>0.4.5</version>
+    <title>jQuery Grid By Gijgo.com</title>
+    <authors>gijgo.com</authors>
+    <owners>gijgo.com</owners>
+    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>http://gijgo.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>jQuery Grid by Gijgo.com is a plug-in for the jQuery Javascript library.
+It is a very fast and extandable tool,  and will add advanced interaction controls to any HTML table.
+This plugin support pagination, javascript and server side data sources, jQuery UI and Bootstrap.
+Free open source tool distributed under MIT License.</description>
+    <releaseNotes>added inline cell editing
+loader configuration setting renamed to dataSource
+column.index configuration setting renamed to columns.field
+column.name configuration setting renamed to columns.title
+Html based configuration.
+column.onClick configuration setting replaced by column.events
+column.nowrap configuration setting replaced by column.cssClass
+"ui-icon" option for the column.type configuration setting is renamed to "icon"
+getRecordById method renamed to getById
+getRecordByIndex method renamed to get</releaseNotes>
+    <language>en-US</language>
+    <tags>jquery grid gijgo javascript plugin</tags>
+    <dependencies>
+      <dependency id="jQuery" version="1.9.1" />
+    </dependencies>
+  </metadata>
+</package>

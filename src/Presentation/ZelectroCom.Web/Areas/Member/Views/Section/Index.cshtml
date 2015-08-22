@@ -1,0 +1,130 @@
+﻿@model List<ZelectroCom.Web.Areas.Member.ViewModels.Section.SectionVM>
+@{
+    ViewBag.Title = "Разделы";
+    Layout = "~/Areas/Member/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section PageHead {
+    <link href="~/Areas/Member/Content/grid-0.4.5.min.css" rel="stylesheet" type="text/css"/>
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1>
+            Разделы <small>Управление разделами сообщества</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-list-alt"></i> Разделы</li>
+        </ol>
+    </div>
+</div>
+
+<button type="button" id="btnAddSection" class="btn btn-default pull-right">Добавить раздел</button>
+<table id="grid" data-source="@Url.Action("GetSections")"></table>
+
+<!-- Modal -->
+<div class="modal fade" id="sectionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Раздел</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="sectionId"/>
+                    <div class="form-group">
+                        <label for="name">Название</label>
+                        <input type="text" class="form-control" id="name" placeholder="Введите название"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="path">Путь</label>
+                        <input type="text" class="form-control" id="path" placeholder="Введите путь" />
+                    </div>
+                    <div class="form-group">
+                        <label for="order">Порядок отображения</label>
+                        <input type="text" class="form-control" id="order" placeholder="Ввержите порядок отображения" />
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="isHidden" /> Скрытый раздел
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" id="btnSave" class="btn btn-primary">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section PageScripts {
+    <script src="~/Areas/Member/Scripts/grid-0.4.5.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var grid;
+        function Add() {
+            $("#sectionId").val("");
+            $("#name").val("");
+            $("#path").val("");
+            $("#isHidden").prop('checked', false);
+            $("#order").val("");
+            $("#sectionModal").modal("show");
+        }
+        function Edit(e) {
+            $("#sectionId").val(e.data.record.Id);
+            $("#name").val(e.data.record.Name);
+            $("#path").val(e.data.record.Path);
+            $("#isHidden").prop('checked', e.data.record.IsHidden);
+            $("#order").val(e.data.record.Order);
+            $("#sectionModal").modal("show");
+        }
+        function Save() {
+            var section = {
+                Id: $("#sectionId").val(),
+                Name: $("#name").val(),
+                Path: $("#path").val(),
+                IsHidden: $("#isHidden").prop('checked'),
+                Order: $("#order").val()
+            };
+            $.ajax({ url: "Section/Save", type: "POST", data: AddAntiForgeryToken({ section: section }) })
+                .done(function () {
+                    grid.reload();
+                    $("#sectionModal").modal("hide");
+                })
+                .fail(function () {
+                    alert("Не удалось сохранить.");
+                    $("#sectionModal").modal("hide");
+                });
+        }
+        function Remove(e) {
+            $.ajax({ url: "Section/Remove", type: "POST", data: AddAntiForgeryToken({ id: e.data.record.Id }) })
+                .done(function () {
+                    grid.reload();
+                })
+                .fail(function () {
+                    alert("Не удалось удалить.");
+                });
+        }
+
+        $(document).ready(function () {
+            grid = $("#grid").grid({
+                dataKey: "Id",
+                uiLibrary: "bootstrap",
+                notFoundText: "В сообществе пока нет разделов",
+                columns: [
+                    { field: "Id", hidden: true },
+                    { field: "Name", title: "Название", sortable: true },
+                    { field: "Path", title: "URL" },
+                    { field: "IsHidden", title: "Скрытый раздел" },
+                    { field: "Order", title: "Порядок отображения" },
+                    { title: "", field: "Edit", width: 34, type: "icon", icon: "glyphicon-pencil", tooltip: "Edit", events: { "click": Edit } },
+                    { title: "", field: "Delete", width: 34, type: "icon", icon: "glyphicon-remove", tooltip: "Delete", events: { "click": Remove } }
+                ]
+            });
+            $("#btnAddSection").on("click", Add);
+            $("#btnSave").on("click", Save);
+        });
+    </script>
+}

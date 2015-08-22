@@ -1,14 +1,15 @@
-﻿@using ZelectroCom.Web.Models;
-@using Microsoft.AspNet.Identity;
-@{
-    ViewBag.Title = "Manage Account";
+﻿@{
+    ViewBag.Title = "Управление учетной записью";
+    Layout = "";
 }
-
-<h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-lg-12">
+        <h1>Настройки</h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-user"></i> Мой профиль</li>
+        </ol>
         @if (ViewBag.HasLocalPassword)
         {
             @Html.Partial("_ChangePasswordPartial")
@@ -20,7 +21,7 @@
 
         <section id="externalLogins">
             @Html.Action("RemoveAccountList")
-            @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
+            @Html.Partial("_ExternalLoginsListPartial", new ZelectroCom.Web.ViewModels.ExternalLoginViewModel() {Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl})
         </section>
     </div>
 </div>

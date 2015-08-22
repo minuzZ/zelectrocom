@@ -8,7 +8,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
-using ZelectroCom.Web.Models;
+using ZelectroCom.Data;
+using ZelectroCom.Data.Models;
+using ZelectroCom.Web.ViewModels;
 
 namespace ZelectroCom.Web.Controllers
 {
@@ -16,7 +18,7 @@ namespace ZelectroCom.Web.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
+            : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new AppDbContext())))
         {
         }
 
@@ -53,7 +55,7 @@ namespace ZelectroCom.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "Неправильное имя пользователя или пароль.");
                 }
             }
 
@@ -76,23 +78,31 @@ namespace ZelectroCom.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            using (var context = new AppDbContext())
             {
-                var user = new ApplicationUser() { UserName = model.UserName };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                if (ModelState.IsValid)
                 {
-                    await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    AddErrors(result);
-                }
-            }
+                    var user = new ApplicationUser() {UserName = model.UserName, Email = model.Email};
+                    var result = await UserManager.CreateAsync(user, model.Password);
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+                    var store = new UserStore<ApplicationUser>(context);
+                    var manager = new UserManager<ApplicationUser>(store);
+                    manager.AddToRole(user.Id, "Member");
+
+                    if (result.Succeeded)
+                    {
+                        await SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                    }
+                }
+
+                // If we got this far, something failed, redisplay form
+                return View(model);
+            }
         }
 
         //
@@ -116,13 +126,14 @@ namespace ZelectroCom.Web.Controllers
 
         //
         // GET: /Account/Manage
+        [ChildActionOnly]
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                message == ManageMessageId.ChangePasswordSuccess ? "Ваш пароль был изменен."
+                : message == ManageMessageId.SetPasswordSuccess ? "Ваш пароль был установлен."
+                : message == ManageMessageId.RemoveLoginSuccess ? "Внешняя учетная запись была удалена."
+                : message == ManageMessageId.Error ? "Возникла ошибка."
                 : "";
             ViewBag.HasLocalPassword = HasPassword();
             ViewBag.ReturnUrl = Url.Action("Manage");
@@ -259,24 +270,32 @@ namespace ZelectroCom.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
+                using (var context = new AppDbContext())
                 {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new ApplicationUser() { UserName = model.UserName };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    // Get the information about the user from the external login provider
+                    var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+                    if (info == null)
+                    {
+                        return View("ExternalLoginFailure");
+                    }
+                    var user = new ApplicationUser() {UserName = model.UserName};
+                    var result = await UserManager.CreateAsync(user);
+
+                    var store = new UserStore<ApplicationUser>(context);
+                    var manager = new UserManager<ApplicationUser>(store);
+                    manager.AddToRole(user.Id, "Member");
+
                     if (result.Succeeded)
                     {
-                        await SignInAsync(user, isPersistent: false);
-                        return RedirectToLocal(returnUrl);
+                        result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                        if (result.Succeeded)
+                        {
+                            await SignInAsync(user, isPersistent: false);
+                            return RedirectToLocal(returnUrl);
+                        }
                     }
+                    AddErrors(result);
                 }
-                AddErrors(result);
             }
 
             ViewBag.ReturnUrl = returnUrl;

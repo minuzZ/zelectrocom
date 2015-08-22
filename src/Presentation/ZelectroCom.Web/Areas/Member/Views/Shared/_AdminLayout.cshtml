@@ -1,0 +1,98 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--TODO:SEO-->
+    <title>@ViewBag.Title - Кабинет пользователя</title>
+    @if (IsSectionDefined("PageHead"))
+    {
+        @RenderSection("PageHead")
+    }
+    @Styles.Render("~/Content/membercss")
+</head>
+
+<body>
+    @Html.AntiForgeryToken()
+    <div id="wrapper">
+    <!-- Sidebar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Личный кабинет", "Index", "Home", null, new {@class = "navbar-brand"})
+        </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa fa-user"></i> Мой профиль <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("ProfileInfo", "Profile")">Информация</a></li>
+                        <li><a href="@Url.Action("ProfileSettings", "Profile")">Настройки</a></li>
+                    </ul>
+                </li>
+                <li><a href="@Url.Action("DraftsList", "Article")"><i class="fa fa-pencil"></i> Черновики</a></li>
+                <li><a href="#"><i class="fa fa-newspaper-o"></i> Публикации</a></li>
+
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <li><a href="#"><i class="fa fa-search-plus"></i> Заявки на публикацию</a></li>
+                    <li><a href="#"><i class="fa fa-users"></i> Пользователи</a></li>
+                    <li><a href="@Url.Action("Index", "Section")"><i class="fa fa-list-alt"></i> Разделы</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i> Настройки <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Общие</a></li>
+                            <li><a href="#">Почта</a></li>
+                            <li><a href="#">Планировщик</a></li>
+                        </ul>
+                    </li>
+                }
+
+            </ul>
+
+            @using (Html.BeginForm("LogOff", "Account", new {Area = ""}, FormMethod.Post, new {id = "logoutForm"}))
+            {
+                @Html.AntiForgeryToken()
+
+                <ul class="nav navbar-nav navbar-right navbar-user">
+                    <li>
+                        <a href="@Url.Action("Index", "Home", new {Area = ""})">
+                            <i class="fa fa-users"></i> Главная сообщества
+                        </a>
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-power-off"></i> Выйти</a></li>
+                </ul>
+            }
+        </div><!-- /.navbar-collapse -->
+    </nav>
+
+    <div id="page-wrapper">
+        @RenderBody()
+    </div><!-- /#page-wrapper -->
+
+</div><!-- /#wrapper -->
+<!-- JavaScript -->
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/membercommonbody")
+@if (IsSectionDefined("PageScripts"))
+{
+    @RenderSection("PageScripts")
+}
+</body>
+</html>
+

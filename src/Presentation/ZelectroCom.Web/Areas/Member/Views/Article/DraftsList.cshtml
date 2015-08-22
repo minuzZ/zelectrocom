@@ -1,0 +1,82 @@
+﻿@model List<ZelectroCom.Web.Areas.Member.ViewModels.Section.SectionVM>
+@{
+    ViewBag.Title = "Черновики";
+    Layout = "~/Areas/Member/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section PageHead {
+    <link href="~/Areas/Member/Content/grid-0.4.5.min.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1>
+            Черновики <small>Список ваших черновиков</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-pencil"></i> Черновики</li>
+        </ol>
+    </div>
+</div>
+
+<br />
+<div class="row">
+    <div class="col-md-3">
+        <div class="input-group">
+            <input type="text" id="search" class="form-control" placeholder="Поиск по заголовку">
+            <span class="input-group-btn">
+                <button type="button" id="btnSearch" class="btn btn-default">Искать</button>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-9">
+        @Html.ActionLink("Добавить черновик", "Draft", null, new { @class = "btn btn-default" })
+    </div>
+</div>
+<br />
+
+<table id="grid" data-source="@Url.Action("GetDrafts")"></table>
+
+@section PageScripts {
+    <script src="~/Areas/Member/Scripts/grid-0.4.5.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var grid;
+        function Remove(e) {
+            $.ajax({ url: "Remove", type: "POST", data: AddAntiForgeryToken({ id: e.data.record.Id }) })
+                .done(function () {
+                    grid.reload();
+                })
+                .fail(function () {
+                    alert("Не удалось удалить.");
+                });
+        }
+
+        function Edit(e) {
+            window.location = "Draft/" + e.data.record.Id;
+        }
+
+        $(document).ready(function () {
+            grid = $("#grid").grid({
+                dataKey: "Id",
+                uiLibrary: "bootstrap",
+                notFoundText: "В сообществе пока нет разделов",
+                columns: [
+                    { field: "Id", hidden: true },
+                    { field: "Title", title: "Заголовок"},
+                    { field: "Section", title: "Раздел"},
+                    { field: "ArticleState", title: "Состояние" },
+                    { field: "CreatedDate", title: "Дата создания", type: "date" },
+                    { field: "CreatedDate", title: "Дата обновления", type: "date" },
+                    { title: "", field: "Edit", width: 34, type: "icon", icon: "glyphicon-pencil", tooltip: "Edit", events: { "click": Edit } },
+                    { title: "", field: "Delete", width: 34, type: "icon", icon: "glyphicon-remove", tooltip: "Delete", events: { "click": Remove } }
+                ],
+                pager: { enable: true, limit: 15, sizes: [15, 30, 50, 100] }
+            });
+            $("#btnSearch").on("click", Search);
+        });
+
+        function Search() {
+            grid.reload({ searchString: $("#search").val() });
+        }
+    </script>
+}

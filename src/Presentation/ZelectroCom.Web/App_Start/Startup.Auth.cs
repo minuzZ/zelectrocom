@@ -28,9 +28,9 @@ namespace ZelectroCom.Web
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "483604625132593",
+               appSecret: "2675ad1683cb926c777015949ec944d1");
 
             //app.UseGoogleAuthentication();
         }

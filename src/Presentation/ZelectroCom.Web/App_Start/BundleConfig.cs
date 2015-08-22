@@ -19,13 +19,32 @@ namespace ZelectroCom.Web
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/datetime").Include(
+                      "~/Scripts/moment*",
+                      "~/Scripts/bootstrap-datetimepicker*",
+                      "~/Scripts/datetimepicker-ru.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            //bundles.Add(new ScriptBundle("~/bundles/formValidation").Include(
+            //          "~/Scripts/FormValidation/formValidation.min.js",
+            //          "~/Scripts/FormValidation/bootstrap.min.js",
+            //          "~/Scripts/FormValidation/formValidationru_RU.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            //Member bundles
+            bundles.Add(new StyleBundle("~/Content/membercss").Include(
+                      "~/Content/bootstrap.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Areas/Member/Content/style.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/membercommonbody").Include(
+                "~/Areas/Member/Scripts/common.js"));
         }
     }
 }

@@ -1,0 +1,112 @@
+﻿@model ZelectroCom.Web.Areas.Member.ViewModels.Article.DraftVM
+@{
+    ViewBag.Title = "Черновик";
+    Layout = "~/Areas/Member/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section PageHead
+{
+    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.min.css" />
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h1>Черновик <small>вашей будущей статьи</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-pencil"></i> Черновик</li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        @using (Html.BeginForm("SaveDraft", "Article", FormMethod.Post, new {role = "form"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Id);
+            <div class="control-group">
+                <input type="submit" value="Сохранить" name="action:SaveDraft" class="btn btn-default"/>
+                <input type="submit" value="Передать на публикацию" name="action:PublishDraft" class="btn btn-default" />
+            </div>
+            <hr/>
+            @Html.ValidationSummary()
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                    @Html.LabelFor(m => m.Title, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Название статьи" })
+                </div>
+            </div>
+            if (this.User.IsInRole("Admin"))
+            {
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                        @Html.LabelFor(m => m.SectionId)
+                        @Html.DropDownListFor(m => m.SectionId, Model.Sections, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+            @Html.TextAreaFor(m => m.Text, 15, 80, new {@id = "articleEditor"})
+            @*TODO Html.EditorFor(m => m.Text, "RichEditor")*@
+            <hr/>
+
+            if (this.User.IsInRole("Admin"))
+            {
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                            @Html.LabelFor(model => model.PublishTime, new { @class = "control-label" })
+                            @Html.TextBoxFor(model => model.PublishTime, new { @class = "form-control", id="datetimePicker" })
+                            @Html.ValidationMessageFor(model => model.PublishTime, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                        @Html.LabelFor(m => m.SeoTitle, new {@class = "control-label"})
+                        @Html.TextBoxFor(m => m.SeoTitle, new {@class = "form-control"})
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                        @Html.LabelFor(m => m.SeoUrl, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.SeoUrl, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                        @Html.LabelFor(m => m.SeoDescription, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.SeoDescription, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                        @Html.LabelFor(m => m.SeoKeywords, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.SeoKeywords, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@section PageScripts {
+    @Scripts.Render("~/bundles/datetime")
+    <script src="~/Content/CKEditor/ckeditor.js" type="text/javascript"></script>
+    <script>
+    $(document).ready(function () {
+        $('#datetimePicker').datetimepicker({
+            locale: 'ru'
+        });
+
+        @*set draft id to find article content folder*@
+        var roxyFileman = '@Url.Content(string.Format("~/Content/fileman/index.html?articleId={0}", Model.Id))';
+        CKEDITOR.replace("articleEditor",
+            {
+                filebrowserBrowseUrl: roxyFileman,
+                filebrowserImageBrowseUrl: roxyFileman + '&type=image',
+                removeDialogTabs: 'link:upload;link:advanced;image:Upload;image:advanced;'
+            }
+        );
+    });
+    </script>
+}
+
