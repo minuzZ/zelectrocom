@@ -1,0 +1,6 @@
+{
+   "paths":	{
+    "membercommon": "controllers//member//membercommon",
+	"ckeditor" : "CKEditor/ckeditor"
+  }
+}

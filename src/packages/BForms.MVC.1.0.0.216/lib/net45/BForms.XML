@@ -1,0 +1,2699 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BForms</name>
+    </assembly>
+    <members>
+        <member name="T:BForms.Grid.BsBaseGridRepository`2">
+            <summary>
+            Base repository for constructing grid model.
+            </summary>
+            <typeparam name="TEntity">Grid row bse model type. Usually maps on entity set</typeparam>
+            <typeparam name="TRow">Grid row model type</typeparam>
+        </member>
+        <member name="F:BForms.Grid.BsBaseGridRepository`2.settings">
+            <summary>
+            Basic settings for contructing query. Contains data for query filtering, ordering, paging sent from client
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsBaseGridRepository`2.orderedQueryBuilder">
+            <summary>
+            Ordered query builder var
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.Query">
+            <summary>
+            Basic query builder. Recommended to be used for grid count
+            </summary>
+            <returns>Basic query</returns>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.OrderQuery(System.Linq.IQueryable{`0},BForms.Grid.BsGridBaseRepositorySettings)">
+            <summary>
+            Query ordering. To be used before grid paging
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.MapQuery(System.Linq.IQueryable{`0})">
+            <summary>
+            Query mapping. Recommended to be used after grid paging
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.FillDetails(`1)">
+            <summary>
+            Fills row with details, must be implemented if settings.GetDetails is true
+            </summary>
+            <param name="row"></param>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.PaginateBy``1(System.Linq.IQueryable{`0},System.Linq.Expressions.Expression{System.Func{`0,``0}},BForms.Grid.BsGridBaseRepositorySettings)">
+            <summary>
+            Paginates the result using the direction the orderQueryable
+            </summary>
+            <typeparam name="TValue"></typeparam>
+            <param name="query"></param>
+            <param name="uniqueIdFunc"></param>
+            <param name="gridSettings"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.ToBsGridViewModel">
+            <summary>
+            Creates GridModel based on Query, OrderQuery and MapQuery with default sttings
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.ToBsGridViewModel(System.Int32,System.Int32)">
+            <summary>
+            Creates GridModel based on Query, OrderQuery and MapQuery
+            </summary>
+            <param name="page">Requested page number</param>
+            <param name="pageSize">Page size - number of records on requested page</param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.ToBsGridViewModel(`1)">
+            <summary>
+            Creates GridModel for added row
+            </summary>
+            <typeparam name="TModel">Wrapper model type</typeparam>
+            <param name="expression">Grid selector targeted for wrapping</param>
+            <param name="row">Added row</param>
+            <returns>Wrapper model</returns>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.ToBsGridViewModel(System.Collections.Generic.List{`1})">
+            <summary>
+            Creates GridModel for added row
+            </summary>
+            <typeparam name="TModel">Wrapper model type</typeparam>
+            <param name="expression">Grid selector targeted for wrapping</param>
+            <param name="rows">Added rows</param>
+            <returns>Wrapper model</returns>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.ToBsGridViewModel(BForms.Grid.BsGridBaseRepositorySettings)">
+            <summary>
+            Creates GridModel based on Query, OrderQuery and MapQuery
+            </summary>
+            <param name="settings">Requested settings</param>
+            <returns>Grid model</returns>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.ToBsGridViewModel(BForms.Grid.BsGridBaseRepositorySettings,System.Int32@)">
+            <summary>
+            Creates GridModel based on Query, OrderQuery and MapQuery
+            </summary>
+            <param name="settings">Settings</param>
+            <param name="count">Total records</param>
+            <returns>Wrapper model</returns>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.ToBsGridViewModel``1(BForms.Grid.BsGridBaseRepositorySettings,System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Creates GridModel based on Query, OrderQuery and MapQuery
+            </summary>
+            <param name="settings">Requested settings</param>
+            <returns>Grid model</returns>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.SetGridProperty``1(System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsGridModel{`1}}},BForms.Models.BsGridModel{`1})">
+            <summary>
+            Helper for wrapping grid
+            </summary>
+            <typeparam name="TModel">Wrapper model type</typeparam>
+            <param name="expression">Grid selector targeted for wrapping</param>
+            <param name="grid">Grid object</param>
+            <returns>Wrapper model</returns>
+        </member>
+        <member name="T:BForms.Grid.BsBaseGridRepository`2.OrderedQueryBuilder`1">
+            <summary>
+            Builder for generic ordered query
+            </summary>
+            <typeparam name="TRow">Grid row model type</typeparam>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.OrderedQueryBuilder`1.#ctor(System.Collections.Generic.List{BForms.Grid.BsColumnOrder})">
+            <summary>
+            .ctor
+            </summary>
+            <param name="columnsOrder">Columns order list sent from client</param>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.OrderedQueryBuilder`1.OrderFor``2(System.Linq.Expressions.Expression{System.Func{`2,``0}},System.Linq.Expressions.Expression{System.Func{`0,``1}})">
+            <summary>
+            Stores order expression for row column. Used when row column order is different from db column order 
+            or row column order is based on multiple columns in db
+            Ascending or descending order is handled automatically
+            </summary>
+            <typeparam name="TKey">Row property type</typeparam>
+            <param name="columnSelector">Row column selector</param>
+            <param name="orderDelegate">Order expression</param>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.OrderedQueryBuilder`1.OrderFor``1(System.Linq.Expressions.Expression{System.Func{`2,``0}},System.Func{System.Linq.IQueryable{`0},BForms.Grid.BsOrderType,System.Linq.IOrderedQueryable{`0}})">
+            <summary>
+            Stores complex order delegate for row column. Used when row column order is based on multiple columns order in db.
+            Must handle ascending and descending order
+            </summary>
+            <typeparam name="TKey">Row property type</typeparam>
+            <param name="columnSelector">Row column selector</param>
+            <param name="orderDelegate">Order delegate</param>
+        </member>
+        <member name="M:BForms.Grid.BsBaseGridRepository`2.OrderedQueryBuilder`1.Order(System.Linq.IQueryable{`0},System.Func{System.Linq.IQueryable{`0},System.Linq.IOrderedQueryable{`0}},BForms.Grid.BsGridBaseRepositorySettings)">
+            <summary>
+            Creates Ordered query based on stored expressions and delegates.
+            For row columns that have identical names with db columns, the order is made automatically
+            </summary>
+            <param name="query">Query that will be ordered</param>
+            <param name="defaultOrderFunc">Default order row column. The query must be ordered before take/skip</param>
+            <returns>Ordered query</returns>
+        </member>
+        <member name="T:BForms.Grid.BsBulkAction">
+            <summary>
+            BulkActions component
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsBulkActionType">
+            <summary>
+            Toolbar built-in grid actions
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsScreenType">
+            <summary>
+             Bootstrap grid system mods
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsScreenType.Large">
+            <summary>
+            Large devices Desktops and TVs
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsScreenType.Medium">
+            <summary>
+            Medium devices Desktops and Tablets
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsScreenType.Small">
+            <summary>
+            Small devices Tablets and Phones
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsScreenType.ExtraSmall">
+            <summary>
+            Small Phones
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsColumnWidth">
+            <summary>
+            Grid column width helper class
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsGridExcelHelpers.AreEqual(BForms.Grid.BsGridExcelStyle,BForms.Grid.BsGridExcelStyle)">
+            <summary>
+            Test if two BsGridExcelStyles are equal (based on fontId and fillId reference)
+            </summary>
+            <param name="excelStyle"></param>
+            <param name="otherExcelStyle"></param>
+            <returns></returns>
+        </member>
+        <member name="F:BForms.Grid.BsGridExcelHelpers.Concat">
+            <summary>
+            Concatenate styles properties without overriding them
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsGridExcelStyle">
+            <summary>
+            Class representing a cell style
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsGridExcelFont">
+            <summary>
+            Class representing a font style
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsGridExcelBuilder`1.AddWorkbook(DocumentFormat.OpenXml.Packaging.SpreadsheetDocument)">
+            <summary>
+            Generate basic excel document, filling it with rows representation of the items
+            </summary>
+            <param name="spreadsheetDocument"></param>
+        </member>
+        <member name="M:BForms.Grid.BsGridExcelBuilder`1.AddRows(DocumentFormat.OpenXml.Spreadsheet.Worksheet)">
+            <summary>
+            Processes the list of items, adding them to the worksheet
+            </summary>
+            <param name="worksheet"></param>
+        </member>
+        <member name="M:BForms.Grid.BsGridExcelBuilder`1.AddStylesheet">
+            <summary>
+            Creates a basic stylesheet
+            Can be overriden for custom cell styles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Grid.BsGridExcelBuilder`1.ToStream">
+            <summary>
+            Excel format memory stream representation of the resulting excel file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Grid.BsGridExcelBuilder`1.ToArray">
+            <summary>
+            Excel format byte array representation of the resulting excel file
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Grid.BsGridHtmlBuilder`2.DisplayName(System.String)">
+            <summary>
+            Set grids name
+            </summary>
+        </member>
+        <member name="P:BForms.Editor.BsEditorTabConfigurator`1.Title">
+            <summary>
+            Tabs header
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarActionsBaseFactory`1.Add(BForms.Grid.BsToolbarActionType)">
+            <summary>
+            Adds a default action
+            </summary>
+            <param name="actionType">Action type</param>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarActionsBaseFactory`1.Add(System.String)">
+            <summary>
+            Adds custom control - action or tab
+            </summary>
+            <param name="descriptorClass"></param>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup`1.DescriptorClass(System.String)">
+            <summary>
+            Sets control descriptor class
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup`1.StyleClasses(System.String)">
+            <summary>
+            Sets control style
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup`1.DisplayName(System.String)">
+            <summary>
+            Set display name
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup`1.GlyphIcon(BForms.Models.Glyphicon)">
+            <summary>
+            Sets control GlyphIcon
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup`1.AlignRight">
+            <summary>
+            Sets dropdown align right
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup`1.HtmlAttributes(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup`1.HtmlAttributes(System.Object)">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup`1.AddActionLink">
+            <summary>
+            Add link to button group
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsToolbarButtonGroup">
+            <summary>
+            For toolbar without forms
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsToolbarActionsBaseFactory">
+            <summary>
+            For toolbar without forms
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup.DescriptorClass(System.String)">
+            <summary>
+            Sets control descriptor class
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup.StyleClasses(System.String)">
+            <summary>
+            Sets control style
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup.DisplayName(System.String)">
+            <summary>
+            Set display name
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup.GlyphIcon(BForms.Models.Glyphicon)">
+            <summary>
+            Sets control GlyphIcon
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup.AlignRight">
+            <summary>
+            Sets dropdown align right
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup.HtmlAttributes(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup.HtmlAttributes(System.Object)">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarButtonGroup.AddActionLink">
+            <summary>
+            Add link to button group
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsToolbarAction`1">
+            <summary>
+            Grid toolbar default control component
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.DescriptorClass(System.String)">
+            <summary>
+            Sets control descriptor class
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.StyleClasses(System.String)">
+            <summary>
+            Sets control style
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.Title(System.String)">
+            <summary>
+            Sets control button title
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.XsText(System.String)">
+            <summary>
+            Sets control text visible only on less than 768px width
+            </summary>
+            <param name="xsText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.Text(System.String)">
+            <summary>
+            Sets control button text
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.Selected(System.Boolean)">
+            <summary>
+            Specifies if the tab is selected
+            </summary>
+            <param name="visible"></param>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.GlyphIcon(BForms.Models.Glyphicon)">
+            <summary>
+            Sets control GlyphIcon
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.Tab(System.Func{`0,System.Web.Mvc.MvcHtmlString})">
+            <summary>
+            Sets tab content
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.HtmlAttributes(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.HtmlAttributes(System.Object)">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.HtmlAttributes(System.Func{`0,System.Web.Mvc.MvcHtmlString})">
+            <summary>
+            Sets html attributes
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction`1.Action(System.String)">
+            <summary>
+            Sets href attribute
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink`1.DescriptorClass(System.String)">
+            <summary>
+            Sets control descriptor class
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink`1.StyleClasses(System.String)">
+            <summary>
+            Sets control style
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink`1.Text(System.String)">
+            <summary>
+            Sets control button text
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink`1.GlyphIcon(BForms.Models.Glyphicon)">
+            <summary>
+            Sets control GlyphIcon
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink`1.HtmlAttributes(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink`1.HtmlAttributes(System.Object)">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink`1.Action(System.String)">
+            <summary>
+            Sets href attribute
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="T:BForms.Grid.BsToolbarItemGroupActionLink">
+            <summary>
+            For toolbar without forms
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink.DescriptorClass(System.String)">
+            <summary>
+            Sets control descriptor class
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink.StyleClasses(System.String)">
+            <summary>
+            Sets control style
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink.Text(System.String)">
+            <summary>
+            Sets control button text
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink.GlyphIcon(BForms.Models.Glyphicon)">
+            <summary>
+            Sets control GlyphIcon
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink.HtmlAttributes(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink.HtmlAttributes(System.Object)">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarItemGroupActionLink.Action(System.String)">
+            <summary>
+            Sets href attribute
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="T:BForms.Html.UploadExtensions">
+            <summary>
+            Represent bootstrap support for upload control
+            </summary>
+        </member>
+        <member name="T:BForms.Models.BsJavascriptErrorModel">
+            <summary>
+            Used for logging client side errors
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsRangeItem`1.TextValue">
+            <summary>
+            Display value
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsRangeItem`1.ItemValue">
+            <summary>
+            Value
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsRangeItem`1.MinValue">
+            <summary>
+            Bottom limit for ItemValue
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsRangeItem`1.MaxValue">
+            <summary>
+            Top limit for ItemValue
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsRangeItem`1.Display">
+            <summary>
+            Display text
+            </summary>
+        </member>
+        <member name="T:BForms.Mvc.BsGridColumnValue`2">
+            <summary>
+            Used for rendering bs grid columns with data-value attributes
+            </summary>
+            <typeparam name="TValue"></typeparam>
+            <typeparam name="TDisplay"></typeparam>
+        </member>
+        <member name="M:BForms.Mvc.BsGridColumnValue`2.#ctor">
+            <summary>
+            Parameterless constructor
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.BsGridColumnValue`2.#ctor(`0,`1)">
+            <summary>
+            Sets ItemValue and DisplayValue
+            </summary>
+            <param name="value"></param>
+            <param name="display"></param>
+        </member>
+        <member name="P:BForms.Mvc.BsGridColumnValue`2.ItemValue">
+            <summary>
+            Used for no offset pagination
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsGridColumnValue`2.DisplayValue">
+            <summary>
+            Used for rendering
+            </summary>
+        </member>
+        <member name="M:BForms.Panels.BsPanelHtmlBuilder.#ctor(System.Web.Mvc.ViewContext)">
+            <summary>
+            Sets the ViewContext property for the BaseComponent
+            </summary>
+        </member>
+        <member name="M:BForms.Panels.BsPanelHtmlBuilder.Name(System.String)">
+            <summary>
+            Sets the display name
+            </summary>
+        </member>
+        <member name="M:BForms.Panels.BsPanelHtmlBuilder.Editable(System.Boolean)">
+            <summary>
+            Specify if the box form has an editable component
+            </summary>
+        </member>
+        <member name="M:BForms.Panels.BsPanelHtmlBuilder.Expanded(System.Boolean)">
+            <summary>
+            Specify if the box form is already expanded
+            </summary>
+        </member>
+        <member name="M:BForms.Panels.BsPanelHtmlBuilder.Expandable(System.Boolean)">
+            <summary>
+            Specify if the box form is expandable or static
+            </summary>
+        </member>
+        <member name="M:BForms.Panels.BsPanelHtmlBuilder.ReadonlyUrl(System.String)">
+            <summary>
+            Specify url from where the readonly form will be loaded
+            </summary>
+        </member>
+        <member name="M:BForms.Panels.BsPanelHtmlBuilder.EditableUrl(System.String)">
+            <summary>
+            Specify url from where the editable form will be loaded
+            It will assume that the box form is editable
+            </summary>
+        </member>
+        <member name="M:BForms.Panels.BsPanelHtmlBuilder.Mode(BForms.Panels.BsPanelMode)">
+            <summary>
+            sets panel type, readonly/editable/both, overrides any past and future settings
+            </summary>
+            <param name="mode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Panels.BsPanelHtmlBuilder.Content(System.String)">
+            <summary>
+            Sets the content of the box form
+            It will also set the box as expanded and loaded
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.BsEditorTabAttribute.#ctor">
+            <summary>
+            Empty ctor
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.BsEditorGroupAttribute.#ctor">
+            <summary>
+            Empty ctor
+            </summary>
+        </member>
+        <member name="P:BForms.Html.SortableListItemWrapper.RootTag">
+            <summary>
+            @RootTag represents the tag which will wrap around any nested list
+            </summary>
+        </member>
+        <member name="M:BForms.Renderers.BsPagerBaseRenderer.RenderPagination">
+            <summary>
+            Used for the default pager rendering
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Renderers.BsPagerBaseRenderer.RenderIndexButtons(System.Web.Mvc.TagBuilder)">
+            <summary>
+            Used for no offset pagination
+            </summary>
+            <param name="paginationBuilder"></param>
+        </member>
+        <member name="T:BForms.Renderers.BsToolbarActionRenderer`1">
+            <summary>
+            For toolbar with forms
+            </summary>
+        </member>
+        <member name="M:BForms.Renderers.BsToolbarActionRenderer`1.Render">
+            <summary>
+            Renders component
+            </summary>
+        </member>
+        <member name="T:BForms.Renderers.BsToolbarActionRenderer">
+            <summary>
+            For toolbar without forms
+            </summary>
+        </member>
+        <member name="M:BForms.Renderers.BsToolbarActionRenderer.Render">
+            <summary>
+            Renders component
+            </summary>
+        </member>
+        <member name="T:BForms.Renderers.BsToolbarBaseRenderer`1">
+            <summary>
+            For toolbar with forms
+            </summary>
+        </member>
+        <member name="M:BForms.Renderers.BsToolbarBaseRenderer`1.Render">
+            <summary>
+            Renders toolbar
+            </summary>
+        </member>
+        <member name="T:BForms.Renderers.BsToolbarBaseRenderer">
+            <summary>
+            For toolbar without forms
+            </summary>
+        </member>
+        <member name="M:BForms.Renderers.BsToolbarBaseRenderer.Render">
+            <summary>
+            Renders toolbar
+            </summary>
+        </member>
+        <member name="T:BForms.Renderers.BsToolbarButtonGroupRenderer`1">
+            <summary>
+            For toolbar with forms
+            </summary>
+        </member>
+        <member name="T:BForms.Renderers.BsToolbarButtonGroupRenderer">
+            <summary>
+            For toolbar without forms
+            </summary>
+        </member>
+        <member name="T:BForms.Renderers.BsToolbarItemGroupActionRenderer`1">
+            <summary>
+            For toolbar with forms
+            </summary>
+        </member>
+        <member name="M:BForms.Renderers.BsToolbarItemGroupActionRenderer`1.Render">
+            <summary>
+            Renders component
+            </summary>
+        </member>
+        <member name="T:BForms.Renderers.BsToolbarItemGroupActionRenderer">
+            <summary>
+            For toolbar without forms
+            </summary>
+        </member>
+        <member name="M:BForms.Renderers.BsToolbarItemGroupActionRenderer.Render">
+            <summary>
+            Renders component
+            </summary>
+        </member>
+        <member name="M:BForms.Renderers.BsToolbarQuickSearchRenderer.Render">
+            <summary>
+            Renders custom control
+            </summary>
+        </member>
+        <member name="T:BForms.Resources.BFormsResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_ChooseFile">
+            <summary>
+              Looks up a localized string similar to Choose file.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_GoTop">
+            <summary>
+              Looks up a localized string similar to Go top.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_GroupEditorMoveToGroups">
+            <summary>
+              Looks up a localized string similar to Move to groups .
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_Items">
+            <summary>
+              Looks up a localized string similar to items.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_New">
+            <summary>
+              Looks up a localized string similar to New.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_NoResults">
+            <summary>
+              Looks up a localized string similar to There are no results.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_Of">
+            <summary>
+              Looks up a localized string similar to of.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_Reset">
+            <summary>
+              Looks up a localized string similar to Reset.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_ResultsPerPage">
+            <summary>
+              Looks up a localized string similar to results per page.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_Save">
+            <summary>
+              Looks up a localized string similar to Save.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_Search">
+            <summary>
+              Looks up a localized string similar to Search.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_Select">
+            <summary>
+              Looks up a localized string similar to Select.
+            </summary>
+        </member>
+        <member name="P:BForms.Resources.BFormsResources.BF_Upload">
+            <summary>
+              Looks up a localized string similar to Upload.
+            </summary>
+        </member>
+        <member name="T:BForms.Utilities.BsConfigurationManager">
+            <summary>
+            Used for configuration, ie if debugging is enabled
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.BsConfigurationManager.Release(System.Boolean)">
+            <summary>
+            Sets current configuration
+            </summary>
+            <param name="release"></param>
+        </member>
+        <member name="T:BForms.Utilities.BsDefaultsManagers">
+            <summary>
+            Handles default values of BForms components
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.BsDefaultsManagers.PageSizeValues(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            Sets default page size values for BsGridPager
+            </summary>
+            <param name="sizeValues"></param>
+        </member>
+        <member name="M:BForms.Utilities.BsDefaultsManagers.GetPageSizeValues">
+            <summary>
+            Gets the default page size values for BsGridPager
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Utilities.BsUIManager.Theme(BForms.Models.BsTheme)">
+            <summary>
+            Sets the global theme
+            </summary>
+            <param name="theme"></param>
+        </member>
+        <member name="M:BForms.Utilities.BsUIManager.GetGlobalTheme">
+            <summary>
+            Gets the global theme
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:BForms.Html.FormExtensions">
+            <summary>
+            Represents bootstrap support for form tag
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,BForms.Models.BsTheme,System.Object)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,BForms.Models.BsTheme,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.Object)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.Object,BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.Web.Routing.RouteValueDictionary)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.Web.Routing.RouteValueDictionary,BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Web.Routing.RouteValueDictionary)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Web.Routing.RouteValueDictionary,BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Web.Mvc.FormMethod)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Web.Mvc.FormMethod,BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,System.Web.Mvc.FormMethod)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,System.Web.Mvc.FormMethod,BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Web.Routing.RouteValueDictionary,System.Web.Mvc.FormMethod)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Web.Routing.RouteValueDictionary,System.Web.Mvc.FormMethod,BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Web.Mvc.FormMethod,System.Object)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Web.Mvc.FormMethod,System.Object,BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Web.Mvc.FormMethod,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Web.Mvc.FormMethod,System.Collections.Generic.IDictionary{System.String,System.Object},BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,System.Web.Mvc.FormMethod,System.Object)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object,System.Web.Mvc.FormMethod,System.Object,BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.FormExtensions.BsBeginForm(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Web.Routing.RouteValueDictionary,System.Web.Mvc.FormMethod,System.Collections.Generic.IDictionary{System.String,System.Object},BForms.Models.BsTheme)">
+            <summary>
+            Renders a form suitable for BForms fields
+            </summary>
+        </member>
+        <member name="M:BForms.Html.BsMvcForm.#ctor(System.Web.Mvc.ViewContext,System.Web.Mvc.Html.MvcForm,System.String,System.String)">
+            <summary>
+            HTML Form wrapper
+            </summary>
+            <param name="startTags">html content injected after begin form</param>
+            <param name="endTags">html content injected before end form</param>
+        </member>
+        <member name="T:BForms.Models.BsExcelResult`1">
+            <summary>
+            Action Result used to export an excel file
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:BForms.Models.BsExcelResult`1.ExecuteResult(System.Web.Mvc.ControllerContext)">
+            <summary> 
+            Execute the Excel Result. 
+            </summary> 
+            <param name="context">Controller context.</param> 
+        </member>
+        <member name="M:BForms.Models.BsExcelResult`1.WriteStream(System.IO.MemoryStream,System.String)">
+            <summary> 
+            Writes the memory stream to the browser. 
+            </summary> 
+            <param name="memoryStream">Memory stream.</param> 
+            <param name="fileName">Excel file name.</param> 
+        </member>
+        <member name="T:BForms.Models.BsTheme">
+            <summary>
+            Provides theme support for BForms components
+            </summary>
+        </member>
+        <member name="T:BForms.Mvc.BsToolbarAttribute">
+            <summary>
+            BForms grid column descriptor
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.BsToolbarAttribute.#ctor">
+            <summary>
+            Empty ctor
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsToolbarAttribute.Theme">
+            <summary>
+            BForms Theme
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsToolbarAction">
+            <summary>
+            For toolbar without forms
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction.DescriptorClass(System.String)">
+            <summary>
+            Sets control descriptor class
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction.StyleClasses(System.String)">
+            <summary>
+            Sets control style
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction.Title(System.String)">
+            <summary>
+            Sets control button title
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction.XsText(System.String)">
+            <summary>
+            Sets control text visible only on less than 768px width
+            </summary>
+            <param name="xsText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction.Text(System.String)">
+            <summary>
+            Sets control button text
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction.GlyphIcon(BForms.Models.Glyphicon)">
+            <summary>
+            Sets control GlyphIcon
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction.HtmlAttributes(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction.HtmlAttributes(System.Object)">
+            <summary>
+            Set html attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarAction.Action(System.String)">
+            <summary>
+            Sets href attribute
+            </summary>
+            <returns>BsToolbarAction</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarActionsFactory`1.Add``1">
+            <summary>
+            Adds custom control - ex: QuickSearch
+            </summary>
+            <typeparam name="TCustomAction"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarActionsFactory`1.AddButtonGroup">
+            <summary>
+            Adds ButtonGroup to Toolbar
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarActionsFactory`1.AddButtonGroup(System.Action{BForms.Grid.BsToolbarButtonGroup{`0}})">
+            <summary>
+            Adds ButtonGroup to Toolbar, right after the last added toolbar action
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarActionsFactory.AddButtonGroup">
+            <summary>
+            Adds ButtonGroup to Toolbar
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsToolbarActionType">
+            <summary>
+            Toolbar built-in grid actions
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarActionType.Refresh">
+            <summary>
+            Triggers the grid current page refresh ajax 
+            Preserves search filters and current page but deselects all rows
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarActionType.AdvancedSearch">
+            <summary>
+            Toggles search form 
+            To be renderd after quick search input
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarActionType.Add">
+            <summary>
+            Toggles create form
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarActionType.Order">
+            <summary>
+            Toggles order form
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarHtmlBuilder`1.displayName">
+            <summary>
+            Text that will be displayed in header
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarHtmlBuilder`1.fullName">
+            <summary>
+            Toolbar name based on class hierarchy
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarHtmlBuilder`1.model">
+            <summary>
+            Toolbar model
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarHtmlBuilder`1.metadata">
+            <summary>
+            Toolbar model metadata
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarHtmlBuilder`1.attributes">
+            <summary>
+            model attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarHtmlBuilder`1.DisplayName(System.String)">
+            <summary>
+            Sets the display name property
+            </summary>
+            <returns>BsToolbarHtmlBuilder</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarHtmlBuilder`1.HtmlAttributes(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Appends html attributes to grid_toolbar div element
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarHtmlBuilder`1.HtmlAttributes(System.Object)">
+            <summary>
+            Appends html attributes to grid_toolbar div element
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarHtmlBuilder`1.ConfigureActions(System.Action{BForms.Grid.BsToolbarActionsFactory{`0}})">
+            <summary>
+            Sets actions factory
+            </summary>
+            <returns>BsToolbarHtmlBuilder</returns>
+        </member>
+        <member name="P:BForms.Grid.BsToolbarHtmlBuilder`1.ActionsFactory">
+            <summary>
+            Utility class used for action 
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsToolbarHtmlBuilder">
+            <summary>
+            For toolbar without forms
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarHtmlBuilder.displayName">
+            <summary>
+            Text that will be displayed in header
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarHtmlBuilder.fullName">
+            <summary>
+            Toolbar name based on class hierarchy
+            </summary>
+        </member>
+        <member name="F:BForms.Grid.BsToolbarHtmlBuilder.attributes">
+            <summary>
+            model attributes
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarHtmlBuilder.DisplayName(System.String)">
+            <summary>
+            Sets the display name property
+            </summary>
+            <returns>BsToolbarHtmlBuilder</returns>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarHtmlBuilder.HtmlAttributes(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Appends html attributes to grid_toolbar div element
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarHtmlBuilder.HtmlAttributes(System.Object)">
+            <summary>
+            Appends html attributes to grid_toolbar div element
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarHtmlBuilder.ConfigureActions(System.Action{BForms.Grid.BsToolbarActionsFactory})">
+            <summary>
+            Sets actions factory
+            </summary>
+            <returns>BsToolbarHtmlBuilder</returns>
+        </member>
+        <member name="P:BForms.Grid.BsToolbarHtmlBuilder.ActionsFactory">
+            <summary>
+            Utility class used for action 
+            </summary>
+        </member>
+        <member name="T:BForms.Grid.BsToolbarQuickSearch">
+            <summary>
+            Grid toolbar inline search component
+            </summary>
+        </member>
+        <member name="M:BForms.Grid.BsToolbarQuickSearch.Placeholder(System.String)">
+            <summary>
+            Set input placeholder, default is "search"
+            </summary>
+        </member>
+        <member name="T:BForms.Html.DateTimeExtensions">
+            <summary>
+            Represents bootstrap support for date and time input control
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DateTimeExtensions.BsDateTimePicker(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            Returns an input type=datetime element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DateTimeExtensions.BsDateTimePicker(System.Web.Mvc.HtmlHelper,System.String,System.Nullable{System.DateTime})">
+            <summary>
+            Returns an input type=datetime element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DateTimeExtensions.BsDateTimePicker(System.Web.Mvc.HtmlHelper,System.String,System.Nullable{System.DateTime},System.Object)">
+            <summary>
+            Returns an input type=datetime element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DateTimeExtensions.BsDateTimePicker(System.Web.Mvc.HtmlHelper,System.String,System.Nullable{System.DateTime},System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an input type=datetime element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DateTimeExtensions.BsDateTimePickerFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsDateTime}})">
+            <summary>
+            Returns a DateTime picker input element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DateTimeExtensions.BsDateTimePickerFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsDateTime}},System.Object)">
+            <summary>
+            Returns a DateTime picker input element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DateTimeExtensions.BsDateTimePickerFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsDateTime}},System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a DateTime picker input element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="T:BForms.Html.RangeExtensions">
+            <summary>
+            Represents support for making range selections
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RangeExtensions.BsRangeFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsRange{``1}}})">
+            <summary>
+            Returns a BForms range element based on BsControlAttribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RangeExtensions.BsRangeFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsRange{``1}}},System.Object)">
+            <summary>
+            Returns a BForms range element based on BsControlAttribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RangeExtensions.BsRangeFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsRange{``1}}},System.Object,System.Object)">
+            <summary>
+            Returns a BForms range element based on BsControlAttribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RangeExtensions.BsRangeFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsRange{``1}}},System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a BForms range element based on BsControlAttribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RangeExtensions.BsRangeForInternal``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsRange{``1}}},System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a BForms range element based on BsControlAttribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ToolbarExtensions.BsToolbarFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Toolbar with forms ( normal or inside a dropdown )
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ToolbarExtensions.BsToolbar(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Toolbar without forms
+            </summary>
+        </member>
+        <member name="T:BForms.Models.BsDateTime">
+            <summary>
+            Model type class from BsDateTimeFor and BsDateTime
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsDateTime.TextValue">
+            <summary>
+            Display value
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsDateTime.DateValue">
+            <summary>
+            Datetime value
+            </summary>
+        </member>
+        <member name="M:BForms.Models.BsGridModel`1.Wrap``1(System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsGridModel{`0}}})">
+            <summary>
+            Helper for wrapping grid
+            </summary>
+            <typeparam name="TModel">Wrapper model type</typeparam>
+            <param name="expression">Grid selector targeted for wrapping</param>
+            <param name="grid">Grid object</param>
+            <returns>Wrapper model</returns>
+        </member>
+        <member name="T:BForms.Models.BsRange`1">
+            <summary>
+            Model type class from BsRangeFor
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsRange`1.TextValue">
+            <summary>
+            Display value
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsRange`1.From">
+            <summary>
+            Begin value
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsRange`1.To">
+            <summary>
+            End value
+            </summary>
+        </member>
+        <member name="T:BForms.Models.BsSelectList`1">
+            <summary>
+            Represents a list of items for Dropdown, ListBox, RadioList, CheckboxList binding
+            </summary>
+        </member>
+        <member name="M:BForms.Models.BsSelectList`1.ToSelectList">
+            <summary>
+            Returns all select list items as IEnumerable
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Models.BsSelectList`1.ItemsFromEnum(System.Type,System.Enum[])">
+            <summary>
+            Filla BsSelectList.Items with enum vals
+            </summary>
+        </member>
+        <member name="M:BForms.Models.BsSelectList`1.FromSelectList(System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem})">
+            <summary>
+            Returns a BsSelectList from 
+            </summary>
+        </member>
+        <member name="M:BForms.Models.BsSelectList`1.FromEnum(System.Type)">
+            <summary>
+            Returns a BsSelectList from enum using the DescriptionAttribute
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsSelectList`1.SelectedValues">
+            <summary>
+            Selected values
+            </summary>
+        </member>
+        <member name="T:BForms.Models.BsToolbarModel">
+            <summary>
+            Helper class used when there is no need for custom object on toolbar render
+            </summary>
+        </member>
+        <member name="T:BForms.Models.BsToolbarModel`1">
+            <summary>
+            Helper class used when toolbar has advanced search form
+            </summary>
+            <typeparam name="TSearch"></typeparam>
+        </member>
+        <member name="T:BForms.Models.BsToolbarModel`2">
+            <summary>
+            Helper class used when toolbar has advanced search and add new entity forms
+            </summary>
+            <typeparam name="TSearch"></typeparam>
+            <typeparam name="TNew"></typeparam>
+        </member>
+        <member name="T:BForms.Models.BsToolbarModel`3">
+            <summary>
+            Helper class used when toolbar has advanced search and add new entity forms
+            </summary>
+            <typeparam name="TSearch"></typeparam>
+            <typeparam name="TNew"></typeparam>
+            <typeparam name="TOrder"></typeparam>
+        </member>
+        <member name="T:BForms.Mvc.BsControlAttribute">
+            <summary>
+            BForms control descriptor
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.BsControlAttribute.#ctor">
+            <summary>
+            Empty ctor
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.BsControlAttribute.#ctor(BForms.Models.BsControlType)">
+            <summary>
+            Specifies the name of an BFroms control type to associate with an input HTML field
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsControlAttribute.ControlType">
+            <summary>
+            Specifies the name of an BFroms control type to associate with an input HTML field
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsControlAttribute.CssClass">
+            <summary>
+            Sets custom css
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsControlAttribute.IsReadonly">
+            <summary>
+            Sets readonly html attribute
+            </summary>
+        </member>
+        <member name="T:BForms.Html.CheckBoxExtensions">
+            <summary>
+            Represents a check box input element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.CheckBoxExtensions.BsCheckBox(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.CheckBoxExtensions.BsCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.Boolean)">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.CheckBoxExtensions.BsCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.Boolean,System.Object)">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.CheckBoxExtensions.BsCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.Object)">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.CheckBoxExtensions.BsCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.CheckBoxExtensions.BsCheckBox(System.Web.Mvc.HtmlHelper,System.String,System.Boolean,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.CheckBoxExtensions.BsCheckBoxFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.CheckBoxExtensions.BsCheckBoxFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Object)">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.CheckBoxExtensions.BsCheckBoxFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="T:BForms.Html.TagListExtensions">
+            <summary>
+            Represents bootstrap support for tag list input control
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagList(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagList(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Object)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String,System.Object)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Object)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String,System.Object)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TagListExtensions.BsTagListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a single-selection select element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="T:BForms.Html.ListBoxExtensions">
+            <summary>
+            Represents bootstrap support for password input control
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ListBoxExtensions.BsListBox(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ListBoxExtensions.BsListBox(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ListBoxExtensions.BsListBox(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Object)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ListBoxExtensions.BsListBox(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ListBoxExtensions.BsListBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ListBoxExtensions.BsListBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Object)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ListBoxExtensions.BsListBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a single-selection select element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="T:BForms.Html.DropDownListExtensions">
+            <summary>
+            Represents bootstrap support for password input control
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownList(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownList(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Object)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String,System.Object)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownList(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Object)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String,System.Object)">
+            <summary>
+             Returns a single-selection select element with placeholder
+            </summary>
+        </member>
+        <member name="M:BForms.Html.DropDownListExtensions.BsDropDownListFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IEnumerable{System.Web.Mvc.SelectListItem},System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a single-selection select element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="T:BForms.Html.PasswordExtensions">
+            <summary>
+            Represents bootstrap support for password input control
+            </summary>
+        </member>
+        <member name="M:BForms.Html.PasswordExtensions.BsPassword(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            Returns an input type=password element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.PasswordExtensions.BsPassword(System.Web.Mvc.HtmlHelper,System.String,System.Object)">
+            <summary>
+            Returns an input type=password element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.PasswordExtensions.BsPassword(System.Web.Mvc.HtmlHelper,System.String,System.Object,System.Object)">
+            <summary>
+            Returns an input type=password element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.PasswordExtensions.BsPassword(System.Web.Mvc.HtmlHelper,System.String,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an input type=password element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.PasswordExtensions.BsPasswordFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Returns a textbox password element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.PasswordExtensions.BsPasswordFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+            <summary>
+            Returns a textbox password element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.PasswordExtensions.BsPasswordFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a textbox password element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="T:BForms.Html.RadioButtonExtensions">
+            <summary>
+            Represents a radio button input element that is used to present mutually exclusive options
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RadioButtonExtensions.BsRadioButton(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RadioButtonExtensions.BsRadioButton(System.Web.Mvc.HtmlHelper,System.String,System.Boolean)">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RadioButtonExtensions.BsRadioButton(System.Web.Mvc.HtmlHelper,System.String,System.Boolean,System.Object)">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RadioButtonExtensions.BsRadioButton(System.Web.Mvc.HtmlHelper,System.String,System.Object)">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RadioButtonExtensions.BsRadioButton(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RadioButtonExtensions.BsRadioButton(System.Web.Mvc.HtmlHelper,System.String,System.Boolean,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RadioButtonExtensions.BsRadioButtonFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RadioButtonExtensions.BsRadioButtonFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Object)">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.RadioButtonExtensions.BsRadioButtonFor``1(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a checkbox input element wrapped in a label element
+            </summary>
+        </member>
+        <member name="T:BForms.Html.TextAreaExtensions">
+            <summary>
+            Represents bootstrap support for text input control
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextArea(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            Returns a textarea element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextArea(System.Web.Mvc.HtmlHelper,System.String,System.Object)">
+            <summary>
+            Returns a textarea element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextArea(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a textarea element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String)">
+            <summary>
+            Returns a textarea element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Object)">
+            <summary>
+            Returns a textarea element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a textarea element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Int32,System.Int32,System.Object)">
+            <summary>
+            Returns a textarea element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextArea(System.Web.Mvc.HtmlHelper,System.String,System.String,System.Int32,System.Int32,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a textarea element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Returns a textarea element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+            <summary>
+            Returns a textarea element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a textarea element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Int32,System.Int32,System.Object)">
+            <summary>
+            Returns a textarea element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextAreaExtensions.BsTextAreaFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Int32,System.Int32,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a textarea element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="T:BForms.Html.TextBoxExtensions">
+            <summary>
+            Represents bootstrap support for text input control
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBox(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            Returns an input type=text element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBox(System.Web.Mvc.HtmlHelper,System.String,System.Object)">
+            <summary>
+            Returns an input type=text element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBox(System.Web.Mvc.HtmlHelper,System.String,System.Object,System.String)">
+            <summary>
+            Returns an input type=text element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBox(System.Web.Mvc.HtmlHelper,System.String,System.Object,System.Object)">
+            <summary>
+            Returns an input type=text element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBox(System.Web.Mvc.HtmlHelper,System.String,System.Object,System.String,System.Object)">
+            <summary>
+            Returns an input type=text element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBox(System.Web.Mvc.HtmlHelper,System.String,System.Object,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an input type=text element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBox(System.Web.Mvc.HtmlHelper,System.String,System.Object,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an input type=text element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Returns a textbox input element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+            <summary>
+            Returns a textbox input element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a textbox input element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.String)">
+            <summary>
+            Returns a textbox input element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.String,System.Object)">
+            <summary>
+            Returns a textbox input element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TextBoxExtensions.BsTextBoxFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a textbox input element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="T:BForms.Models.BsControlType">
+            <summary>
+            BForms input elements
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.TextBox">
+            <summary>
+            Text input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.TextArea">
+            <summary>
+            Textarea input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.Password">
+            <summary>
+            Password input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.Autocomplete">
+            <summary>
+            Typeahead input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.Url">
+            <summary>
+            Url input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.Email">
+            <summary>
+            Email input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.Number">
+            <summary>
+            Number input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.NumberInline">
+            <summary>
+            Number input element with inline range
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.NumberRange">
+            <summary>
+            Number range input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.DatePicker">
+            <summary>
+            Datepicker input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.DatePickerRange">
+            <summary>
+            Datepicker range input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.DateTimePicker">
+            <summary>
+            Date and time picker input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.DateTimePickerRange">
+            <summary>
+            Date and time picker range input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.TimePicker">
+            <summary>
+            Time input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.TimePickerRange">
+            <summary>
+            Time picker range input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.CheckBox">
+            <summary>
+            Checkbox input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.CheckBoxList">
+            <summary>
+            Checkbox list input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.RadioButton">
+            <summary>
+            Radio button input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.RadioButtonList">
+            <summary>
+            Radio button list input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.TagList">
+            <summary>
+            Tag list input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.DropDownList">
+            <summary>
+            Drop-down list input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.DropDownListRemote">
+            <summary>
+            Drop-down list input element with remote data
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.DropDownListGrouped">
+            <summary>
+            Grouped drop-down list input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.ListBox">
+            <summary>
+            Listbox input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.ListBoxGrouped">
+            <summary>
+            Grouped listbox input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.Upload">
+            <summary>
+            File upload input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.UploadList">
+            <summary>
+            Multi-file upload input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.ColorPicker">
+            <summary>
+            File upload input element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.SortableList">
+            <summary>
+            Sortable list element
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.ButtonGroupDropdown">
+            <summary>
+            Bootstrap button group
+            </summary>
+        </member>
+        <member name="F:BForms.Models.BsControlType.MixedButtonGroup">
+            <summary>
+            Bootstrap component containing buttons and button dropdowns
+            </summary>
+        </member>
+        <member name="T:BForms.Models.BsJsonResult">
+            <summary>
+            Extends JsonResult with ResponseStatus and compression
+            </summary>
+        </member>
+        <member name="T:BForms.Models.BsSelectListItem">
+            <summary>
+            Represents the selected item in an instance of the BsSelectList
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsSelectListItem.GroupKey">
+            <summary>
+            Option group unique ID
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsSelectListItem.GroupName">
+            <summary>
+            Option group display name
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsSelectListItem.Data">
+            <summary>
+            The dictionary items are serialized in html as data- attributes
+            </summary>
+        </member>
+        <member name="P:BForms.Models.BsSelectListItem.IsButton">
+            <summary>
+            Gets or sets a value that indicates if the option should be rendered as a button or inside a select; used for BsMixedButtonGroup component
+            </summary>
+        </member>
+        <member name="T:BForms.Models.Glyphicon">
+            <summary>
+            Glyphicon font symbols
+            </summary>
+        </member>
+        <member name="T:BForms.Mvc.BsGridAttribute">
+            <summary>
+            BForms grid column descriptor
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.BsGridAttribute.#ctor">
+            <summary>
+            Empty ctor
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsGridAttribute.HasDetails">
+            <summary>
+            Flag for grid row container 
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsGridAttribute.Theme">
+            <summary>
+            BForms Theme
+            </summary>
+        </member>
+        <member name="T:BForms.Mvc.BsGridColumnAttribute">
+            <summary>
+            BForms grid column descriptor
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.BsGridColumnAttribute.#ctor">
+            <summary>
+            Empty ctor
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsGridColumnAttribute.IsSortable">
+            <summary>
+            Wraps column header in a html node. Default is true
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsGridColumnAttribute.IsEditable">
+            <summary>
+            Wraps cell in editable container
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsGridColumnAttribute.Order">
+            <summary>
+            Column order
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsGridColumnAttribute.Width">
+            <summary>
+            Column width expected values 1-12
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsGridColumnAttribute.MediumWidth">
+            <summary>
+            Column width expected values 1-12
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsGridColumnAttribute.SmallWidth">
+            <summary>
+            Column width expected values 1-12
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsGridColumnAttribute.ExtraSmallWidth">
+            <summary>
+            Column width expected values 1-12
+            </summary>
+        </member>
+        <member name="P:BForms.Mvc.BsGridColumnAttribute.Usage">
+            <summary>
+            Column usage expected values Both/Excel/Html
+            </summary>
+        </member>
+        <member name="T:BForms.Mvc.BsMandatoryAttribute">
+            <summary>
+            The Mandatory attribute should be used for checkbox fields when the checked state is required
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.BsMandatoryAttribute.IsValid(System.Object)">
+            <summary>
+            Returns true if the object is of type bool and it's set to true
+            </summary>
+        </member>
+        <member name="T:BForms.Mvc.BsModelValidatorProvider">
+            <summary>
+            Custom validator provider for BsSelectList fields
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.BsModelValidatorProvider.GetValidators(System.Web.Mvc.ModelMetadata,System.Web.Mvc.ControllerContext)">
+            <summary>
+            Custom validation for BsSelectList&lt;T&gt;
+            </summary>
+        </member>
+        <member name="T:BForms.Html.GlyphiconExtensions">
+            <summary>
+            Represents bootstrap support for glyphicon fonts
+            </summary>
+        </member>
+        <member name="M:BForms.Html.GlyphiconExtensions.BsGlyphicon``1(System.Web.Mvc.HtmlHelper{``0},BForms.Models.Glyphicon,System.Object)">
+            <summary>
+            Returns a span element with glyphicon css
+            </summary>
+        </member>
+        <member name="M:BForms.Html.GlyphiconExtensions.BsGlyphicon``1(System.Web.Mvc.HtmlHelper{``0},BForms.Models.Glyphicon)">
+            <summary>
+            Returns a span element with glyphicon css
+            </summary>
+        </member>
+        <member name="M:BForms.Html.GlyphiconExtensions.BsGlyphicon``1(System.Web.Mvc.HtmlHelper{``0},BForms.Models.Glyphicon,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a span element with glyphicon css
+            </summary>
+        </member>
+        <member name="M:BForms.Html.GlyphiconExtensions.BsGlyphiconAddon``1(System.Web.Mvc.HtmlHelper{``0},BForms.Models.Glyphicon,System.Object)">
+            <summary>
+            Returns a span element with glyphicon css and input-group-addon, to be used inside a input-group div
+            </summary>
+        </member>
+        <member name="M:BForms.Html.GlyphiconExtensions.BsGlyphiconAddon``1(System.Web.Mvc.HtmlHelper{``0},BForms.Models.Glyphicon)">
+            <summary>
+            Returns a span element with glyphicon css and input-group-addon, to be used inside a input-group div
+            </summary>
+        </member>
+        <member name="M:BForms.Html.GlyphiconExtensions.BsGlyphiconAddon``1(System.Web.Mvc.HtmlHelper{``0},BForms.Models.Glyphicon,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a span element with glyphicon css and input-group-addon, to be used inside a input-group div
+            </summary>
+        </member>
+        <member name="T:BForms.Html.BaseExtensions">
+            <summary>
+            Represents HTML helpers for bootstrap forms
+            </summary>
+        </member>
+        <member name="M:BForms.Html.BaseExtensions.BsPartialPrefixed``3(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``1,``2}},System.String,``1,System.String)">
+            <summary>
+            Replacer for Html.Partial when dealing with nested models
+            </summary>
+            <example>
+            @Html.PartialPrefixed(m => m.Client.Address, "Client/_Address", Model)
+            </example>
+        </member>
+        <member name="M:BForms.Html.BaseExtensions.BsEnumDisplayName``2(System.Web.Mvc.HtmlHelper{``0},``1)">
+            <summary>
+            Renders the name of an enum based on DisplayAttribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.BaseExtensions.GetEnumDescription(System.Web.Mvc.HtmlHelper,System.Enum)">
+            <summary>
+            Get description of a specific enum value
+            </summary>
+        </member>
+        <member name="M:BForms.Html.BaseExtensions.ApplyBFormsAttributes(System.Collections.Generic.IDictionary{System.String,System.Object},System.Web.Mvc.ModelMetadata,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Appends BForms custom html attribute to an existing collection
+            </summary>
+        </member>
+        <member name="T:BForms.Html.InputExtensions">
+            <summary>
+            Represents bootstrap support for HTML5 input controls
+            </summary>
+        </member>
+        <member name="M:BForms.Html.InputExtensions.BsInputFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Returns an input element based on BsControlType with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.InputExtensions.BsInputFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},BForms.Models.BsControlType)">
+            <summary>
+            Returns an input element with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.InputExtensions.BsInputFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+            <summary>
+            Returns an input element based on BsControlType with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.InputExtensions.BsInputFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},BForms.Models.BsControlType,System.Object)">
+            <summary>
+            Returns an input element based on BsControlType with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.InputExtensions.BsInputFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object,System.Object)">
+            <summary>
+            Returns an input element based on BsControlType with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.InputExtensions.BsInputFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},BForms.Models.BsControlType,System.Object,System.Object)">
+            <summary>
+            Returns an input element based on BsControlType with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.InputExtensions.BsInputFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an input element based on BsControlType with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.InputExtensions.BsInputFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.String)">
+            <summary>
+            Returns an input element based on BsControlType with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.InputExtensions.BsInputFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.String,System.Object)">
+            <summary>
+            Returns an input element based on BsControlType with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.InputExtensions.BsInputFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.String,System.Object,System.Object)">
+            <summary>
+            Returns an input element based on BsControlType with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="M:BForms.Html.InputExtensions.BsInputFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.String,System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an input element based on BsControlType with placeholder and info tooltip
+            </summary>
+        </member>
+        <member name="T:BForms.Html.LabelExtensions">
+            <summary>
+            Represents support for the bootstrap HTML label element
+            </summary>
+        </member>
+        <member name="M:BForms.Html.LabelExtensions.BsLabelFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Returns a label element with required css class
+            </summary>
+        </member>
+        <member name="M:BForms.Html.LabelExtensions.BsLabelFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+            <summary>
+            Returns a label element with required css class
+            </summary>
+        </member>
+        <member name="M:BForms.Html.LabelExtensions.BsLabelFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a label element with required css class
+            </summary>
+        </member>
+        <member name="T:BForms.Html.SelectExtensions">
+            <summary>
+            Represents support for making selections in a list
+            </summary>
+        </member>
+        <member name="M:BForms.Html.SelectExtensions.BsSelectFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsSelectList{``1}}})">
+            <summary>
+            Returns a BForms select element based on BsControlAttribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.SelectExtensions.BsSelectFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsSelectList{``1}}},System.Object)">
+            <summary>
+            Returns a BForms select element based on BsControlAttribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.SelectExtensions.BsSelectFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsSelectList{``1}}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a BForms select element based on BsControlAttribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.SelectExtensions.BsSelectFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsSelectList{``1}}},System.Object,System.Object)">
+            <summary>
+            Returns a BForms select element based on BsControlAttribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.SelectExtensions.BsSelectFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,BForms.Models.BsSelectList{``1}}},System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a BForms select element based on BsControlAttribute
+            </summary>
+        </member>
+        <member name="T:BForms.Html.TooltipExtensions">
+            <summary>
+            Represents helpers for bootstrap forms info tooltips
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TooltipExtensions.BsDescription(System.Web.Mvc.HtmlHelper,System.String)">
+            <summary>
+            Returns a span element containing the localized value of Display description attribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TooltipExtensions.BsDescription(System.Web.Mvc.HtmlHelper,System.String,System.Object)">
+            <summary>
+            Returns a span element containing the localized value of Display description attribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TooltipExtensions.BsDescription(System.Web.Mvc.HtmlHelper,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a span element containing the localized value of Display description attribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TooltipExtensions.BsDescriptionFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Returns a span element containing the localized value of Display description attribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TooltipExtensions.BsDescriptionFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+            <summary>
+            Returns a span element containing the localized value of Display description attribute
+            </summary>
+        </member>
+        <member name="M:BForms.Html.TooltipExtensions.BsDescriptionFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a span element containing the localized value of Display description attribute
+            </summary>
+        </member>
+        <member name="T:BForms.Html.ValidationExtensions">
+            <summary>
+            Represents helpers for bootstrap forms validation
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ValidationExtensions.BsValidationCssFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            The name of the CSS class that is used to style the input group validation errors
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ValidationExtensions.BsValidationFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an alert div containing the BsFormError message
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ValidationExtensions.BsValidationFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Returns an alert div containing the BsFormError message
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ValidationExtensions.BsValidationFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+            <summary>
+            Returns an alert div containing the BsFormError message
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ValidationExtensions.BsValidationSummary(System.Web.Mvc.HtmlHelper,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns an alert div containing the BsFormError message
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ValidationExtensions.BsValidationSummary(System.Web.Mvc.HtmlHelper,System.Object)">
+            <summary>
+            Returns an alert div containing the BsFormError message
+            </summary>
+        </member>
+        <member name="M:BForms.Html.ValidationExtensions.BsValidationSummary(System.Web.Mvc.HtmlHelper)">
+            <summary>
+            Returns an alert div containing the BsFormError message
+            </summary>
+        </member>
+        <member name="T:BForms.Mvc.ModelStateExtensions">
+            <summary>
+            MVC ModelState helpers 
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.ModelStateExtensions.GetErrors(System.Web.Mvc.ModelStateDictionary,System.String)">
+            <summary>
+            Returns a dictionary will all model state errors
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.ModelStateExtensions.ClearModelState(System.Web.Mvc.ModelStateDictionary,System.String)">
+            <summary>
+            Removes model state errors except for the specified filed
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.ModelStateExtensions.AddFormError(System.Web.Mvc.ModelStateDictionary,System.String,System.String)">
+            <summary>
+            Substitute for ValidationSummary
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.ModelStateExtensions.AddFieldError(System.Web.Mvc.ModelStateDictionary,System.String,System.Type,System.String)">
+            <summary>
+            Substitute for AddModelError
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.ModelStateExtensions.ClearModelState(System.Web.Mvc.ModelStateDictionary,System.Collections.Generic.List{System.String})">
+            <summary>
+            Removes model state errors except for the specified fileds
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ExcelHelpers.CreateCellFormat(System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.Boolean,System.Boolean)">
+            <summary>
+            Create a new cell format
+            </summary>
+            <param name="fontId"></param>
+            <param name="fillId"></param>
+            <param name="numberFormatId"></param>
+            <param name="borderId"></param>
+            <param name="formatId"></param>
+            <param name="applyFill"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Utilities.ExcelHelpers.CreateFont(System.Boolean,System.Boolean,System.String,System.Nullable{System.Double},System.String)">
+            <summary>
+            Create a new font
+            </summary>
+            <param name="isBold">Whether the text should be bold</param>
+            <param name="fontFamily">The font family eg: "Arial"</param>
+            <param name="size">The font size</param>
+            <param name="color">The font color (value of the color theme)</param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Utilities.ExcelHelpers.CreateFill(System.String,System.Nullable{DocumentFormat.OpenXml.Spreadsheet.PatternValues})">
+            <summary>
+            Create a new fill
+            </summary>
+            <param name="fillColorRgb">The foreground color of the fill</param>
+            <param name="pattern">The fill pattern</param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Utilities.ExcelHelpers.CreateBorder">
+            <summary>
+            Create a new border
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Utilities.ExcelHelpers.CreateTextCell(System.String)">
+            <summary>
+            Create simple text cell
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Utilities.ExcelHelpers.CreateTextCell(System.Int32,System.Int32,System.Object,System.Nullable{System.UInt32})">
+            <summary>
+            Create styled text cell at specified position
+            </summary>
+            <param name="columnIndex"></param>
+            <param name="rowIndex"></param>
+            <param name="cellValue"></param>
+            <param name="styleIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Utilities.ExcelHelpers.CreateTextCell(System.Object,System.Nullable{System.UInt32})">
+            <summary>
+            Create styled text cell
+            </summary>
+            <param name="cellValue"></param>
+            <param name="styleIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Utilities.ExcelHelpers.CreateValueCell(System.Int32,System.Int32,System.Object,System.Nullable{System.UInt32},System.Nullable{DocumentFormat.OpenXml.Spreadsheet.CellValues})">
+            <summary>
+            Create styled value cell at specified position
+            </summary>
+            <param name="columnIndex"></param>
+            <param name="rowIndex"></param>
+            <param name="cellValue"></param>
+            <param name="styleIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Utilities.ExcelHelpers.CreateValueCell(System.Object,System.Nullable{System.UInt32},System.Nullable{DocumentFormat.OpenXml.Spreadsheet.CellValues})">
+            <summary>
+            Create styled value cell
+            </summary>
+            <param name="cellValue"></param>
+            <param name="styleIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Utilities.ExcelHelpers.CreateColumn(System.UInt32,System.UInt32,System.Double)">
+            <summary>
+            Create a custom width column
+            </summary>
+            <param name="startIndex"></param>
+            <param name="endIndex"></param>
+            <param name="width"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BForms.Utilities.ExcelHelpers.GetColumnName(System.Int32)">
+            <summary>
+            Get the column name based on its index
+            </summary>
+            <param name="columnIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BForms.Utilities.ReflectionHelpers">
+            <summary>
+            Reflection helper class 
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.GetDescription(System.Enum)">
+            <summary>
+            Returns the Name value of Description attribute
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.EnumDisplayName(System.Type,System.Enum)">
+            <summary>
+            Returns the text value of Display attribute
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.EnumDescription(System.Type,System.Enum)">
+            <summary>
+            Returns the Name value of Description attribute
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.TryGetAttribute``1(System.String,System.Type,``0@)">
+            <summary>
+            Retuns Attribute
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.TryGetAttribute``1(System.Reflection.PropertyInfo,``0@)">
+            <summary>
+            Retuns Attribute
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.GetPropertyInfo``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Gets propertyInfo from expression
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.GetModelStateValue(System.Web.Mvc.HtmlHelper,System.String,System.Type)">
+            <summary>
+            Retuns model state value
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.HasModelStateErros``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Returns true if the specified model property has validation errors
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.MergeAttribute(System.Collections.Generic.IDictionary{System.String,System.Object},System.String,System.String,System.Boolean)">
+            <summary>
+            Appends the specified html attribute to an existing collection
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.GetHtml5Type(System.String)">
+            <summary>
+            Retuns HTML5 input type based on DataTypeAttribute
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.GetHtml5Type(BForms.Models.BsControlType)">
+            <summary>
+            Retuns HTML5 input type based on BsControlType
+            </summary>
+        </member>
+        <member name="M:BForms.Utilities.ReflectionHelpers.InheritsOrImplements(System.Type,System.Type)">
+            <summary>
+            Checks to see if a generic type is a subclass of a raw generic type. eg. List&lt;int&gt; for List&lt;&gt;
+            </summary>
+        </member>
+        <member name="T:BForms.Mvc.RenderViewHelpers">
+            <summary>
+            Helper class for rendering views as string inside a MVC controller
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.RenderViewHelpers.BsRenderPartialView(System.Web.Mvc.ControllerBase,System.String,System.Object,System.String)">
+            <summary>
+            Retuns a rendered partial view as string
+            </summary>
+        </member>
+        <member name="M:BForms.Mvc.RenderViewHelpers.BsRenderView(System.Web.Mvc.ControllerBase,System.String,System.Object)">
+            <summary>
+            Retuns a rendered view as string
+            </summary>
+        </member>
+    </members>
+</doc>

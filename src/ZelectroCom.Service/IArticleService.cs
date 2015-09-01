@@ -9,8 +9,7 @@ namespace ZelectroCom.Service
 {
     public interface IArticleService : IEntityService<Article>
     {
-        IEnumerable<Article> GetDrafts(int? page, int? limit, string sortBy, string direction,
-            string searchString, out int total); 
+        IEnumerable<Article> GetDrafts(); 
         bool IsDraft(Article item);
     }
 }

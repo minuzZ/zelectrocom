@@ -19,8 +19,8 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
     public class RoxyFilemanController : Controller
     {
         private string uploadsFolder = "~/Content/Uploads";
-        private string filesFolderName = "Файлы";
-        private string confFile = "~/Content/fileman/conf.json";
+        private string filesFolderName = "Files";
+        private string confFile = "~/Scripts/fileman/conf.json";
         private Dictionary<string, string> _settings = null;
         private Dictionary<string, string> _lang = null;
 

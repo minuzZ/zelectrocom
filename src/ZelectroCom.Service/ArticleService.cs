@@ -16,26 +16,10 @@ namespace ZelectroCom.Service
             return item.ArticleState == ArticleState.Draft ||
                    item.ArticleState == ArticleState.Posted;
         }
-        public IEnumerable<Article> GetDrafts(int? page, int? limit, string sortBy, string direction, string searchString, out int total)
+        public IEnumerable<Article> GetDrafts()
         {
-            var records = GetAll().Where(x => IsDraft(x)).AsQueryable();
-
-            total = records.Count();
-
-            if (!string.IsNullOrWhiteSpace(searchString))
-            {
-                records = records.Where(p => p.Title.ToLower().Contains(searchString.ToLower()));
-            }
-
-            records = records.OrderBy(x => x.CreatedDate);
-
-            if (page.HasValue && limit.HasValue)
-            {
-                int start = (page.Value - 1) * limit.Value;
-                records = records.Skip(start).Take(limit.Value);
-            }
-
-            return records.ToList();
+            var drafts = GetAll().Where(x => IsDraft(x));
+            return drafts;
         }
     }
 }

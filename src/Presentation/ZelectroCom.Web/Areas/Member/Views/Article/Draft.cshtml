@@ -1,4 +1,6 @@
-﻿@model ZelectroCom.Web.Areas.Member.ViewModels.Article.DraftVM
+﻿@using BForms.Html
+@using BForms.Models
+@model ZelectroCom.Web.Areas.Member.ViewModels.Article.DraftVm
 @{
     ViewBag.Title = "Черновик";
     Layout = "~/Areas/Member/Views/Shared/_AdminLayout.cshtml";
@@ -19,94 +21,98 @@
     </div>
 </div>
 
-<div class="row">
+
     <div class="col-xs-12">
-        @using (Html.BeginForm("SaveDraft", "Article", FormMethod.Post, new {role = "form"}))
+        @using (Html.BsBeginForm("Draft", "Article", FormMethod.Post, new { @class = "bs-form js-draftForm" }, BsTheme.Green))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(m => m.Id);
-            <div class="control-group">
-                <input type="submit" value="Сохранить" name="action:SaveDraft" class="btn btn-default"/>
-                <input type="submit" value="Передать на публикацию" name="action:PublishDraft" class="btn btn-default" />
+            <div class="row">
+                <div class="control-group col-xs-12">
+                    <button class="btn btn-theme js-saveDraftBtn" type="submit">Сохранить</button>
+                    <button class="btn btn-theme" id="previewBtn">Предварительный просмотр</button>
+                </div>
             </div>
             <hr/>
-            @Html.ValidationSummary()
+            <div class="row">
+                <div class="col-xs-12 bs-validation_summary">
+                    @Html.BsValidationSummary()
+                </div>
+                <div class="alert alert-success" id="success-alert">
+                    <button type="button" class="close" data-hide="alert">x</button>
+                    Черновик успешно сохранен.
+                </div>
+            </div>
             <div class="row">
                 <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                    @Html.LabelFor(m => m.Title, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Название статьи" })
+                    @Html.BsLabelFor(m => m.Title)
+                    <div class="input-group">
+                        @Html.BsGlyphiconAddon(Glyphicon.Book)
+                        @Html.BsTextBoxFor(m => m.Title)
+                        @Html.BsValidationFor(m => m.Title)
+                    </div>
                 </div>
             </div>
             if (this.User.IsInRole("Admin"))
             {
                 <div class="row">
                     <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                        @Html.LabelFor(m => m.SectionId)
-                        @Html.DropDownListFor(m => m.SectionId, Model.Sections, new { @class = "form-control" })
+                        @Html.BsLabelFor(m => m.SectionId)
+                        <div class="input-group">
+                            @Html.BsDropDownListFor(m => m.SectionId, Model.Sections)
+                            @Html.BsValidationFor(m => m.SectionId)
+                        </div>
                     </div>
                 </div>
             }
-            @Html.TextAreaFor(m => m.Text, 15, 80, new {@id = "articleEditor"})
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8">
+                    @Html.BsTextAreaFor(m => m.Text, 18, 60, new { @id = "articleEditor" })
+                </div>
+            </div>
             @*TODO Html.EditorFor(m => m.Text, "RichEditor")*@
-            <hr/>
+            <hr />
 
             if (this.User.IsInRole("Admin"))
             {
                 <div class="row">
                     <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                            @Html.LabelFor(model => model.PublishTime, new { @class = "control-label" })
-                            @Html.TextBoxFor(model => model.PublishTime, new { @class = "form-control", id="datetimePicker" })
-                            @Html.ValidationMessageFor(model => model.PublishTime, "", new {@class = "text-danger"})
+                        @Html.BsLabelFor(m => m.PublishTime)
+                        <div class="input-group">
+                            @Html.BsGlyphiconAddon(Glyphicon.Time)
+                            @Html.BsDateTimePickerFor(m => m.PublishTime)
+                            @Html.BsValidationFor(m => m.PublishTime)
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                        @Html.LabelFor(m => m.SeoTitle, new {@class = "control-label"})
-                        @Html.TextBoxFor(m => m.SeoTitle, new {@class = "form-control"})
+                        @Html.BsLabelFor(m => m.SeoTitle)
+                        @Html.BsInputFor(m => m.SeoTitle)
+                        @Html.BsValidationFor(m => m.SeoTitle)
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                        @Html.LabelFor(m => m.SeoUrl, new { @class = "control-label" })
-                        @Html.TextBoxFor(m => m.SeoUrl, new { @class = "form-control" })
+                        @Html.BsLabelFor(m => m.SeoUrl)
+                        @Html.BsInputFor(m => m.SeoUrl)
+                        @Html.BsValidationFor(m => m.SeoUrl)
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
                         @Html.LabelFor(m => m.SeoDescription, new { @class = "control-label" })
-                        @Html.TextAreaFor(m => m.SeoDescription, new { @class = "form-control" })
+                        @Html.BsTextAreaFor(m => m.SeoDescription, new { @class = "form-control" })
+                        @Html.BsValidationFor(m => m.SeoDescription)
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                        @Html.LabelFor(m => m.SeoKeywords, new { @class = "control-label" })
-                        @Html.TextAreaFor(m => m.SeoKeywords, new { @class = "form-control" })
+                        @Html.BsLabelFor(m => m.SeoKeywords)
+                        @Html.BsInputFor(m => m.SeoKeywords)
+                        @Html.BsValidationFor(m => m.SeoKeywords)
                     </div>
                 </div>
             }
         }
     </div>
-</div>
-
-@section PageScripts {
-    @Scripts.Render("~/bundles/datetime")
-    <script src="~/Content/CKEditor/ckeditor.js" type="text/javascript"></script>
-    <script>
-    $(document).ready(function () {
-        $('#datetimePicker').datetimepicker({
-            locale: 'ru'
-        });
-
-        @*set draft id to find article content folder*@
-        var roxyFileman = '@Url.Content(string.Format("~/Content/fileman/index.html?articleId={0}", Model.Id))';
-        CKEDITOR.replace("articleEditor",
-            {
-                filebrowserBrowseUrl: roxyFileman,
-                filebrowserImageBrowseUrl: roxyFileman + '&type=image',
-                removeDialogTabs: 'link:upload;link:advanced;image:Upload;image:advanced;'
-            }
-        );
-    });
-    </script>
-}
-

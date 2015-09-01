@@ -39,12 +39,9 @@ namespace ZelectroCom.Web
 
             //Member bundles
             bundles.Add(new StyleBundle("~/Content/membercss").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/font-awesome.min.css",
-                      "~/Areas/Member/Content/style.css"));
-
-            bundles.Add(new ScriptBundle("~/bundles/membercommonbody").Include(
-                "~/Areas/Member/Scripts/common.js"));
+                "~/Content/font-awesome.min.css",
+                "~/Areas/Member/Content/style.css")
+                .Include("~/Scripts/BForms/Bundles/css/*.css", new CssRewriteUrlTransform()));
         }
     }
 }
