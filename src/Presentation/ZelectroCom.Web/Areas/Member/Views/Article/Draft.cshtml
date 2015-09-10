@@ -30,7 +30,7 @@
             <div class="row">
                 <div class="control-group col-xs-12">
                     <button class="btn btn-theme js-saveDraftBtn" type="submit">Сохранить</button>
-                    <button class="btn btn-theme" id="previewBtn">Предварительный просмотр</button>
+                    @Html.ActionLink("Предварительный просмотр", "Preview", "Post", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-theme" })
                 </div>
             </div>
             <hr/>

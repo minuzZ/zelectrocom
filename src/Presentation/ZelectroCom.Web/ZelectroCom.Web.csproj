@@ -53,11 +53,9 @@
       <HintPath>..\..\packages\Autofac.Mvc5.3.3.4\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper">
-      <HintPath>..\..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="AutoMapper.Net4">
-      <HintPath>..\..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    <Reference Include="AutoMapper, Version=4.0.4.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="BForms">
       <HintPath>..\..\packages\BForms.MVC.1.0.0.216\lib\net45\BForms.dll</HintPath>
@@ -207,7 +205,9 @@
     <Compile Include="Areas\Member\ViewModels\Article\DraftListVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Article\DraftRowVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Article\DraftVm.cs" />
-    <Compile Include="Areas\Member\ViewModels\Section\SectionVM.cs" />
+    <Compile Include="Areas\Member\ViewModels\Section\SectionListVm.cs" />
+    <Compile Include="Areas\Member\ViewModels\Section\SectionRowVm.cs" />
+    <Compile Include="Areas\Member\ViewModels\Section\SectionVm.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Member\Controllers\RoxyFilemanController.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -371,39 +371,6 @@
     <Content Include="Scripts\ckeditor\plugins\magicline\images\icon.png" />
     <Content Include="Scripts\ckeditor\plugins\pagebreak\images\pagebreak.gif" />
     <Content Include="Scripts\ckeditor\plugins\pastefromword\filter\default.js" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\ad-gallery-css-diff.htm" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\ad_next.png" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\ad_prev.png" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\ad_scroll_back.png" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\ad_scroll_forward.png" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\jquery.ad-gallery.css" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\jquery.ad-gallery.js" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\jquery.ad-gallery.min.js" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\LICENSE.txt" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\loader.gif" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\opa75.png" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\placeholder.png" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\trans.gif" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\blank.gif" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\fancybox_loading%402x.gif" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\fancybox_loading.gif" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\fancybox_overlay.png" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\fancybox_sprite%402x.png" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\fancybox_sprite.png" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\helpers\fancybox_buttons.png" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\helpers\jquery.fancybox-buttons.css" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\helpers\jquery.fancybox-buttons.js" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\helpers\jquery.fancybox-media.js" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\helpers\jquery.fancybox-thumbs.css" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\helpers\jquery.fancybox-thumbs.js" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\jquery.fancybox.css" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\jquery.fancybox.js" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\fancybox2\jquery.fancybox.pack.js" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\jquery.min.js" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\dialogs\slideshow.js" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\dialogs\slideshow.min.js" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\icons\placeholder.png" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\icons\slideshow.png" />
     <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\af.js" />
     <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\ar.js" />
     <Content Include="Scripts\ckeditor\plugins\specialchar\dialogs\lang\bg.js" />
@@ -463,46 +430,38 @@
     <Content Include="Scripts\ckeditor\plugins\table\dialogs\table.js" />
     <Content Include="Scripts\ckeditor\plugins\widget\images\handle.png" />
     <Content Include="Scripts\ckeditor\plugins\youtube\images\icon.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\dialog.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\dialog_ie.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\dialog_ie7.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\dialog_ie8.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\dialog_iequirks.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\dialog_opera.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\editor.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\editor_gecko.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\editor_ie.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\editor_ie7.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\editor_ie8.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\.temp\css\editor_iequirks.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\dialog.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\dialog_ie.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\dialog_ie7.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\dialog_ie8.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\dialog_iequirks.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\dialog_opera.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\editor.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\editor_gecko.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\editor_ie.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\editor_ie7.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\editor_ie8.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\editor_iequirks.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\icons.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\icons_hidpi.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\images\arrow.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\images\close.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\images\hidpi\close.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\images\hidpi\lock-open.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\images\hidpi\lock.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\images\hidpi\refresh.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\images\lock-open.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\images\lock.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\images\refresh.png" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\sample\bootstrapck-sample.html" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\sample\css\bootstrapck-sample.css" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\sample\js\analytics.js" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\sample\js\jquery-1.11.0.min.js" />
+    <Content Include="Scripts\ckeditor\skins\moono\dialog.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\dialog_ie.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\dialog_ie7.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\dialog_ie8.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\dialog_iequirks.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor_gecko.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor_ie.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor_ie7.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor_ie8.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\editor_iequirks.css" />
+    <Content Include="Scripts\ckeditor\skins\moono\icons.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\icons_hidpi.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\images\arrow.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\images\close.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\images\hidpi\close.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\images\hidpi\lock-open.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\images\hidpi\lock.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\images\hidpi\refresh.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\images\lock-open.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\images\lock.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
+    <Content Include="Scripts\ckeditor\skins\moono\images\spinner.gif" />
     <Content Include="Scripts\ckeditor\styles.js" />
+    <Content Include="Scripts\Controllers\Member\Section\Add.js" />
+    <Content Include="Scripts\Controllers\Member\Section\Edit.js" />
+    <Content Include="Scripts\Controllers\Root\Account\Register.js" />
+    <Content Include="Scripts\Controllers\Root\Account\Manage.js" />
+    <Content Include="Scripts\Controllers\Root\Account\Login.js" />
+    <Content Include="Scripts\Controllers\Root\Home\Contact.js" />
+    <Content Include="Scripts\Controllers\Root\Home\About.js" />
+    <Content Include="Scripts\Controllers\Root\Home\Index.js" />
     <Content Include="Scripts\Controllers\Member\Article\DraftsList.js" />
     <Content Include="Scripts\Controllers\Member\Article\Draft.js" />
     <Content Include="Scripts\Controllers\Member\Home\Index.js" />
@@ -545,6 +504,12 @@
     <Content Include="Areas\Member\Views\Article\DraftsList.cshtml" />
     <Content Include="Areas\Member\Views\Shared\EditorTemplates\RichEditor.cshtml" />
     <Content Include="Areas\Member\Views\Article\_DraftsGrid.cshtml" />
+    <Content Include="Areas\Member\RequireJS.json" />
+    <Content Include="Areas\Member\RequireJS.Release.json" />
+    <Content Include="Areas\Member\Views\Section\_SectionsGrid.cshtml" />
+    <None Include="Areas\Member\Views\Section\Add.cshtml" />
+    <None Include="Areas\Member\Views\Section\Edit.cshtml" />
+    <None Include="Areas\Member\Views\Section\_SectionFormFields.cshtml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="Scripts\BForms\Bundles\css\stylesheets.css" />
     <Content Include="Scripts\BForms\Bundles\fonts\glyphicons-halflings-regular.svg" />
@@ -673,43 +638,17 @@
     <Content Include="Scripts\BForms\Bundles\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Scripts\BForms\Bundles\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Scripts\BForms\Bundles\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Areas\Member\RequireJS.json" />
-    <Content Include="Areas\Member\RequireJS.Release.json" />
+    <Content Include="RequireJS.json" />
+    <Content Include="RequireJS.Release.json" />
     <Content Include="Scripts\ckeditor\plugins\codesnippet\lib\highlight\CHANGES.md" />
     <Content Include="Scripts\ckeditor\plugins\codesnippet\lib\highlight\LICENSE" />
     <Content Include="Scripts\ckeditor\plugins\codesnippet\lib\highlight\README.md" />
     <Content Include="Scripts\ckeditor\plugins\codesnippet\lib\highlight\README.ru.md" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\readme.md" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\browser-specific\gecko\editor_gecko.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\browser-specific\ie7\dialog_ie7.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\browser-specific\ie7\editor_ie7.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\browser-specific\ie8\dialog_ie8.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\browser-specific\ie8\editor_ie8.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\browser-specific\iequirks\dialog_iequirks.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\browser-specific\iequirks\editor_iequirks.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\browser-specific\ie\dialog_ie.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\browser-specific\ie\editor_ie.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\browser-specific\opera\dialog_opera.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\components\editor.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\components\_colorpanel.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\components\_elementspath.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\components\_mainui.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\components\_menu.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\components\_panel.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\components\_presets.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\components\_reset.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\components\_richcombo.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\components\_toolbar.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\config\_colors.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\config\_config.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\config\_defaults.scss" />
-    <Content Include="Scripts\ckeditor\skins\bootstrapck\scss\dialog\dialog.scss" />
+    <Content Include="Scripts\Controllers\Root\Post\Preview.js" />
     <Content Include="Scripts\fileman\conf.json" />
     <Content Include="Scripts\fileman\lang\en.json" />
     <Content Include="Scripts\fileman\lang\ru.json" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\ad-gallery.css.patch" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\3rdParty\ad-gallery\ad-gallery.js.patch" />
-    <Content Include="Scripts\ckeditor\plugins\slideshow\README.md" />
+    <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Icon.png" />
     <Content Include="Scripts\BForms\Components\FileUpload\jquery.fileupload-validate.js" />
@@ -740,8 +679,6 @@
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Areas\Member\Scripts\grid-0.4.5.js" />
-    <Content Include="Areas\Member\Scripts\grid-0.4.5.min.js" />
     <Content Include="Scripts\Controllers\Member\Section\Index.js" />
     <Content Include="Scripts\datetimepicker-ru.js" />
     <Content Include="Scripts\fileman\css\images\animated-overlay.gif" />
@@ -1067,12 +1004,12 @@
     <Content Include="Views\Section\_HomeSectionsPartial.cshtml" />
     <Content Include="Views\Search\_SearchPartial.cshtml" />
     <Content Include="Views\Post\Preview.cshtml" />
+    <Content Include="Views\Shared\_LayoutOneCol.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\ckeditor\" />
     <Folder Include="Scripts\fileman\tmp\" />
-    <Folder Include="Views\RoxyFileman\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1122,7 +1059,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

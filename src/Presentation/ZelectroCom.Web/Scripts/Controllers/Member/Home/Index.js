@@ -1,6 +1,5 @@
 require([
         'jquery',
-        'bootstrap',
-        'membercommon'
+        'bootstrap'
 ], function ($) {
 })

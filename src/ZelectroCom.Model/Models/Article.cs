@@ -17,15 +17,6 @@ namespace ZelectroCom.Data.Models
         Deleted
     }
 
-    public class ArticleHelper
-    {
-        public bool IsDraft(Article item)
-        {
-            return item.ArticleState == ArticleState.New || item.ArticleState == ArticleState.Draft ||
-                   item.ArticleState == ArticleState.Posted;
-        }
-    }
-
     public class Article : AuditableEntity
     {
         public string AuthorId { get; set; }
@@ -42,5 +33,7 @@ namespace ZelectroCom.Data.Models
         public string SeoDescription { get; set; }
         public string SeoKeywords { get; set; }
         public string SeoUrl { get; set; }
+
+        public int ViewsCount { get; set; }
     }
 }

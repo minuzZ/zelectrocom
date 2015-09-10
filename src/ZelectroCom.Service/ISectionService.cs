@@ -9,5 +9,7 @@ namespace ZelectroCom.Service
 {
     public interface ISectionService : IEntityService<Section>
     {
+        IEnumerable<Section> GetActiveSections();
+        bool IsActiveSection(Section item);
     }
 }

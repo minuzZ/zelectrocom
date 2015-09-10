@@ -1,0 +1,32 @@
+{
+    "paths": {
+        "jquery": {
+            "path": "jquery-2.1.4",
+            "defaultBundle": "frontcomponents"
+        },
+        "jquery-validate": {
+            "path": "jquery.validate",
+            "defaultBundle": "frontcomponents"
+        },
+        "bootstrap": {
+            "path": "bootstrap",
+            "defaultBundle": "frontcomponents"
+        },
+        "respond": {
+            "path": "respond",
+            "defaultBundle": "frontcomponents"
+        },
+        "highlightjs": {
+            "path": "ckeditor/plugins/codesnippet/lib/highlight/highlight.pack",
+            "defaultBundle": "frontcomponents"
+        }
+    },
+    "shim": {
+        "jquery-validate": {
+            "deps": [ "jquery" ]
+        },
+        "bootstrap": {
+            "deps": [ "jquery", "respond" ]
+        }
+    }
+}

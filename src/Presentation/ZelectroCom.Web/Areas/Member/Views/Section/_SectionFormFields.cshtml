@@ -1,0 +1,52 @@
+﻿@using BForms.Html
+@using BForms.Models
+@model ZelectroCom.Web.Areas.Member.ViewModels.Section.SectionVm
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.Id)
+<div class="row">
+    <div class="control-group col-xs-12">
+        <button class="btn btn-theme js-saveDraftBtn" type="submit">Сохранить</button>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-xs-12 bs-validation_summary">
+        @Html.BsValidationSummary()
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+        @Html.BsLabelFor(m => m.Name)
+        <div class="input-group">
+            @Html.BsGlyphiconAddon(Glyphicon.Book)
+            @Html.BsTextBoxFor(m => m.Name)
+            @Html.BsValidationFor(m => m.Name)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+        @Html.BsLabelFor(m => m.Path)
+        <div class="input-group">
+            @Html.BsInputFor(m => m.Path)
+            @Html.BsValidationFor(m => m.Path)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+        @Html.BsLabelFor(m => m.Order)
+        <div class="input-group">
+            @Html.BsGlyphiconAddon(Glyphicon.SortByAttributes)
+            @Html.BsInputFor(m => m.Order)
+            @Html.BsValidationFor(m => m.Order)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group checkbox col-xs-12 col-sm-10 col-md-8 col-lg-4">
+        @Html.BsInputFor(m => m.IsHidden)
+        @Html.BsValidationFor(m => m.IsHidden)
+    </div>
+</div>

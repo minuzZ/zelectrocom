@@ -11,5 +11,16 @@ namespace ZelectroCom.Service
     public class SectionService : EntityService<Section>, ISectionService
     {
         public SectionService(IContext context) : base(context) { }
+
+        public IEnumerable<Section> GetActiveSections()
+        {
+            var activeSections = GetAll().Where(IsActiveSection);
+            return activeSections;
+        }
+
+        public bool IsActiveSection(Section item)
+        {
+            return item.SectionState == SectionState.Active;
+        }
     }
 }

@@ -201,4 +201,19 @@
   <data name="DraftVm_SeoUrl" xml:space="preserve">
     <value>SEO URL</value>
   </data>
+  <data name="SectionListVm_Grid" xml:space="preserve">
+    <value>Разделы</value>
+  </data>
+  <data name="SectionVm_Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="SectionVm_Path" xml:space="preserve">
+    <value>Путь</value>
+  </data>
+  <data name="SectionVm_IsHidden" xml:space="preserve">
+    <value>Скрытый раздел</value>
+  </data>
+  <data name="SectionVm_Order" xml:space="preserve">
+    <value>Порядок</value>
+  </data>
 </root>

@@ -295,6 +295,51 @@ namespace ZelectroCom.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Разделы.
+        /// </summary>
+        public static string SectionListVm_Grid {
+            get {
+                return ResourceManager.GetString("SectionListVm_Grid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Скрытый раздел.
+        /// </summary>
+        public static string SectionVm_IsHidden {
+            get {
+                return ResourceManager.GetString("SectionVm_IsHidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Имя.
+        /// </summary>
+        public static string SectionVm_Name {
+            get {
+                return ResourceManager.GetString("SectionVm_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Порядок.
+        /// </summary>
+        public static string SectionVm_Order {
+            get {
+                return ResourceManager.GetString("SectionVm_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Путь.
+        /// </summary>
+        public static string SectionVm_Path {
+            get {
+                return ResourceManager.GetString("SectionVm_Path", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Поле не может содержать более 50 символов.
         /// </summary>
         public static string Validation_Length50 {

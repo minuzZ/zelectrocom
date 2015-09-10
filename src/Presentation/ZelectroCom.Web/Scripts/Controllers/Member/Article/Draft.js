@@ -22,7 +22,6 @@
 
     draftPage.prototype.addHandlers = function () {
         this.$draftForm.on('click', '.js-saveDraftBtn', $.proxy(this.onSaveDraft, this));
-        $('#previewBtn').on('click', null, $.proxy(this.onPreviewDraft, this));
     };
 
     draftPage.prototype.onSaveDraft = function (e) {
@@ -59,37 +58,6 @@
                         validatedForm.showErrors(response.Errors, true);
                     }
                     $target.removeProp('disabled');
-                }
-            });
-        }
-    };
-
-    draftPage.prototype.onPreviewDraft = function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        //set Text from CKeditor
-        for (instance in CKEDITOR.instances)
-            CKEDITOR.instances[instance].updateElement();
-
-        $.validator.unobtrusive.parse(this.$draftForm);
-        var validatedForm = this.$draftForm.validate();
-
-        if (this.$draftForm.valid()) {
-
-            var draftData = this.$draftForm.parseForm();
-            alert(this.options.previewUrl);
-            $.bforms.ajax({
-                url: this.options.previewUrl,
-                data: draftData,
-                headers: { 'RequestVerificationToken': GetAntiForgeryToken() },
-                success: $.proxy(function () {
-                    alert("OK");
-                }, this),
-                validationError: function (response) {
-                    if (response != null && response.Errors != null) {
-                        validatedForm.showErrors(response.Errors, true);
-                    }
                 }
             });
         }

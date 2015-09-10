@@ -9,7 +9,7 @@ namespace ZelectroCom.Web.Controllers
 {
     public class SectionController : Controller
     {
-        private ISectionService _sectionService;
+        private readonly ISectionService _sectionService;
         public SectionController(ISectionService sectionService)
         {
             _sectionService = sectionService;

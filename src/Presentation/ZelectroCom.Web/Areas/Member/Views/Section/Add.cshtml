@@ -1,0 +1,25 @@
+﻿@using BForms.Html
+@using BForms.Models
+@model ZelectroCom.Web.Areas.Member.ViewModels.Section.SectionVm
+@{
+    ViewBag.Title = "Добавить раздел";
+    Layout = "~/Areas/Member/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1>
+            Разделы <small>Добавить новый раздел</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-list-alt"></i> Разделы</li>
+        </ol>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    @using (Html.BsBeginForm("Add", "Section", FormMethod.Post, new { @class = "bs-form js-sectionForm" }, BsTheme.Green))
+    {
+        @Html.Partial("_SectionFormFields", Model)
+    }
+</div>

@@ -29,11 +29,13 @@
         this.$grid.on('mouseover', '.grid_row', $.proxy(this._onMouseOver, this));
         this.$grid.on('mouseleave', '.grid_row', $.proxy(this._onMouseLeave, this));
         this.$grid.on('click', '.grid_row', $.proxy(this._onRowClick, this));
-        $('.actionCol').click(function (event) {
-            // do not open draft when clicking "remove" action
-            event.stopPropagation();
-        });
+        this.$grid.on('click', '.actionCol', $.proxy(this._onActionColClick, this));
     };
+
+    draftsGrid.prototype._onActionColClick = function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
 
     draftsGrid.prototype._onRowClick = function (e) {
         var $row = $(e.currentTarget);

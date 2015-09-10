@@ -32,7 +32,6 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
             _fakeArticleRepository = new FakeArticleRepository(articleService);
         }
 
-        [NoAntiForgeryCheck]
         public ActionResult DraftsList()
         {
             var gridModel = _fakeArticleRepository.ToBsGridViewModel(new BsGridBaseRepositorySettings() {Page = 1, PageSize = 10});
@@ -139,8 +138,7 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
 
             var options = new Dictionary<string, string>
             {
-                {"saveDraftUrl",  Url.Action("SaveDraft")},
-                {"previewUrl", Url.Action("Preview", "Post", new {area = string.Empty})}
+                {"saveDraftUrl",  Url.Action("SaveDraft")}
             };
 
             RequireJsOptions.Add("index", options);

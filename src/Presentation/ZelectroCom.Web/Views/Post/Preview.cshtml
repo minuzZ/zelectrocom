@@ -4,20 +4,24 @@
     ViewBag.Title = "Предварительный просмотр статьи";
 }
 
+@section PageCss
+{
+    @Styles.Render("~/Content/postcss")
+}
+
 <!-- Blog Post Content Column -->
 <div class="col-lg-8">
     <!-- Blog Post -->
     <!-- Title -->
     <h1>@Model.Title</h1>
-    <!-- Author -->
     <p class="lead">
-        by <a href="#">@Model.Author</a>
+        автор: <a href="#">@Model.Author</a>
     </p>
     <hr>
     <!-- Date/Time -->
-    <p><span class="glyphicon glyphicon-time"></span> Posted on @Model.PublishTime</p>
+    <p><span class="glyphicon glyphicon-time"></span> Опубликовано @Model.PublishTime</p>
     <hr>
     <!-- Post Content -->
-    @Model.Text
+    @Html.Raw(Model.Text)
     <hr>
 </div>
