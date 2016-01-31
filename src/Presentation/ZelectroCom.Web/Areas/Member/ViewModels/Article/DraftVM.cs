@@ -4,12 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using BForms.Models;
 using BForms.Mvc;
+using Newtonsoft.Json;
+using ZelectroCom.Data.Models;
 
 namespace ZelectroCom.Web.Areas.Member.ViewModels.Article
 {
     public class DraftVm
     {
         public int Id { get; set; }
+
+        public ArticleState ArticleState { get; set; }
 
         [Required(ErrorMessageResourceName = "Validation_RequiredField", ErrorMessageResourceType = typeof(Resources.Resources))]
         [MaxLength(50, ErrorMessageResourceName = "Validation_Length50", ErrorMessageResourceType = typeof(Resources.Resources))]
@@ -30,6 +34,14 @@ namespace ZelectroCom.Web.Areas.Member.ViewModels.Article
         [AllowHtml]
         [BsControl(BsControlType.TextArea)]
         public string Text { get; set; }
+
+        [Display(ResourceType = typeof (Resources.Resources), Name = "DraftVm_ViewsCount")]
+        [BsControl(BsControlType.TextBox)]
+        public int ViewsCount { get; set; }
+
+        [Display(ResourceType = typeof (Resources.Resources), Name = "DraftVm_Rating")]
+        [BsControl(BsControlType.TextBox)]
+        public int Rating { get; set; }
 
         [Display(ResourceType = typeof (Resources.Resources), Name = "DraftVm_SeoTitle")]
         [BsControl(BsControlType.TextBox)]

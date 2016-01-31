@@ -44,25 +44,28 @@
 
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li></li>
-                    <li class="dropdown">
+                    @*<li></li>*@
+                    <li><a href="@Url.Action("Index", "Profile")"><i class="fa fa fa-user"></i> Мой профиль</a></li>
+                    @*<li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa fa-user"></i> Мой профиль <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="@Url.Action("ProfileInfo", "Profile")">Информация</a></li>
                             <li><a href="@Url.Action("ProfileSettings", "Profile")">Настройки</a></li>
                         </ul>
-                    </li>
+                    </li>*@
                     <li><a href="@Url.Action("DraftsList", "Article")"><i class="fa fa-pencil"></i> Черновики</a></li>
-                    <li><a href="#"><i class="fa fa-newspaper-o"></i> Публикации</a></li>
+                    <li><a href="@Url.Action("Publications", "Article")"><i class="fa fa-newspaper-o"></i> Публикации</a></li>
 
                     @if (this.User.IsInRole("Admin"))
                     {
-                        <li><a href="#"><i class="fa fa-search-plus"></i> Заявки на публикацию</a></li>
+                        <li><a href="@Url.Action("PubRequests", "Article")"><i class="fa fa-search-plus"></i> Заявки на публикацию</a></li>
                         <li><a href="#"><i class="fa fa-users"></i> Пользователи</a></li>
                         <li><a href="@Url.Action("Index", "Section")"><i class="fa fa-list-alt"></i> Разделы</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i> Настройки <b class="caret"></b></a>
                             <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Index", "OldMedia")"><i class="fa fa-file-image-o"></i> Переадресация файлов</a></li>
+                                <li><a href="@Url.Action("ClearCache", "Common", new {area = "Member"})">Очистить кеш</a></li>
                                 <li><a href="#">Общие</a></li>
                                 <li><a href="#">Почта</a></li>
                                 <li><a href="#">Планировщик</a></li>

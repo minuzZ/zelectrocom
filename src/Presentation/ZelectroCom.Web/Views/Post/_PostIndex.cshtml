@@ -1,0 +1,20 @@
+﻿@model ZelectroCom.Web.ViewModels.Home.PostIndexVm
+
+@{
+    string baseUrl = Url.Content("~");
+    string url = string.IsNullOrEmpty(Model.SeoUrl) ? Url.Action("Article", new {id = Model.Id}) : baseUrl + Model.SeoUrl;
+}
+
+<h2>
+    <a href="@url">@Model.Title</a>
+</h2>
+<p class="lead">
+    автор: <a href="#">@Model.AuthorName</a>
+</p>
+<p>
+    <span class="glyphicon glyphicon-time"></span> Опубликовано @Model.PublishTime
+</p>
+<hr>
+<div class="article">@Html.Raw(@Model.IndexHtml)</div>
+<a class="btn z-btn-primary" href="@url">Читать <span class="glyphicon glyphicon-chevron-right"></span></a>
+<hr>

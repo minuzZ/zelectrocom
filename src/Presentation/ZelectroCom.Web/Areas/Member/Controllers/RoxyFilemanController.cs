@@ -19,6 +19,7 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
     public class RoxyFilemanController : Controller
     {
         private string uploadsFolder = "~/Content/Uploads";
+        private string commonfilesFolderName = "Common";
         private string filesFolderName = "Files";
         private string confFile = "~/Scripts/fileman/conf.json";
         private Dictionary<string, string> _settings = null;
@@ -222,27 +223,17 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
 
         protected string GetFilesRoot(string rootFolderName)
         {
-            if (!IsAllowedForUser(rootFolderName))
+            if (!IsAllowedForUser(rootFolderName) && !User.IsInRole("Admin"))
             {
                 throw new Exception("Access to path is denied");
             }
-            string ret = String.Empty;
+
             if (User.IsInRole("Admin"))
             {
-                if (_context.Session != null && _context.Session["SESSION_PATH_KEY"] != null)
-                    ret = (string) _context.Session[GetSetting("SESSION_PATH_KEY")];
+                return GetAdminRoot();
             }
 
-            if (ret == String.Empty)
-            {
-                ret = GetUserRoot(rootFolderName);
-            }
-            else
-            {
-                ret = FixPath(ret);
-            }
-
-            return ret;
+            return GetUserRoot(rootFolderName);
         }
 
         protected string GetUserRoot(string rootFolderName)
@@ -256,6 +247,19 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
             }
 
             return path;
+        }
+
+        protected string GetAdminRoot()
+        {
+            string path = _context.Server.MapPath(String.Format("{0}/{1}", uploadsFolder, commonfilesFolderName));
+            bool exists = Directory.Exists(path);
+
+            if (!exists)
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            return _context.Server.MapPath(uploadsFolder);
         }
 
         protected void LoadConf()
@@ -469,15 +473,39 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
             return ret;
         }
 
-        private ArrayList ListDirs(string path)
+        private List<string> ListDirs(string path)
         {
             string[] dirs = Directory.GetDirectories(path);
-            ArrayList ret = new ArrayList();
+            List<string> ret = new List<string>();
             foreach (string dir in dirs)
             {
                 ret.Add(dir);
                 ret.AddRange(ListDirs(dir));
             }
+            return ret;
+        }
+
+        private List<string> ListDirsAdmin(string path, string rootFolderName, bool topLevel = true)
+        {
+            List<string> ret = new List<string>();
+            string[] dirs;
+            if (topLevel)
+            {
+                dirs = new string[2];
+                dirs[0] = (GetUserRoot(rootFolderName));
+                dirs[1] = _context.Server.MapPath(String.Format("{0}/{1}", uploadsFolder, commonfilesFolderName));
+            }
+            else
+            {
+                dirs = Directory.GetDirectories(path);
+            }
+
+            foreach (string dir in dirs)
+            {
+                ret.Add(dir);
+                ret.AddRange(ListDirsAdmin(dir, rootFolderName, false));
+            }
+
             return ret;
         }
 
@@ -487,7 +515,7 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
             if (!d.Exists)
                 throw new Exception("Invalid files root directory. Check your configuration.");
 
-            ArrayList dirs = ListDirs(d.FullName);
+            List<string> dirs = User.IsInRole("Admin") ? ListDirsAdmin(d.FullName, rootFolderName) : ListDirs(d.FullName);
             dirs.Insert(0, d.FullName);
 
             string localPath = _context.Server.MapPath("~/");

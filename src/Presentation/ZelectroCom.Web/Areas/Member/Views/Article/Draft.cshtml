@@ -1,118 +1,203 @@
 ﻿@using BForms.Html
 @using BForms.Models
+@using ZelectroCom.Data.Models
 @model ZelectroCom.Web.Areas.Member.ViewModels.Article.DraftVm
 @{
-    ViewBag.Title = "Черновик";
     Layout = "~/Areas/Member/Views/Shared/_AdminLayout.cshtml";
-}
-
-@section PageHead
-{
-    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.min.css" />
+    string itemName = string.Empty;
+    string faClass = string.Empty;
+    string smallText = string.Empty;
+    if (Model.ArticleState == ArticleState.New || Model.ArticleState == ArticleState.Draft ||
+        Model.ArticleState == ArticleState.ReturnedDraft)
+    {
+        itemName = "Черновик";
+        faClass = "fa-pencil";
+        smallText = "";
+    }
+    else if (Model.ArticleState == ArticleState.Posted)
+    {
+        itemName = "Заявка на публикацию";
+        faClass = "fa-search-plus";
+        smallText = "";
+    }
+    else if (Model.ArticleState == ArticleState.Article)
+    {
+        itemName = "Публикация";
+        faClass = "fa-newspaper-o";
+        smallText = "в сообществе Zelectro";
+    }
+    ViewBag.Title = itemName;
 }
 
 <div class="row">
     <div class="col-xs-12">
-        <h1>Черновик <small>вашей будущей статьи</small>
+        <h1>@itemName <small>@smallText</small>
         </h1>
         <ol class="breadcrumb">
-            <li class="active"><i class="fa fa-pencil"></i> Черновик</li>
+            <li class="active"><i class="fa @faClass"></i> @itemName</li>
         </ol>
     </div>
 </div>
 
 
-    <div class="col-xs-12">
-        @using (Html.BsBeginForm("Draft", "Article", FormMethod.Post, new { @class = "bs-form js-draftForm" }, BsTheme.Green))
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.Id);
-            <div class="row">
-                <div class="control-group col-xs-12">
-                    <button class="btn btn-theme js-saveDraftBtn" type="submit">Сохранить</button>
-                    @Html.ActionLink("Предварительный просмотр", "Preview", "Post", new { area = string.Empty, id = Model.Id }, new { @class = "btn btn-theme" })
+<div class="col-xs-12">
+    @using (Html.BsBeginForm("Action", "Article", FormMethod.Post, new { @class = "bs-form js-draftForm" }, BsTheme.Green))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id);
+        <div id="modalBox" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="close" data-dismiss="modal">X</a>
+                        <h1>Передать на публикацию</h1>
+                    </div>
+                    <div class="modal-body">
+                        <p>Отправив черновик на публикацию вы не сможете вносить в него более никаких изменений до рассмотрения администратором. Подтвердите, что ваша статья готова. </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" name="postConfirm" data-dismiss="modal">Нет, я еще поработаю</button>
+                        <input id="okPostBtn" type="button" value="Да" name="postDraft" class="btn btn-theme" data-dismiss="modal" />
+                    </div>
                 </div>
             </div>
-            <hr/>
-            <div class="row">
-                <div class="col-xs-12 bs-validation_summary">
-                    @Html.BsValidationSummary()
-                </div>
+        </div>
+        <div class="row">
+            <div class="control-group col-xs-12">
+                @*
+                    Draft can be: saved, posted
+                    By: both admin and member
+                *@
+                @if (Model.ArticleState == ArticleState.New || Model.ArticleState == ArticleState.Draft ||
+                        Model.ArticleState == ArticleState.ReturnedDraft)
+                {
+                    <button class="btn btn-theme js-saveDraftBtn" type="button">Сохранить</button>
+                    <input type="button" value="Передать на публикацию" class="btn btn-theme js-postDraftBtn" />
+                }
+                @*
+                    Posted draft can be: saved, returned, published
+                    By: this view is for admin only
+                *@
+                else if (Model.ArticleState == ArticleState.Posted)
+                {
+                    <button class="btn btn-theme js-saveDraftBtn" type="button">Сохранить</button>
+                    <button class="btn btn-theme js-returnBtn" type="submit">Вернуть на доработку</button>
+                    <button class="btn btn-theme js-submitBtn" type="submit">Опубликовать</button>
+                }
+                @*
+                    Article can be saved by admin
+                    Any member can only propose changes
+                *@
+                else if (Model.ArticleState == ArticleState.Article)
+                {
+                    if (User.IsInRole("Admin"))
+                    {
+                        <button class="btn btn-theme js-saveDraftBtn" type="button">Сохранить</button>
+                    }
+                    else
+                    {
+                        //TODO: <button class="btn btn-theme js-proposeChangesBtn" type="submit">Предложить изменения</button>
+                    }
+                }
+                @Html.ActionLink("Предварительный просмотр", "Preview", "Post", new {area = string.Empty, id = Model.Id}, new {@class = "btn btn-theme", target = "_blank"})
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-xs-12 bs-validation_summary">
+                @Html.BsValidationSummary()
+            </div>
+            <div class="col-xs-12">
                 <div class="alert alert-success" id="success-alert">
                     <button type="button" class="close" data-hide="alert">x</button>
-                    Черновик успешно сохранен.
+                    @ViewBag.SuccessText
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                @Html.BsLabelFor(m => m.Title)
+                <div class="input-group">
+                    @Html.BsGlyphiconAddon(Glyphicon.Book)
+                    @Html.BsTextBoxFor(m => m.Title)
+                    @Html.BsValidationFor(m => m.Title)
+                </div>
+            </div>
+        </div>
+        if (this.User.IsInRole("Admin"))
+        {
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                    @Html.BsLabelFor(m => m.SectionId)
+                    <div class="input-group">
+                        @Html.BsDropDownListFor(m => m.SectionId, Model.Sections)
+                        @Html.BsValidationFor(m => m.SectionId)
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8">
+                @Html.BsTextAreaFor(m => m.Text, 18, 60, new { @id = "articleEditor" })
+            </div>
+        </div>
+        @*TODO Html.EditorFor(m => m.Text, "RichEditor")*@
+        <hr />
+
+        if (User.IsInRole("Admin"))
+        {
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                    @Html.BsLabelFor(m => m.PublishTime)
+                    <div class="input-group">
+                        @Html.BsGlyphiconAddon(Glyphicon.Time)
+                        @Html.BsDateTimePickerFor(m => m.PublishTime)
+                        @Html.BsValidationFor(m => m.PublishTime)
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                    @Html.BsLabelFor(m => m.Title)
-                    <div class="input-group">
-                        @Html.BsGlyphiconAddon(Glyphicon.Book)
-                        @Html.BsTextBoxFor(m => m.Title)
-                        @Html.BsValidationFor(m => m.Title)
-                    </div>
+                    @Html.BsLabelFor(m => m.ViewsCount)
+                    @Html.BsInputFor(m => m.ViewsCount)
+                    @Html.BsValidationFor(m => m.ViewsCount)
                 </div>
             </div>
-            if (this.User.IsInRole("Admin"))
-            {
-                <div class="row">
-                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                        @Html.BsLabelFor(m => m.SectionId)
-                        <div class="input-group">
-                            @Html.BsDropDownListFor(m => m.SectionId, Model.Sections)
-                            @Html.BsValidationFor(m => m.SectionId)
-                        </div>
-                    </div>
-                </div>
-            }
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-10 col-lg-8">
-                    @Html.BsTextAreaFor(m => m.Text, 18, 60, new { @id = "articleEditor" })
+                <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                    @Html.BsLabelFor(m => m.Rating)
+                    @Html.BsInputFor(m => m.Rating)
+                    @Html.BsValidationFor(m => m.Rating)
                 </div>
             </div>
-            @*TODO Html.EditorFor(m => m.Text, "RichEditor")*@
-            <hr />
-
-            if (this.User.IsInRole("Admin"))
-            {
-                <div class="row">
-                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                        @Html.BsLabelFor(m => m.PublishTime)
-                        <div class="input-group">
-                            @Html.BsGlyphiconAddon(Glyphicon.Time)
-                            @Html.BsDateTimePickerFor(m => m.PublishTime)
-                            @Html.BsValidationFor(m => m.PublishTime)
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                    @Html.BsLabelFor(m => m.SeoTitle)
+                    @Html.BsInputFor(m => m.SeoTitle)
+                    @Html.BsValidationFor(m => m.SeoTitle)
                 </div>
-                <div class="row">
-                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                        @Html.BsLabelFor(m => m.SeoTitle)
-                        @Html.BsInputFor(m => m.SeoTitle)
-                        @Html.BsValidationFor(m => m.SeoTitle)
-                    </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                    @Html.BsLabelFor(m => m.SeoUrl)
+                    @Html.BsInputFor(m => m.SeoUrl)
+                    @Html.BsValidationFor(m => m.SeoUrl)
                 </div>
-                <div class="row">
-                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                        @Html.BsLabelFor(m => m.SeoUrl)
-                        @Html.BsInputFor(m => m.SeoUrl)
-                        @Html.BsValidationFor(m => m.SeoUrl)
-                    </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                    @Html.LabelFor(m => m.SeoDescription, new { @class = "control-label" })
+                    @Html.BsTextAreaFor(m => m.SeoDescription, new { @class = "form-control" })
+                    @Html.BsValidationFor(m => m.SeoDescription)
                 </div>
-                <div class="row">
-                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                        @Html.LabelFor(m => m.SeoDescription, new { @class = "control-label" })
-                        @Html.BsTextAreaFor(m => m.SeoDescription, new { @class = "form-control" })
-                        @Html.BsValidationFor(m => m.SeoDescription)
-                    </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                    @Html.BsLabelFor(m => m.SeoKeywords)
+                    @Html.BsInputFor(m => m.SeoKeywords)
+                    @Html.BsValidationFor(m => m.SeoKeywords)
                 </div>
-                <div class="row">
-                    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
-                        @Html.BsLabelFor(m => m.SeoKeywords)
-                        @Html.BsInputFor(m => m.SeoKeywords)
-                        @Html.BsValidationFor(m => m.SeoKeywords)
-                    </div>
-                </div>
-            }
+            </div>
         }
-    </div>
+    }
+</div>

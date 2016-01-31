@@ -1,0 +1,9 @@
+﻿@model ZelectroCom.Web.ViewModels.Home.PostsListVm
+
+<div id="postslist" class="scroll">
+    @foreach (var item in Model.PostsList)
+    {
+        @Html.Partial("../Post/_PostIndex", @item)
+    }
+    <li class="next"><a href="@Model.ScrollUrl">Загружаем...</a></li>
+</div>

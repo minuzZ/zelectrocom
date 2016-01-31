@@ -1,0 +1,25 @@
+﻿@using BForms.Html
+@model ZelectroCom.Web.Areas.Member.ViewModels.Article.PublicationsVm
+@{
+    ViewBag.Title = "Публикации";
+    Layout = "~/Areas/Member/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1>
+            Публикации <small>Список ваших публикаций</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa-newspaper-o"></i> Публикации</li>
+        </ol>
+    </div>
+</div>
+
+<br/>
+
+@using (Html.BsGridWrapper())
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("_PublicationsGrid", Model)
+}

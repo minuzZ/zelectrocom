@@ -216,4 +216,46 @@
   <data name="SectionVm_Order" xml:space="preserve">
     <value>Порядок</value>
   </data>
+  <data name="PublicationRowVm_Author" xml:space="preserve">
+    <value>Автор</value>
+  </data>
+  <data name="PubRequestsVm_Grid" xml:space="preserve">
+    <value>Заявки на публикацию</value>
+  </data>
+  <data name="PublicationsVm_Grid" xml:space="preserve">
+    <value>Публикации</value>
+  </data>
+  <data name="DraftVm_ViewsCount" xml:space="preserve">
+    <value>Кол-во просмотров</value>
+  </data>
+  <data name="DraftVm_Rating" xml:space="preserve">
+    <value>Рейтинг</value>
+  </data>
+  <data name="OldMediaRowVm_OldPath" xml:space="preserve">
+    <value>Старый путь</value>
+  </data>
+  <data name="OldMediaRowVm_NewPath" xml:space="preserve">
+    <value>Новый путь</value>
+  </data>
+  <data name="OldMediaListVm_Grid" xml:space="preserve">
+    <value>Редирект старых файлов</value>
+  </data>
+  <data name="ProfileVm_UserProfile" xml:space="preserve">
+    <value>Участник</value>
+  </data>
+  <data name="ProfileVm_UserInfo" xml:space="preserve">
+    <value>Настроить</value>
+  </data>
+  <data name="EditableUserDataVm_Nickname" xml:space="preserve">
+    <value>Ник</value>
+  </data>
+  <data name="EditableUserDataVm_Firstname" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="EditableUserDataVm_Lastname" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="EditableUserDataVm_Description" xml:space="preserve">
+    <value>О себе</value>
+  </data>
 </root>

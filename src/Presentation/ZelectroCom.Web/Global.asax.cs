@@ -20,6 +20,7 @@ namespace ZelectroCom.Web
             builder.RegisterModule(new ServiceModule());
             builder.RegisterModule(new EFModule());
             builder.RegisterModule(new AutofacWebTypesModule());
+            builder.RegisterModule(new HelperModule());
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 

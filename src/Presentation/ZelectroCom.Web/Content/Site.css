@@ -9,13 +9,6 @@
     padding-right: 15px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-/*input,
-select,
-textarea {
-    max-width: 280px;
-}*/
-
 /* styles for validation helpers */
 .field-validation-error {
     color: #b94a48;
@@ -44,8 +37,8 @@ input[type="checkbox"].input-validation-error {
 /*LAYOUT*/
 .zheader {
     padding-bottom: 9px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 24px;
+    /*border-bottom: 1px solid #eee;*/
 }
 
 body {
@@ -54,4 +47,41 @@ body {
 
 footer {
     margin: 50px 0;
+}
+
+/* Articles */
+
+.article h2 {
+  font-size: 21px;
+}
+.article h3 {
+  font-size: 18px;
+}
+
+.z-img-responsive {
+    max-width: 100%;
+    height: auto !important;
+    display: block;
+}
+
+/**/
+.side-widget {
+    margin-bottom: 20px;
+}
+
+.z-btn-primary {
+    color: #fff;
+    background-color: #1f7a34;
+    border-color: #1e7531;
+}
+
+.z-btn-primary:hover,
+.z-btn-primary:focus,
+.z-btn-primary.focus,
+.z-btn-primary:active,
+.z-btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #1b672c;
+  border-color: #186128;
 }

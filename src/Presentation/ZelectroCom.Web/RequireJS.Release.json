@@ -19,6 +19,14 @@
         "highlightjs": {
             "path": "ckeditor/plugins/codesnippet/lib/highlight/highlight.pack",
             "defaultBundle": "frontcomponents"
+        },
+        "jscroll": {
+            "path": "jscroll",
+            "defaultBundle": "frontcomponents"
+        },
+        "spoiler": {
+            path: "ckeditor/plugins/spoiler/js/spoiler",
+            "defaultBundle": "frontcomponents"
         }
     },
     "shim": {
@@ -27,6 +35,12 @@
         },
         "bootstrap": {
             "deps": [ "jquery", "respond" ]
+        },
+        "jscroll": {
+            "deps": [ "jquery" ]
+        },
+        "spoiler": {
+            "deps": [ "jquery" ]
         }
     }
 }

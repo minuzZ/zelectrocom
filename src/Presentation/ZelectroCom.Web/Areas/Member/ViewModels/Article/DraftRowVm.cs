@@ -11,15 +11,11 @@ namespace ZelectroCom.Web.Areas.Member.ViewModels.Article
     {
         public int Id { get; set; }
 
-        [BsGridColumn(Width = 3, MediumWidth = 3)]
+        [BsGridColumn(Width = 4, MediumWidth = 4)]
         [Display(ResourceType = typeof(Resources.Resources), Name = "DraftRowVm_Title")]
         public string Title { get; set; }
 
-        [BsGridColumn(Width = 2, MediumWidth = 2)]
-        [Display(ResourceType = typeof (Resources.Resources), Name = "DraftRowVm_Section")]
-        public string Section { get; set; }
-
-        [BsGridColumn(Width = 2, MediumWidth = 2)]
+        [BsGridColumn(Width = 3, MediumWidth = 3)]
         [Display(ResourceType = typeof (Resources.Resources), Name = "DraftRowVm_ArticleState")]
         public string ArticleState { get; set; }
 

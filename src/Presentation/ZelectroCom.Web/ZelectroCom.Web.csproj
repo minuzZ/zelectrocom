@@ -72,6 +72,10 @@
       <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -121,6 +125,7 @@
       <HintPath>..\..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -198,20 +203,30 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Member\Controllers\ArticleController.cs" />
+    <Compile Include="Areas\Member\Controllers\CommonController.cs" />
     <Compile Include="Areas\Member\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Member\Controllers\OldMediaController.cs" />
     <Compile Include="Areas\Member\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Member\Controllers\SectionController.cs" />
     <Compile Include="Areas\Member\MemberAreaRegistration.cs" />
+    <Compile Include="Areas\Member\ViewModels\Article\PubRequestRowVm.cs" />
+    <Compile Include="Areas\Member\ViewModels\Article\PubRequestsVm.cs" />
+    <Compile Include="Areas\Member\ViewModels\Article\PublicationsVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Article\DraftListVm.cs" />
+    <Compile Include="Areas\Member\ViewModels\Article\PublicationRowVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Article\DraftRowVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Article\DraftVm.cs" />
+    <Compile Include="Areas\Member\ViewModels\OldMedia\OldMediaListVm.cs" />
+    <Compile Include="Areas\Member\ViewModels\OldMedia\OldMediaRowVm.cs" />
+    <Compile Include="Areas\Member\ViewModels\Profile\ProfileVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Section\SectionListVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Section\SectionRowVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Section\SectionVm.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Member\Controllers\RoxyFilemanController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\OldMediaController.cs" />
     <Compile Include="Controllers\PostController.cs" />
-    <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
@@ -220,8 +235,13 @@
     <Compile Include="Infrastructure\Attributes\MultipleButtonAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\NoCacheAttribute.cs" />
     <Compile Include="Infrastructure\CommonExtensions.cs" />
+    <Compile Include="Infrastructure\CustomUrlRouteHandler.cs" />
     <Compile Include="Infrastructure\Filters\AntiForgeryFilter.cs" />
+    <Compile Include="Infrastructure\Helpers\HtmlParserHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\MemoryCacheHelper.cs" />
+    <Compile Include="Infrastructure\Helpers\IHtmlParserHelper.cs" />
     <Compile Include="Modules\EFModule.cs" />
+    <Compile Include="Modules\HelperModule.cs" />
     <Compile Include="Modules\ServiceModule.cs" />
     <Compile Include="Infrastructure\AutoMapperConfiguration.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
@@ -232,10 +252,16 @@
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\PreviewArticleVm.cs" />
+    <Compile Include="ViewModels\Home\PostIndexVm.cs" />
+    <Compile Include="ViewModels\Home\PostsListVm.cs" />
+    <Compile Include="ViewModels\Post\ArticleVm.cs" />
+    <Compile Include="ViewModels\Post\PreviewArticleVm.cs" />
+    <Compile Include="ViewModels\Search\SearchVm.cs" />
+    <Compile Include="ViewModels\Section\SectionVm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Member\Content\style.css" />
+    <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Scripts\BForms\Plugins\Select2\js\i18n\select2-ru.js" />
     <Content Include="Scripts\BForms\Plugins\Validation\i18n\bforms.validate-ru.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
@@ -426,6 +452,7 @@
     <Content Include="Scripts\ckeditor\plugins\spoiler\css\spoiler.css" />
     <Content Include="Scripts\ckeditor\plugins\spoiler\images\minus.png" />
     <Content Include="Scripts\ckeditor\plugins\spoiler\images\plus.png" />
+    <Content Include="Scripts\ckeditor\plugins\spoiler\js\spoiler.js" />
     <Content Include="Scripts\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
     <Content Include="Scripts\ckeditor\plugins\table\dialogs\table.js" />
     <Content Include="Scripts\ckeditor\plugins\widget\images\handle.png" />
@@ -454,6 +481,10 @@
     <Content Include="Scripts\ckeditor\skins\moono\images\refresh.png" />
     <Content Include="Scripts\ckeditor\skins\moono\images\spinner.gif" />
     <Content Include="Scripts\ckeditor\styles.js" />
+    <Content Include="Scripts\Controllers\Member\Article\Publications.js" />
+    <Content Include="Scripts\Controllers\Member\Article\PubRequests.js" />
+    <Content Include="Scripts\Controllers\Member\OldMedia\Index.js" />
+    <Content Include="Scripts\Controllers\Member\Profile\Index.js" />
     <Content Include="Scripts\Controllers\Member\Section\Add.js" />
     <Content Include="Scripts\Controllers\Member\Section\Edit.js" />
     <Content Include="Scripts\Controllers\Root\Account\Register.js" />
@@ -461,6 +492,9 @@
     <Content Include="Scripts\Controllers\Root\Account\Login.js" />
     <Content Include="Scripts\Controllers\Root\Home\Contact.js" />
     <Content Include="Scripts\Controllers\Root\Home\About.js" />
+    <Content Include="Scripts\Controllers\Root\Home\Best.js" />
+    <Content Include="Scripts\Controllers\Root\Home\Section.js" />
+    <Content Include="Scripts\Controllers\Root\Home\Popular.js" />
     <Content Include="Scripts\Controllers\Root\Home\Index.js" />
     <Content Include="Scripts\Controllers\Member\Article\DraftsList.js" />
     <Content Include="Scripts\Controllers\Member\Article\Draft.js" />
@@ -497,8 +531,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="Areas\Member\Views\Profile\ProfileSettings.cshtml" />
-    <Content Include="Areas\Member\Views\Profile\ProfileInfo.cshtml" />
+    <Content Include="Areas\Member\Views\Profile\Index.cshtml" />
     <Content Include="Areas\Member\Views\Section\Index.cshtml" />
     <Content Include="Areas\Member\Views\Article\Draft.cshtml" />
     <Content Include="Areas\Member\Views\Article\DraftsList.cshtml" />
@@ -507,9 +540,20 @@
     <Content Include="Areas\Member\RequireJS.json" />
     <Content Include="Areas\Member\RequireJS.Release.json" />
     <Content Include="Areas\Member\Views\Section\_SectionsGrid.cshtml" />
-    <None Include="Areas\Member\Views\Section\Add.cshtml" />
-    <None Include="Areas\Member\Views\Section\Edit.cshtml" />
-    <None Include="Areas\Member\Views\Section\_SectionFormFields.cshtml" />
+    <Content Include="Areas\Member\Views\Article\_PublicationsGrid.cshtml" />
+    <Content Include="Areas\Member\Views\Article\_PubRequestsGrid.cshtml" />
+    <Content Include="Areas\Member\Views\Article\Publications.cshtml" />
+    <Content Include="Areas\Member\Views\Article\PubRequests.cshtml" />
+    <Content Include="Areas\Member\Views\Article\PostSuccess.cshtml" />
+    <Content Include="Areas\Member\Views\Section\Add.cshtml" />
+    <Content Include="Areas\Member\Views\Section\Edit.cshtml" />
+    <Content Include="Areas\Member\Views\Section\_SectionFormFields.cshtml" />
+    <Content Include="Areas\Member\Views\OldMedia\Index.cshtml" />
+    <Content Include="Areas\Member\Views\OldMedia\_OldMediaGrid.cshtml" />
+    <None Include="Areas\Member\Views\Common\ClearCache.cshtml" />
+    <Content Include="Areas\Member\Views\Profile\Readonly\_UserData.cshtml" />
+    <Content Include="Areas\Member\Views\Profile\Readonly\_UserProfile.cshtml" />
+    <Content Include="Areas\Member\Views\Profile\Editable\_UserData.cshtml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="Scripts\BForms\Bundles\css\stylesheets.css" />
     <Content Include="Scripts\BForms\Bundles\fonts\glyphicons-halflings-regular.svg" />
@@ -644,6 +688,7 @@
     <Content Include="Scripts\ckeditor\plugins\codesnippet\lib\highlight\LICENSE" />
     <Content Include="Scripts\ckeditor\plugins\codesnippet\lib\highlight\README.md" />
     <Content Include="Scripts\ckeditor\plugins\codesnippet\lib\highlight\README.ru.md" />
+    <Content Include="Scripts\Controllers\Root\Post\Article.js" />
     <Content Include="Scripts\Controllers\Root\Post\Preview.js" />
     <Content Include="Scripts\fileman\conf.json" />
     <Content Include="Scripts\fileman\lang\en.json" />
@@ -964,6 +1009,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jscroll.js" />
+    <Content Include="Scripts\jscroll.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
@@ -1001,15 +1048,23 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Section\_HomeSectionsPartial.cshtml" />
+    <Content Include="Views\Home\_HomeSectionsPartial.cshtml" />
     <Content Include="Views\Search\_SearchPartial.cshtml" />
     <Content Include="Views\Post\Preview.cshtml" />
     <Content Include="Views\Shared\_LayoutOneCol.cshtml" />
+    <Content Include="Views\Home\Popular.cshtml" />
+    <Content Include="Views\Home\Best.cshtml" />
+    <Content Include="Views\Post\_PostsList.cshtml" />
+    <Content Include="Views\Post\_PostIndex.cshtml" />
+    <Content Include="Views\Post\Article.cshtml" />
+    <Content Include="Views\Home\Section.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\ckeditor\" />
     <Folder Include="Scripts\fileman\tmp\" />
+    <Folder Include="Views\Common\" />
+    <Folder Include="Views\Section\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1029,6 +1084,7 @@
     <EmbeddedResource Include="Resources\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

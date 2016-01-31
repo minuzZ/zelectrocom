@@ -22,12 +22,14 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
     public class SectionController : Controller
     {
         private readonly ISectionService _sectionService;
+        private readonly ICustomUrlService _customUrlService;
         private readonly FakeSectionRepository _fakeSectionRepository;
 
-        public SectionController(ISectionService sectionService)
+        public SectionController(ISectionService sectionService, ICustomUrlService customUrlService)
         {
             _sectionService = sectionService;
-            _fakeSectionRepository = new FakeSectionRepository(_sectionService);
+            _customUrlService = customUrlService;
+            _fakeSectionRepository = new FakeSectionRepository(_sectionService, _customUrlService);
         }
 
         public ActionResult Index()
@@ -37,7 +39,7 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
 
             var model = new SectionListVm()
             {
-                Grid = gridModel,
+                Grid = gridModel
             };
 
             var options = new Dictionary<string, string>
@@ -91,6 +93,12 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
                 {
                     var section = _sectionService.GetById(item.Id);
                     section.SectionState = SectionState.Deleted;
+                    var customUrl = _customUrlService.GetAll().FirstOrDefault(x => x.ContentId == section.Id && x.ContentType == ContentType.Section);
+                    if (customUrl != null)
+                    {
+                        _customUrlService.Delete(customUrl);
+                    }
+
                     _sectionService.Update(section);
                 }
             }
@@ -113,14 +121,28 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
         [HttpPost]
         public ActionResult Add(SectionVm section)
         {
+            if (!_customUrlService.IsUniquePath(section.Path))
+            {
+                ModelState.AddModelError("Path", "Путь не уникален");
+            }
             if (ModelState.IsValid)
             {
                 var model = Mapper.Map<SectionVm, Section>(section);
                 model.SectionState = SectionState.Active;
                 _sectionService.Create(model);
+
+                if (!string.IsNullOrEmpty(section.Path))
+                {
+                    var customUrlModel = new CustomUrl();
+                    customUrlModel.Url = section.Path;
+                    customUrlModel.ContentType = ContentType.Section;
+                    customUrlModel.ContentId = section.Id;
+                    _customUrlService.Create(customUrlModel);
+                }
+
                 return RedirectToAction("Index");
             }
-            return View();
+            return View(section);
         }
 
         [HttpGet]
@@ -128,6 +150,10 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
         {
             var section = _sectionService.GetById(id);
             SectionVm vm = Mapper.Map<Section, SectionVm>(section);
+
+            var customUrl = _customUrlService.GetAll().FirstOrDefault(x => x.ContentId == vm.Id && x.ContentType == ContentType.Section);
+            vm.Path = customUrl != null ? customUrl.Url : String.Empty;
+
             return View(vm);
         }
 
@@ -138,10 +164,36 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
             {
                 var model = Mapper.Map<SectionVm, Section>(section);
                 model.SectionState = SectionState.Active;
+
+                var customUrl =
+                    _customUrlService.GetAll()
+                        .FirstOrDefault(x => x.ContentId == section.Id && x.ContentType == ContentType.Section);
+
+                if (customUrl == null && !string.IsNullOrEmpty(section.Path))
+                {
+                    customUrl = new CustomUrl();
+                }
+
+                if (customUrl != null && customUrl.Url != section.Path)
+                {
+                    if (!_customUrlService.IsUniquePath(section.Path))
+                    {
+                        ModelState.AddModelError("Path", "Путь не уникален");
+                        return View(section);
+                    }
+
+                    customUrl.Url = section.Path;
+                    customUrl.ContentType = ContentType.Section;
+                    customUrl.ContentId = section.Id;
+
+                    _customUrlService.CreateOrUpdate(customUrl);
+                }
+
                 _sectionService.Update(model);
+
                 return RedirectToAction("Index");
             }
-            return View();
+            return View(section);
         }
 
         private void PrepareViewModel(SectionVm vm)
@@ -160,10 +212,12 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
         private class FakeSectionRepository : BsBaseGridRepository<Section, SectionRowVm>
         {
             private readonly ISectionService _sectionService;
+            private readonly ICustomUrlService _customUrlService;
 
-            internal FakeSectionRepository(ISectionService sectionService)
+            internal FakeSectionRepository(ISectionService sectionService, ICustomUrlService customUrlService)
             {
                 _sectionService = sectionService;
+                _customUrlService = customUrlService;
             }
 
             public override IQueryable<Section> Query()
@@ -181,7 +235,14 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
 
             public override IEnumerable<SectionRowVm> MapQuery(IQueryable<Section> query)
             {
-                var mapped = query.Select(Mapper.Map<Section, SectionRowVm>);
+                var mapped = query.Select(Mapper.Map<Section, SectionRowVm>).ToList();
+
+                foreach (var sectionVm in mapped)
+                {
+                    var customUrl = _customUrlService.GetAll().FirstOrDefault(x => x.ContentId == sectionVm.Id && x.ContentType == ContentType.Section);
+                    sectionVm.Path = customUrl != null ? customUrl.Url : String.Empty;
+                }
+
                 return mapped;
             }
         }

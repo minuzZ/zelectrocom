@@ -39,14 +39,14 @@
 
     draftsGrid.prototype._onRowClick = function (e) {
         var $row = $(e.currentTarget);
-        if (!$row.hasClass('title')) {
+        if (!$row.hasClass('title') && !$row.hasClass('bs-noResultsRow')) {
             window.location.href = this.options.draftUrl + "/" + $row.data('objid');
         }
     };
 
     draftsGrid.prototype._onMouseOver = function (e) {
         var $row = $(e.currentTarget);
-        if (!$row.hasClass('title')) {
+        if (!$row.hasClass('title') && !$row.hasClass('bs-noResultsRow')) {
             $row.addClass('selected');
             $row.css('cursor', 'pointer');
         }
@@ -54,7 +54,7 @@
 
     draftsGrid.prototype._onMouseLeave = function (e) {
         var $row = $(e.currentTarget);
-        if (!$row.hasClass('title')) {
+        if (!$row.hasClass('title') && !$row.hasClass('bs-noResultsRow')) {
             $row.removeClass('selected');
             $row.css('cursor', 'default');
         }

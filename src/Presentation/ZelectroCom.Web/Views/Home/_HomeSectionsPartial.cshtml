@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ZelectroCom.Web.ViewModels.Section.SectionVm>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Разделы</h4>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked">
+            @foreach (var item in Model)
+            {
+                if (item.Path != null)
+                {
+                    <li role="presentation"><a href="@Url.Content("~/")@item.Path">@item.Name</a></li>
+                }
+                else
+                {
+                    <li role="presentation"><a href="@Url.Action("Section", "Home", new { id = item.Id })">@item.Name</a></li>
+                }
+            }
+        </ul>
+    </div>
+</div>

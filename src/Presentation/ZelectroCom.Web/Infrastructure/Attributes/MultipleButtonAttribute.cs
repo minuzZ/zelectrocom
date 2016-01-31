@@ -1,4 +1,19 @@
-﻿using System;
+﻿/*
+ Usage:
+ <form action="" method="post">
+     <input type="submit" value="Save" name="action:Save" />
+     <input type="submit" value="Cancel" name="action:Cancel" />
+ </form>
+ *
+    [HttpPost]
+    [MultipleButton(Name = "action", Argument = "Save")]
+    public ActionResult Save(MessageModel mm) { ... }
+
+    [HttpPost]
+    [MultipleButton(Name = "action", Argument = "Cancel")]
+    public ActionResult Cancel(MessageModel mm) { ... }
+ */
+using System;
 using System.Reflection;
 using System.Web.Mvc;
 
@@ -7,22 +22,16 @@ namespace ZelectroCom.Web.Infrastructure.Attributes
     [AttributeUsage(AttributeTargets.Method)]
     public class MultipleButtonAttribute : ActionNameSelectorAttribute
     {
-        public string Name { get; set; }
-        public string Argument { get; set; }
-
         public override bool IsValidName(ControllerContext controllerContext, string actionName, MethodInfo methodInfo)
         {
-            var isValidName = false;
-            var keyValue = string.Format("{0}:{1}", Name, Argument);
-            var value = controllerContext.Controller.ValueProvider.GetValue(keyValue);
+            if (actionName.Equals(methodInfo.Name, StringComparison.InvariantCultureIgnoreCase))
+                return true;
 
-            if (value != null)
-            {
-                controllerContext.Controller.ControllerContext.RouteData.Values[Name] = Argument;
-                isValidName = true;
-            }
+            if (!actionName.Equals("Action", StringComparison.InvariantCultureIgnoreCase))
+                return false;
 
-            return isValidName;
+            var request = controllerContext.RequestContext.HttpContext.Request;
+            return request[methodInfo.Name] != null;
         }
     }
 }

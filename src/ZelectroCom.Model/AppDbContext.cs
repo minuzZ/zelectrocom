@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Infrastructure.Interception;
 using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
@@ -10,12 +11,16 @@ using System.Threading;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ZelectroCom.Data.Mapping;
 using ZelectroCom.Data.Models;
+using ZelectroCom.Data.Tools;
 
 namespace ZelectroCom.Data
 {
     public interface IContext
     {
-        IDbSet<ApplicationUser> ApplicationUsers { get; set;}
+        IDbSet<ApplicationUser> ApplicationUsers { get; set; }
+        IDbSet<Article> Articles { get; set; }
+        IDbSet<CustomUrl> CustomUrls { get; set; }
+        IDbSet<OldMedia> OldMedias { get; set; }
         IDbSet<Section> Sections { get; set; }
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
@@ -26,13 +31,22 @@ namespace ZelectroCom.Data
 
     public class AppDbContext : IdentityDbContext, IContext
     {
+        static AppDbContext()
+        {
+            DbInterception.Add(new FtsInterceptor());
+        }
+
         public AppDbContext()
             : base("DefaultConnection")
         {
         }
 
         public IDbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public IDbSet<Article> Articles { get; set; }
+        public IDbSet<CustomUrl> CustomUrls { get; set; }
+        public IDbSet<OldMedia> OldMedias { get; set; }
         public IDbSet<Section> Sections { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -88,6 +102,5 @@ namespace ZelectroCom.Data
 
             return base.SaveChanges();
         }
-
     }
 }

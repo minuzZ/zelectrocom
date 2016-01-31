@@ -214,6 +214,15 @@ namespace ZelectroCom.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Рейтинг.
+        /// </summary>
+        public static string DraftVm_Rating {
+            get {
+                return ResourceManager.GetString("DraftVm_Rating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Раздел.
         /// </summary>
         public static string DraftVm_SectionId {
@@ -286,11 +295,128 @@ namespace ZelectroCom.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Кол-во просмотров.
+        /// </summary>
+        public static string DraftVm_ViewsCount {
+            get {
+                return ResourceManager.GetString("DraftVm_ViewsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to О себе.
+        /// </summary>
+        public static string EditableUserDataVm_Description {
+            get {
+                return ResourceManager.GetString("EditableUserDataVm_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Имя.
+        /// </summary>
+        public static string EditableUserDataVm_Firstname {
+            get {
+                return ResourceManager.GetString("EditableUserDataVm_Firstname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Фамилия.
+        /// </summary>
+        public static string EditableUserDataVm_Lastname {
+            get {
+                return ResourceManager.GetString("EditableUserDataVm_Lastname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ник.
+        /// </summary>
+        public static string EditableUserDataVm_Nickname {
+            get {
+                return ResourceManager.GetString("EditableUserDataVm_Nickname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Серверная ошибка.
         /// </summary>
         public static string Error_Server {
             get {
                 return ResourceManager.GetString("Error_Server", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Редирект старых файлов.
+        /// </summary>
+        public static string OldMediaListVm_Grid {
+            get {
+                return ResourceManager.GetString("OldMediaListVm_Grid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Новый путь.
+        /// </summary>
+        public static string OldMediaRowVm_NewPath {
+            get {
+                return ResourceManager.GetString("OldMediaRowVm_NewPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Старый путь.
+        /// </summary>
+        public static string OldMediaRowVm_OldPath {
+            get {
+                return ResourceManager.GetString("OldMediaRowVm_OldPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Настроить.
+        /// </summary>
+        public static string ProfileVm_UserInfo {
+            get {
+                return ResourceManager.GetString("ProfileVm_UserInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Участник.
+        /// </summary>
+        public static string ProfileVm_UserProfile {
+            get {
+                return ResourceManager.GetString("ProfileVm_UserProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Автор.
+        /// </summary>
+        public static string PublicationRowVm_Author {
+            get {
+                return ResourceManager.GetString("PublicationRowVm_Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Публикации.
+        /// </summary>
+        public static string PublicationsVm_Grid {
+            get {
+                return ResourceManager.GetString("PublicationsVm_Grid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Заявки на публикацию.
+        /// </summary>
+        public static string PubRequestsVm_Grid {
+            get {
+                return ResourceManager.GetString("PubRequestsVm_Grid", resourceCulture);
             }
         }
         

@@ -16,11 +16,11 @@ namespace ZelectroCom.Data.Models
         public virtual ICollection<Article> Articles { get; set; }
         public string Name { get; set; }
 
-        public string Path { get; set; }
-
         public bool IsHidden { get; set; }
 
         public int Order { get; set; }
+
+        public string Path { get; set; }
 
         public SectionState SectionState { get; set; }
     }

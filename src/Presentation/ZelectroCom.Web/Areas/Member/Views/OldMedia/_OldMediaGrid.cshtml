@@ -1,0 +1,16 @@
+﻿@model OldMediaListVm
+@using BForms.Html
+@using BForms.Grid
+@using ZelectroCom.Web.Areas.Member.ViewModels.OldMedia
+
+@(
+ Html.BsGridFor(m => m.Grid)
+     .PagerSettings(new BsPagerSettings
+    {
+        Size = 20,
+        ShowFirstLastButtons = true,
+        ShowPrevNextButtons = true,
+        HasPagesText = true,
+        HasPageSizeSelector = false
+    })
+)

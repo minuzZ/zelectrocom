@@ -1,0 +1,15 @@
+﻿@model ZelectroCom.Web.Areas.Member.ViewModels.Article.DraftVm
+@{
+    ViewBag.Title = "Статья передана на публикацию";
+    Layout = "~/Areas/Member/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Спасибо за ваш вклад!</h1>
+
+<p class="lead">Ваша статья была отправлена на рассмотрение.</p>
+<p>После проверки вашей статьи командой Zelectro она будет либо опубликована в сообществе,
+    либо возвращена на доработку с замечаниями. В случае успешного прохождения рецензии ваша статья появится на 
+    @Html.ActionLink("главной", "Index", new {area = string.Empty, controller = "Home"}) странице,
+    а также появится в личном кабинете в @Html.ActionLink("публикациях", "Publications", new {controller = "Article"}). 
+    В случае, если статье необходима доработка, статья с замечаниями окажется у вас в @Html.ActionLink("черновиках", "DraftsList", new { controller = "Article" }). 
+    Мы оповестим вас о результатах. Сроки рассмотрения не превышают одну неделю. </p>

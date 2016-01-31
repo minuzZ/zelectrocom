@@ -11,6 +11,8 @@ namespace ZelectroCom.Data.Models
         Draft,
         [Display(Name = "Отправлен на публикацию")]
         Posted,
+        [Display(Name = "Возвращен на доработку")]
+        ReturnedDraft,
         [Display(Name = "Опубликованная статья")]
         Article,
         [Display(Name = "Черновик удален")]
@@ -33,7 +35,9 @@ namespace ZelectroCom.Data.Models
         public string SeoDescription { get; set; }
         public string SeoKeywords { get; set; }
         public string SeoUrl { get; set; }
-
+        public string IndexHtml { get; set; }
         public int ViewsCount { get; set; }
+        public int Rating { get; set; }
+        public bool Hidden { get; set; }
     }
 }

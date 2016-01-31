@@ -1,0 +1,33 @@
+﻿@model ZelectroCom.Web.Areas.Member.ViewModels.Profile.ProfileVm
+@using System.Web.Mvc.Html
+@using BForms.Html
+@using BForms.Panels
+@using BForms.Renderers
+@{
+    ViewBag.Title = "Профиль";
+    Layout = "~/Areas/Member/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1>Профиль</h1>
+        <ol class="breadcrumb">
+            <li class="active"><i class="fa fa fa-user"></i> Мой профиль</li>
+        </ol>
+    </div>
+</div>
+
+@*@Html.Action("Manage", "Account", new { Area = "" })*@
+@(Html.BsPanelsFor(Model).ConfigurePanels(cfg =>
+        {
+            cfg.Renderer<BsPanelBaseRenderer>();
+
+            cfg.GetReadonlyUrl = Url.Action("GetReadonlyContent");
+            cfg.GetEditableUrl = Url.Action("GetEditableContent");
+            cfg.UpdateUrl = Url.Action("SetContent");
+
+            cfg.For(x => x.UserProfile).Content(Html.Partial("Readonly/_UserProfile", Model.UserProfile).ToString());
+
+            cfg.For(x => x.UserData).HtmlAttributes(new { @class = "bs-userInfo" }).Theme(BsPanelTheme.LightGreen);
+            //.IsEditableBtnVisible(false);
+        }))

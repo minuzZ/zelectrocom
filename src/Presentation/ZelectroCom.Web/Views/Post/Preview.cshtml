@@ -1,12 +1,7 @@
-﻿@model ZelectroCom.Web.ViewModels.PreviewArticleVm
+﻿@model ZelectroCom.Web.ViewModels.Post.PreviewArticleVm
 
 @{
     ViewBag.Title = "Предварительный просмотр статьи";
-}
-
-@section PageCss
-{
-    @Styles.Render("~/Content/postcss")
 }
 
 <!-- Blog Post Content Column -->
@@ -22,6 +17,6 @@
     <p><span class="glyphicon glyphicon-time"></span> Опубликовано @Model.PublishTime</p>
     <hr>
     <!-- Post Content -->
-    @Html.Raw(Model.Text)
+    <div class="article">@Html.Raw(Model.Text)</div>
     <hr>
 </div>

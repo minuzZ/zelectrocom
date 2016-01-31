@@ -24,9 +24,8 @@ namespace ZelectroCom.Web
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/postcss").Include(
-                      "~/Scripts/ckeditor/plugins/codesnippet/lib/highlight/styles/github-gist.css",
-                      "~/Scripts/ckeditor/plugins/slideshow/3rdParty/ad-gallery/jquery.ad-gallery.css",
-                      "~/Scripts/ckeditor/plugins/slideshow/3rdParty/fancybox2/jquery.fancybox.css"));
+                      "~/Scripts/ckeditor/plugins/codesnippet/lib/highlight/styles/github-gist.css")
+                      .Include("~/Scripts/ckeditor/plugins/spoiler/css/spoiler.css", new CssRewriteUrlTransform()));
                       
             //Member bundles
             bundles.Add(new StyleBundle("~/Content/membercss").Include(
