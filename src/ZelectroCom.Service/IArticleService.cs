@@ -14,7 +14,7 @@ namespace ZelectroCom.Service
         IEnumerable<Article> GetPosted();
         IEnumerable<Article> SearchArticles(string searchText);
 
-        IEnumerable<Article> GetArticlesForPage<TKey>(int pagesize, int page,
+        IEnumerable<Article> GetArticlesForPage<TKey>(int pagesize, int page, out bool isLastPage, out bool isFirstPage,
             Func<Article, TKey> orderByFunc, IEnumerable<Article> articles = null, 
             bool isAscOrder = false, int? sectionId = null);
 

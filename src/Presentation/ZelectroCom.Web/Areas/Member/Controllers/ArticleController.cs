@@ -19,7 +19,7 @@ using ZelectroCom.Web.Infrastructure.Helpers;
 
 namespace ZelectroCom.Web.Areas.Member.Controllers
 {
-    [Authorize(Roles = "Member")]
+    [Authorize(Roles = "Admin")]
     public class ArticleController : Controller
     {
         private readonly ISectionService _sectionService;
@@ -76,11 +76,23 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
 
         public ActionResult Publications()
         {
-            var gridModel = _fakeArticlePubRepository.ToBsGridViewModel(new BsGridBaseRepositorySettings() { Page = 1, PageSize = 10 });
+            var bsGridSettings = new BsGridRepositorySettings<PublicationsSearchVm>()
+            {
+                PageSize = 10,
+                Page = 1
+            };
+
+            bsGridSettings.Search = new PublicationsSearchVm();
+
+            var gridModel = _fakeArticlePubRepository.ToBsGridViewModel(bsGridSettings);
 
             var model = new PublicationsVm()
             {
                 Grid = gridModel,
+                Toolbar = new BsToolbarModel<PublicationsSearchVm>
+                {
+                    Search = bsGridSettings.Search
+                }
             };
 
             var options = new Dictionary<string, string>
@@ -115,7 +127,7 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
         }
 
         [NoAntiForgeryCheck]
-        public BsJsonResult Pager(BsGridBaseRepositorySettings settings)
+        public BsJsonResult Pager(BsGridRepositorySettings<PublicationsSearchVm> settings)
         {
             var msg = string.Empty;
             var status = BsResponseStatus.Success;
@@ -142,7 +154,7 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
         }
 
         [NoAntiForgeryCheck]
-        public BsJsonResult PublicationPager(BsGridBaseRepositorySettings settings)
+        public BsJsonResult PublicationPager(BsGridRepositorySettings<PublicationsSearchVm> settings)
         {
             var msg = string.Empty;
             var status = BsResponseStatus.Success;
@@ -151,6 +163,7 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
 
             try
             {
+                _fakeArticlePubRepository.Settings = settings;
                 var viewModel = _fakeArticlePubRepository.ToBsGridViewModel(settings, out count).Wrap<PublicationsVm>(x => x.Grid);
 
                 html = this.BsRenderPartialView("_PublicationsGrid", viewModel);
@@ -211,6 +224,8 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
                     {
                         article.ArticleState = ArticleState.Deleted;
                         _articleService.Update(article);
+                        //TODO: remove (temporary for output cache)
+                        MemoryCacheHelper.ArticlesUpdateTime = DateTime.Now;
                     }
                     else
                     {
@@ -328,6 +343,8 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
 
             model.IndexHtml = indexHtml;
             _articleService.Update(model);
+            //TODO: remove (temporary for output cache)
+            MemoryCacheHelper.ArticlesUpdateTime = DateTime.Now;
             if (customUrl != null)
             {
                 _customUrlService.CreateOrUpdate(customUrl);
@@ -447,6 +464,8 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
 
             model.IndexHtml = indexHtml;
             _articleService.Update(model);
+            //TODO: remove (temporary for output cache)
+            MemoryCacheHelper.ArticlesUpdateTime = DateTime.Now;
             if (customUrl != null)
             {
                 _customUrlService.CreateOrUpdate(customUrl);
@@ -541,6 +560,8 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
             private readonly IArticleService _articleService;
             public IPrincipal User { get; set; }
 
+            public BsGridRepositorySettings<PublicationsSearchVm> Settings { get; set; }
+
             internal FakeArticlePubRepository(IArticleService articleService)
             {
                 _articleService = articleService;
@@ -549,7 +570,21 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
             public override IQueryable<Article> Query()
             {
                 //Get authors publications. All publications for admin
-                var draftsQuery = _articleService.GetPublished(User.IsInRole("Admin") ? null : User.Identity.GetUserId()).AsQueryable();
+                var draftsQuery = _articleService.GetPublished(User.IsInRole("Admin") ? null : User.Identity.GetUserId())
+                    .AsQueryable();
+                if (Settings != null && !Settings.FromReset)
+                {
+                    return Filter(draftsQuery);
+                }
+                return draftsQuery;
+            }
+
+            private IQueryable<Article> Filter(IQueryable<Article> draftsQuery)
+            {
+                if (Settings.Search != null && Settings.Search.Title != null)
+                {
+                    return draftsQuery.Where(x => x.Title.ToLower().Contains(Settings.Search.Title.ToLower()));
+                }
                 return draftsQuery;
             }
 

@@ -18,6 +18,7 @@ using ZelectroCom.Web.Infrastructure.Filters;
 
 namespace ZelectroCom.Web.Areas.Member.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class OldMediaController : Controller
     {
         private readonly IOldMediaService _oldMediaService;
@@ -95,7 +96,10 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
                         string oldPath = getOldPath(fields[0]);
                         string newPath = getNewPath(fields[1]);
 
-                        _oldMediaService.Create(new OldMedia() { OldPath = oldPath, NewPath = newPath });
+                        if (!_oldMediaService.HasOldPath(oldPath))
+                        {
+                            _oldMediaService.Create(new OldMedia() { OldPath = oldPath, NewPath = newPath });   
+                        }
                     }
                     parser.Close();
                 }

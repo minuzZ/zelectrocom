@@ -61,11 +61,12 @@
                         <li><a href="@Url.Action("PubRequests", "Article")"><i class="fa fa-search-plus"></i> Заявки на публикацию</a></li>
                         <li><a href="#"><i class="fa fa-users"></i> Пользователи</a></li>
                         <li><a href="@Url.Action("Index", "Section")"><i class="fa fa-list-alt"></i> Разделы</a></li>
+                        <li><a href="@Url.Action("Index", "ZDevEdit")"><i class="fa fa-plane"></i> Z разработки</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i> Настройки <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="@Url.Action("Index", "OldMedia")"><i class="fa fa-file-image-o"></i> Переадресация файлов</a></li>
-                                <li><a href="@Url.Action("ClearCache", "Common", new {area = "Member"})">Очистить кеш</a></li>
+                                <li><a href="@Url.Action("ClearCache", "BaseWeb", new {area = "Member"})">Очистить кеш</a></li>
                                 <li><a href="#">Общие</a></li>
                                 <li><a href="#">Почта</a></li>
                                 <li><a href="#">Планировщик</a></li>

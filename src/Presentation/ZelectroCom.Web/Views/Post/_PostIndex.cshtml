@@ -5,12 +5,12 @@
     string url = string.IsNullOrEmpty(Model.SeoUrl) ? Url.Action("Article", new {id = Model.Id}) : baseUrl + Model.SeoUrl;
 }
 
-<h2>
+<h3>
     <a href="@url">@Model.Title</a>
-</h2>
-<p class="lead">
+</h3>
+@*<p class="lead">
     автор: <a href="#">@Model.AuthorName</a>
-</p>
+</p>*@
 <p>
     <span class="glyphicon glyphicon-time"></span> Опубликовано @Model.PublishTime
 </p>

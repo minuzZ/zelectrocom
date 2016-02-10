@@ -1,0 +1,11 @@
+﻿@using BForms.Grid
+@using BForms.Html
+@model ZelectroCom.Web.Areas.Member.ViewModels.Article.PublicationsVm
+
+@(Html.BsToolbarFor(x => x.Toolbar)
+    .ConfigureActions(ca =>
+    {
+        ca.Add(BsToolbarActionType.AdvancedSearch)
+            .XsText("Поиск")
+            .Tab(x => Html.BsPartialPrefixed(y => y.Search, "Publications/_Search", x));
+    }))

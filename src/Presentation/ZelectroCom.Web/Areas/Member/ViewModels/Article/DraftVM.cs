@@ -43,6 +43,10 @@ namespace ZelectroCom.Web.Areas.Member.ViewModels.Article
         [BsControl(BsControlType.TextBox)]
         public int Rating { get; set; }
 
+        [Display(ResourceType = typeof(Resources.Resources), Name = "DraftVm_Rating")]
+        [BsControl(BsControlType.TextBox)]
+        public int OrderInSection { get; set; }
+
         [Display(ResourceType = typeof (Resources.Resources), Name = "DraftVm_SeoTitle")]
         [BsControl(BsControlType.TextBox)]
         public string SeoTitle { get; set; }

@@ -11,7 +11,7 @@ using ZelectroCom.Web.ViewModels.Search;
 
 namespace ZelectroCom.Web.Controllers
 {
-    public class SearchController : Controller
+    public class SearchController : BaseWebController
     {
         private const int pageSize = 8;
         private readonly IArticleService _articleService;
@@ -27,16 +27,31 @@ namespace ZelectroCom.Web.Controllers
             return PartialView("_SearchPartial");
         }
 
-        public ActionResult Search(SearchVm searchVm, int page = 0)
+        [ChildActionOnly]
+        public ActionResult Search(SearchVm searchVm)
         {
-            var articles = _articleService.GetArticlesForPage(pageSize, page, x => x.Rating, _articleService.SearchArticles(searchVm.SearchText));
+            if (searchVm.Page < 0)
+            {
+                throw new ArgumentException("Page less than 0");
+            }
+
+            bool isLastPage, isFirstPage;
+            var articles = _articleService.GetArticlesForPage(pageSize, searchVm.Page, out isLastPage, 
+                out isFirstPage, x => x.Rating, _articleService.SearchArticles(searchVm.SearchText));
 
             if (articles == null)
                 return new EmptyResult();
 
             var posts = Mapper.Map<IEnumerable<Article>, IEnumerable<PostIndexVm>>(articles);
 
-            var vm = new PostsListVm() { ScrollUrl = Url.Action("Search", new { page = page + 1 }), PostsList = posts };
+            SearchVm vmBack = new SearchVm() { Page = searchVm.Page - 1, SearchText = searchVm.SearchText};
+            searchVm.Page += 1;
+
+            var vm = new PostsListVm()
+            {
+                UrlNext = Url.Action("Search", "Home", searchVm),
+                UrlBack = Url.Action("Search", "Home", vmBack),
+                PostsList = posts, IsLastPage = isLastPage, IsFirstPage = isFirstPage };
 
             return PartialView("../Post/_PostsList", vm);
         }

@@ -14,7 +14,7 @@ using ZelectroCom.Web.Infrastructure.Filters;
 
 namespace ZelectroCom.Web.Areas.Member.Controllers
 {
-    [Authorize(Roles = "Member")]
+    [Authorize(Roles = "Admin")]
     [NoAntiForgeryCheck]
     public class RoxyFilemanController : Controller
     {

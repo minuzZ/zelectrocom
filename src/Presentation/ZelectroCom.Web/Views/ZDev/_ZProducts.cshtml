@@ -1,0 +1,56 @@
+﻿@model ZelectroCom.Web.ViewModels.ZDev.ZItemsListVm
+@{
+    Layout = null;
+}
+
+<div class="masonry-container">
+    <div class="grid-sizer col-lg-3 col-md-3 col-sm-6 col-xs-12"></div>
+    @if (Model.ProductsList.Any())
+    {
+        foreach (var item in Model.ProductsList)
+        {
+            if (item.Description != null)
+            {
+                //big product
+                <div class="col-lg-6 col-md-6 col-sm-6 item col-xs-12">
+                    <div class="home-big-prod">
+                        <a href="@item.Url" title="@item.Title">
+                            <div class="big-img-container">
+                                <img src="@Url.Content(item.ImagePath)" alt="@item.Title">
+                            </div>
+                            <div class="big-title">
+                                <div class="title mobile-text-wrapper">@item.Title</div>
+                                <div class="description mobile-text-wrapper">@item.Description</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-3 col-md-3 col-sm-6 item col-xs-12">
+                    <div class="home-small-prod">
+                        <a href="@item.Url" title="@item.Title">
+                            <div class="small-img-contaier">
+                                <img src="@Url.Content(item.ImagePath)" alt="@item.Title">
+                            </div>
+                            <div class="small-title">
+                                <div class="title mobile-text-wrapper">@item.Title</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    }
+    else
+    {
+        @:<br/>Добавь Z разработки в админке
+    }
+</div>
+<div id="pagination">
+    <a href="@Model.UrlBack" @if (!Model.IsFirstPage) { @: class="prev"
+                                             }>Предыдущие</a>
+    <a href="@Model.UrlNext" @if (!Model.IsLastPage) { @: class="next"
+                                      }>Следующие</a>
+</div>

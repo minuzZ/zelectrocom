@@ -7,13 +7,21 @@
         <ul class="nav nav-pills nav-stacked">
             @foreach (var item in Model)
             {
-                if (item.Path != null)
+                //TEMP
+                if (item.Path == "zd")
                 {
-                    <li role="presentation"><a href="@Url.Content("~/")@item.Path">@item.Name</a></li>
+                    <li role="presentation"><a href="@Url.Action("Index", "ZDev")">@item.Name</a></li>
                 }
                 else
                 {
-                    <li role="presentation"><a href="@Url.Action("Section", "Home", new { id = item.Id })">@item.Name</a></li>
+                    if (item.Path != null)
+                    {
+                        <li role="presentation"><a href="@Url.Content("~/")@item.Path">@item.Name</a></li>
+                    }
+                    else
+                    {
+                        <li role="presentation"><a href="@Url.Action("Section", "Home", new { id = item.Id })">@item.Name</a></li>
+                    }
                 }
             }
         </ul>

@@ -22,6 +22,14 @@ namespace ZelectroCom.Data.Models
 
         public string Path { get; set; }
 
+        public string Description { get; set; }
+
+        public string SeoTitle { get; set; }
+
+        public string SeoDescription { get; set; }
+
+        public string SeoKeywords { get; set; }
+
         public SectionState SectionState { get; set; }
     }
 }

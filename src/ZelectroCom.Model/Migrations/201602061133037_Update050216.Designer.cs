@@ -7,13 +7,13 @@ namespace ZelectroCom.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Working010216 : IMigrationMetadata
+    public sealed partial class Update050216 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Working010216));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Update050216));
         
         string IMigrationMetadata.Id
         {
-            get { return "201601312123483_Working010216"; }
+            get { return "201602061133037_Update050216"; }
         }
         
         string IMigrationMetadata.Source

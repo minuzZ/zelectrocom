@@ -1,16 +1,30 @@
-﻿<!DOCTYPE html>
+﻿@using RequireJsNet
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--TODO SEO-->
-    <title>@ViewBag.Title - Сообщество Zelectro</title>
+    <title>@ViewBag.Title - Zelectro</title>
+    @RenderSection("Meta", false)
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/postcss")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<body class="gray-body">
+    <div id="fb-root"></div>
+    <script>
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.5";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -18,12 +32,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <li><a class="navbar-brand" href="http://shop.zelectro.cc">Наш магазин</a></li>
+                <a class="logo-mobile" href="/" title="На главную">
+                    <img class="img-responsive visible-xs visible-sm" src="~/Content/img/logo_mobile.jpg" alt="Логотип" />
+                </a>
+                <a class="navbar-brand" href="http://shop.zelectro.cc">Наш магазин</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Главная", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О нас", "About", "Home")</li>
+                    <li class="visible-xs visible-sm">@Html.ActionLink("Разделы", "SectionsPage", "Home")</li>
+                    <li class="visible-xs visible-sm">@Html.ActionLink("Поиск", "SearchPage", "Home")</li>
+                    <li>@Html.ActionLink("Заказать проект", "Index", "OrderProject")</li>
                     <li>@Html.ActionLink("Контакты", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -33,20 +52,51 @@
 
     <div class="container body-content">
         @RenderBody()
-        <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>&copy; 2013-@DateTime.Now.Year - магазин и сообщество Zelectro</p>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-        </footer>
     </div>
-    <!-- /.container -->
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+<!-- /.container -->
+    <footer class="footer">
+        <div class="container">
+            <div class="col-xs-6">
+                @Html.ActionLink("Главная", "Index", "Home")
+                @Html.ActionLink("Главная", "Index", "Home")
+                @Html.ActionLink("Главная", "Index", "Home")
+                <p class="text-muted">&copy; 2013-@DateTime.Now.Year - магазин и сообщество Zelectro</p>
+            </div>
+            <div class="col-xs-6">
+                @Html.ActionLink("Главная", "Index", "Home")
+                @Html.ActionLink("Главная", "Index", "Home")
+                @Html.ActionLink("Главная", "Index", "Home")
+                @Html.ActionLink("Главная", "Index", "Home")
+            </div>
+        </div>
+    </footer>
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        @Html.RenderRequireJsSetup(
+        new RequireRendererConfiguration
+        {
+            BaseUrl = Url.Content("~/Scripts/"),
+            RequireJsUrl =
+                Url.Content("~/Scripts/bforms/components/requirejs/require.js"),
+            ConfigurationFiles = new[]
+            {
+                "~/RequireJS.json"
+            }
+        })
+    }
+    else
+    {
+        @Html.RenderRequireJsSetup(
+        new RequireRendererConfiguration
+        {
+            BaseUrl = Url.Content("~/Scripts/"),
+            RequireJsUrl =
+                Url.Content("~/Scripts/bforms/components/requirejs/require.js"),
+            ConfigurationFiles = new[]
+            {
+                "~/RequireJS.Release.json"
+            }
+        })
+    }
 </body>
 </html>

@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using ZelectroCom.Data;
 using ZelectroCom.Data.Models;
 
@@ -14,6 +15,11 @@ namespace ZelectroCom.Service
             {
                 _context.Entry(p).State = EntityState.Deleted;
             }
+            _context.SaveChanges();
+        }
+        public bool HasOldPath(string path)
+        {
+            return _dbset.Any(x => x.OldPath == path);
         }
     }
 }

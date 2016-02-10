@@ -7,7 +7,10 @@ namespace ZelectroCom.Web.ViewModels.Home
 {
     public class PostsListVm
     {
-        public string ScrollUrl { get; set; }
+        public string UrlNext { get; set; }
+        public string UrlBack { get; set; }
+        public bool IsLastPage { get; set; }
+        public bool IsFirstPage { get; set; }
         public IEnumerable<PostIndexVm> PostsList { get; set; }
     }
 }

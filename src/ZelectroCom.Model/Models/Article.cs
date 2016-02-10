@@ -39,5 +39,6 @@ namespace ZelectroCom.Data.Models
         public int ViewsCount { get; set; }
         public int Rating { get; set; }
         public bool Hidden { get; set; }
+        public int OrderInSection { get; set; }
     }
 }

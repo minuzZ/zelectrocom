@@ -6,9 +6,11 @@ using ZelectroCom.Web.Areas.Member.ViewModels.Article;
 using ZelectroCom.Web.Areas.Member.ViewModels.OldMedia;
 using ZelectroCom.Web.Areas.Member.ViewModels.Profile;
 using ZelectroCom.Web.Areas.Member.ViewModels.Section;
+using ZelectroCom.Web.Areas.Member.ViewModels.ZDev;
 using ZelectroCom.Web.ViewModels;
 using ZelectroCom.Web.ViewModels.Home;
 using ZelectroCom.Web.ViewModels.Post;
+using ZelectroCom.Web.ViewModels.ZDev;
 
 namespace ZelectroCom.Web.Infrastructure
 {
@@ -27,7 +29,10 @@ namespace ZelectroCom.Web.Infrastructure
                 }));
             Mapper.CreateMap<SectionVm, Section>()
                 .ForMember(dest => dest.Order, opt => opt.MapFrom(src => src.Order.ItemValue));
-            
+            Mapper.CreateMap<Section, SectionRowVm>().ForMember(dest => dest.Action, opt => opt.Ignore());
+            Mapper.CreateMap<Section, ViewModels.Section.SectionVm>();
+
+
             Mapper.CreateMap<Article, DraftVm>()
                 .ForMember(dest => dest.PublishTime, opt => opt.MapFrom(src => new BsDateTime{ DateValue = src.PublishTime }));
             Mapper.CreateMap<DraftVm, Article>()
@@ -43,9 +48,6 @@ namespace ZelectroCom.Web.Infrastructure
             Mapper.CreateMap<Article, PubRequestRowVm>()
                 .ForMember(dest => dest.ArticleState, opt => opt.MapFrom(src => src.ArticleState.GetDisplayName()))
                 .ForMember(dest => dest.AuthorName, opt => opt.Ignore());
-
-            Mapper.CreateMap<Section, SectionRowVm>();
-            Mapper.CreateMap<Section, ViewModels.Section.SectionVm>();
 
             Mapper.CreateMap<Article, PreviewArticleVm>()
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Author.UserName));
@@ -78,6 +80,22 @@ namespace ZelectroCom.Web.Infrastructure
             Mapper.CreateMap<EditableUserDataVm, ApplicationUser>();
 
             Mapper.CreateMap<OldMedia, OldMediaRowVm>();
+
+            Mapper.CreateMap<ZDev, ZDevVm>()
+                .ForMember(dest => dest.Order, opt => opt.MapFrom(src => new BsRangeItem<int>()
+                {
+                    ItemValue = src.Order,
+                    MinValue = 0,
+                    MaxValue = 100,
+                    TextValue = "0-100",
+                    Display = Resources.Resources.SectionVm_Order
+                }));
+            Mapper.CreateMap<ZDev, ZDevRowVm>();
+
+            Mapper.CreateMap<ZDevVm, ZDev>()
+                .ForMember(dest => dest.Order, opt => opt.MapFrom(src => src.Order.ItemValue));
+
+            Mapper.CreateMap<ZDev, ZDevIndexVm>();
         }
     }
 }

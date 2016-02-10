@@ -1,0 +1,88 @@
+﻿@using BForms.Html
+@using BForms.Models
+@using ZelectroCom.Data.Models
+@model ZelectroCom.Web.Areas.Member.ViewModels.ZDev.ZDevVm
+@{
+    Layout = "~/Areas/Member/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Z разработка";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h1>
+            @ViewBag.Title
+        </h1>
+    </div>
+</div>
+
+
+<div class="col-xs-12">
+    @using (Html.BsBeginForm("Action", "ZDev", FormMethod.Post, new { @class = "bs-form js-zItemForm" }, BsTheme.Green))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id);
+
+        <div class="row">
+            <div class="control-group col-xs-12">
+                <button class="btn btn-theme js-saveZItemBtn" type="button">Сохранить</button>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12 bs-validation_summary">
+                @Html.BsValidationSummary()
+            </div>
+            <div class="col-xs-12">
+                <div class="alert alert-success" id="success-alert">
+                    <button type="button" class="close" data-hide="alert">x</button>
+                    @ViewBag.SuccessText
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                @Html.BsLabelFor(m => m.Title)
+                <div class="input-group">
+                    @Html.BsGlyphiconAddon(Glyphicon.Book)
+                    @Html.BsTextBoxFor(m => m.Title)
+                    @Html.BsValidationFor(m => m.Title)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                @if (Model.ImagePath != null)
+                {
+                    @:<img class="img-responsive" src="@Url.Content(Model.ImagePath)" alt="@Model.Title"/>
+                }
+                @Html.TextBoxFor(m => m.ImageUpload, new {type = "file", accept = "image/*"})
+                @Html.BsValidationFor(m => m.ImageUpload)
+            </div>
+        </div>
+        @Html.HiddenFor(m => m.ImagePath);
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                @Html.BsLabelFor(m => m.Description)
+                @Html.BsInputFor(m => m.Description)
+                @Html.BsValidationFor(m => m.Description)
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                @Html.BsLabelFor(m => m.Url)
+                @Html.BsInputFor(m => m.Url)
+                @Html.BsValidationFor(m => m.Url)
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                @Html.BsLabelFor(m => m.Order)
+                <div class="input-group">
+                    @Html.BsGlyphiconAddon(Glyphicon.SortByAttributes)
+                    @Html.BsInputFor(m => m.Order)
+                    @Html.BsValidationFor(m => m.Order)
+                </div>
+            </div>
+        </div>
+    }
+</div>

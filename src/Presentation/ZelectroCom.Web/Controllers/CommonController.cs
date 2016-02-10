@@ -8,5 +8,10 @@ namespace ZelectroCom.Web.Controllers
 {
     public class CommonController : Controller
     {
+        public ActionResult NoPageFound()
+        {
+            Response.StatusCode = 404;
+            return View();
+        }
     }
 }

@@ -430,6 +430,15 @@ namespace ZelectroCom.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Описание.
+        /// </summary>
+        public static string SectionVm_Description {
+            get {
+                return ResourceManager.GetString("SectionVm_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Скрытый раздел.
         /// </summary>
         public static string SectionVm_IsHidden {
@@ -466,6 +475,33 @@ namespace ZelectroCom.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SEO Описание.
+        /// </summary>
+        public static string SectionVm_SeoDescription {
+            get {
+                return ResourceManager.GetString("SectionVm_SeoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SEO ключевые слова.
+        /// </summary>
+        public static string SectionVm_SeoKeywords {
+            get {
+                return ResourceManager.GetString("SectionVm_SeoKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SEO заголовок.
+        /// </summary>
+        public static string SectionVm_SeoTitle {
+            get {
+                return ResourceManager.GetString("SectionVm_SeoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Поле не может содержать более 50 символов.
         /// </summary>
         public static string Validation_Length50 {
@@ -480,6 +516,60 @@ namespace ZelectroCom.Web.Resources {
         public static string Validation_RequiredField {
             get {
                 return ResourceManager.GetString("Validation_RequiredField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Z разработки.
+        /// </summary>
+        public static string ZDevListVm_Grid {
+            get {
+                return ResourceManager.GetString("ZDevListVm_Grid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Описание.
+        /// </summary>
+        public static string ZDevVm_Description {
+            get {
+                return ResourceManager.GetString("ZDevVm_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Изображение.
+        /// </summary>
+        public static string ZDevVm_ImagePath {
+            get {
+                return ResourceManager.GetString("ZDevVm_ImagePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Порядок.
+        /// </summary>
+        public static string ZDevVm_Order {
+            get {
+                return ResourceManager.GetString("ZDevVm_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Заголовок.
+        /// </summary>
+        public static string ZDevVm_Title {
+            get {
+                return ResourceManager.GetString("ZDevVm_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ссылка.
+        /// </summary>
+        public static string ZDevVm_Url {
+            get {
+                return ResourceManager.GetString("ZDevVm_Url", resourceCulture);
             }
         }
     }

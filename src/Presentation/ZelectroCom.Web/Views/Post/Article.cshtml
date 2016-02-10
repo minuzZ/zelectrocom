@@ -4,19 +4,18 @@
     ViewBag.Title = Model.Title;
 }
 
-<!-- Blog Post Content Column -->
-<div class="col-lg-8">
-    <!-- Blog Post -->
-    <!-- Title -->
-    <h1>@Model.Title</h1>
-    <p class="lead">
-        автор: <a href="#">@Model.AuthorName</a>
-    </p>
-    <hr>
-    <!-- Date/Time -->
-    <p><span class="glyphicon glyphicon-time"></span> Опубликовано @Model.PublishTime</p>
-    <hr>
-    <!-- Post Content -->
-    <div class="article">@Html.Raw(Model.Text)</div>
-    <hr>
-</div>
+@section Meta {
+    <meta name="title" content="@Model.SeoTitle" />
+    <meta name="description" content="@Model.SeoDescription" />
+    <meta name="keywords" content="@Model.SeoKeywords" />
+}
+
+<div class="ztitle"><h1>@Model.Title</h1></div>
+@*<p class="lead">
+    автор: <a href="#">@Model.AuthorName</a>
+</p>*@
+<hr>
+<p><span class="glyphicon glyphicon-time"></span> Опубликовано @Model.PublishTime</p>
+<hr>
+<div class="article">@Html.Raw(Model.Text)</div>
+<hr>

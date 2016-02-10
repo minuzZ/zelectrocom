@@ -1,24 +1,13 @@
-﻿@{
+﻿@model int
+
+@{
     ViewBag.Title = "Новые статьи";
 }
 
-<div class="col-md-8">
-    <div class="row zheader">
-        <div class="col-md-4">
-            <a href="/" title="На главную" id="logo">
-                <img class="img-responsive" src="~/Content/img/logo.jpg" alt="Логотип" />
-            </a>
-        </div>
-        <div class="col-md-8">
-            <h1>
-                Сообщество Zelectro
-            </h1>
-        </div>
-    </div>
-    <ul class="nav nav-tabs nav-justified">
-        <li role="presentation" class="active"><a href="@Url.Action("Index")">Новые</a></li>
-        <li role="presentation"><a href="@Url.Action("Popular")">Популярные</a></li>
-        <li role="presentation"><a href="@Url.Action("Best")">Лучшие</a></li>
-    </ul>
-    @Html.Action("NewPosts", "Post")
-</div>
+@section Meta {
+    <meta name="title" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+}
+
+@Html.Action("NewPosts", "Post", new {page = Model})

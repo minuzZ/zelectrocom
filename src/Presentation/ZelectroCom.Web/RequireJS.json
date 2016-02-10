@@ -20,12 +20,28 @@
             "path": "ckeditor/plugins/codesnippet/lib/highlight/highlight.pack",
             "defaultBundle": "frontcomponents"
         },
-        "jscroll": {
-            "path": "jscroll",
+        "ias": {
+            "path": "jquery-ias.min",
             "defaultBundle": "frontcomponents"
         },
         "spoiler": {
             path: "ckeditor/plugins/spoiler/js/spoiler",
+            "defaultBundle": "frontcomponents"
+        },
+        "scrollup": {
+            path: "jquery.scrollUp.min",
+            "defaultBundle": "frontcomponents"
+        },
+        "masonry": {
+            path: "masonry.pkgd.min",
+            "defaultBundle": "frontcomponents"
+        },
+        "imagesLoaded": {
+            path: "imagesloaded.pkgd.min",
+            "defaultBundle": "frontcomponents"
+        },
+        "jquery.bridget": {
+            path: "jquery.bridget",
             "defaultBundle": "frontcomponents"
         }
     },
@@ -36,10 +52,13 @@
         "bootstrap": {
             "deps": [ "jquery", "respond" ]
         },
-        "jscroll": {
+        "ias": {
             "deps": [ "jquery" ]
         },
         "spoiler": {
+            "deps": [ "jquery" ]
+        },
+        "scrollup": {
             "deps": [ "jquery" ]
         }
     }

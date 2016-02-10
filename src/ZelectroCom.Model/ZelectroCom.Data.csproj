@@ -61,10 +61,16 @@
     <Compile Include="Entity.cs" />
     <Compile Include="IAuditableEntity.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="Migrations\201601312123483_Working010216.cs" />
-    <Compile Include="Migrations\201601312123483_Working010216.Designer.cs">
-      <DependentUpon>201601312123483_Working010216.cs</DependentUpon>
+    <Compile Include="Mapping\ZDevMap.cs" />
+    <Compile Include="Migrations\201602061133037_Update050216.cs" />
+    <Compile Include="Migrations\201602061133037_Update050216.Designer.cs">
+      <DependentUpon>201602061133037_Update050216.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602081324480_Update080216.cs" />
+    <Compile Include="Migrations\201602081324480_Update080216.Designer.cs">
+      <DependentUpon>201602081324480_Update080216.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ZDev.cs" />
     <Compile Include="Tools\FtsInterceptor.cs" />
     <Compile Include="Mapping\ArticleMap.cs" />
     <Compile Include="Mapping\BaseMap.cs" />
@@ -105,8 +111,11 @@
     <EmbeddedResource Include="Migrations\201510012121152_Update021015.resx">
       <DependentUpon>201510012121152_Update021015.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601312123483_Working010216.resx">
-      <DependentUpon>201601312123483_Working010216.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201602061133037_Update050216.resx">
+      <DependentUpon>201602061133037_Update050216.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602081324480_Update080216.resx">
+      <DependentUpon>201602081324480_Update080216.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -36,6 +36,42 @@
 </div>
 <div class="row">
     <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+        @Html.BsLabelFor(m => m.Description)
+        <div class="input-group">
+            @Html.BsInputFor(m => m.Description)
+            @Html.BsValidationFor(m => m.Description)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+        @Html.BsLabelFor(m => m.SeoTitle)
+        <div class="input-group">
+            @Html.BsInputFor(m => m.SeoTitle)
+            @Html.BsValidationFor(m => m.SeoTitle)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+        @Html.BsLabelFor(m => m.SeoDescription)
+        <div class="input-group">
+            @Html.BsInputFor(m => m.SeoDescription)
+            @Html.BsValidationFor(m => m.SeoDescription)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
+        @Html.BsLabelFor(m => m.SeoKeywords)
+        <div class="input-group">
+            @Html.BsInputFor(m => m.SeoKeywords)
+            @Html.BsValidationFor(m => m.SeoKeywords)
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-xs-12 col-sm-10 col-md-8 col-lg-4">
         @Html.BsLabelFor(m => m.Order)
         <div class="input-group">
             @Html.BsGlyphiconAddon(Glyphicon.SortByAttributes)

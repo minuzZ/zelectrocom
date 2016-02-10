@@ -21,6 +21,26 @@ namespace ZelectroCom.Web.Areas.Member.ViewModels.Section
         [Display(ResourceType = typeof (Resources.Resources), Name = "SectionVm_Path")]
         public string Path { get; set; }
 
+        [Required]
+        [BsControl(BsControlType.TextBox)]
+        [Display(ResourceType = typeof (Resources.Resources), Description = "SectionVm_Description")]
+        public string Description { get; set; }
+
+        [Required]
+        [BsControl(BsControlType.TextBox)]
+        [Display(ResourceType = typeof (Resources.Resources), Description = "SectionVm_SeoTitle")]
+        public string SeoTitle { get; set; }
+
+        [Required]
+        [BsControl(BsControlType.TextBox)]
+        [Display(ResourceType = typeof (Resources.Resources), Description = "SectionVm_SeoDescription")]
+        public string SeoDescription { get; set; }
+
+        [Required]
+        [BsControl(BsControlType.TextBox)]
+        [Display(ResourceType = typeof (Resources.Resources), Description = "SectionVm_SeoKeywords")]
+        public string SeoKeywords { get; set; }
+
         [BsControl(BsControlType.CheckBox)]
         [Display(ResourceType = typeof (Resources.Resources), Name = "SectionVm_IsHidden")]
         public bool IsHidden { get; set; }

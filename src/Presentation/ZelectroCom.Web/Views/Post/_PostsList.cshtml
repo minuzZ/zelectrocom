@@ -1,9 +1,28 @@
 ﻿@model ZelectroCom.Web.ViewModels.Home.PostsListVm
 
-<div id="postslist" class="scroll">
-    @foreach (var item in Model.PostsList)
+<div id="posts" class="scroll">
+
+    @if (Model.PostsList.Any())
     {
-        @Html.Partial("../Post/_PostIndex", @item)
+        foreach (var item in Model.PostsList)
+         {
+             <div class="post">
+                 @Html.Partial("../Post/_PostIndex", @item)
+             </div>
+         }
     }
-    <li class="next"><a href="@Model.ScrollUrl">Загружаем...</a></li>
+    else
+    {
+        @:<br/>Посты не найдены
+    }
+
+</div>
+
+<div id="pagination">
+    <a href="@Model.UrlBack" @if (!Model.IsFirstPage) { @: class="prev"
+                                      }>Предыдущие</a>
+    <a href="@Model.UrlNext" @if (!Model.IsLastPage)
+                               {
+                                   @:class="next"
+                               }>Следующие</a>
 </div>

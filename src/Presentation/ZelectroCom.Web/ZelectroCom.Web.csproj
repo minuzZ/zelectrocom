@@ -76,6 +76,10 @@
       <HintPath>..\..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -208,7 +212,9 @@
     <Compile Include="Areas\Member\Controllers\OldMediaController.cs" />
     <Compile Include="Areas\Member\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Member\Controllers\SectionController.cs" />
+    <Compile Include="Areas\Member\Controllers\ZDevEditController.cs" />
     <Compile Include="Areas\Member\MemberAreaRegistration.cs" />
+    <Compile Include="Areas\Member\ViewModels\Article\PublicationsSearchVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Article\PubRequestRowVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Article\PubRequestsVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Article\PublicationsVm.cs" />
@@ -222,13 +228,19 @@
     <Compile Include="Areas\Member\ViewModels\Section\SectionListVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Section\SectionRowVm.cs" />
     <Compile Include="Areas\Member\ViewModels\Section\SectionVm.cs" />
+    <Compile Include="Areas\Member\ViewModels\ZDev\ZDevListVm.cs" />
+    <Compile Include="Areas\Member\ViewModels\ZDev\ZDevRowVm.cs" />
+    <Compile Include="Areas\Member\ViewModels\ZDev\ZDevVm.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Member\Controllers\RoxyFilemanController.cs" />
+    <Compile Include="Controllers\BaseWebController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\OldMediaController.cs" />
+    <Compile Include="Controllers\OrderProjectController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\ZDevController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -258,10 +270,16 @@
     <Compile Include="ViewModels\Post\PreviewArticleVm.cs" />
     <Compile Include="ViewModels\Search\SearchVm.cs" />
     <Compile Include="ViewModels\Section\SectionVm.cs" />
+    <Compile Include="ViewModels\ZDev\ZDevIndexVm.cs" />
+    <Compile Include="ViewModels\ZDev\ZItemsListVm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Member\Content\style.css" />
+    <Content Include="Content\img\404image.jpg" />
     <Content Include="Content\img\ajax-loader.gif" />
+    <Content Include="Content\img\logo_mobile.jpg" />
+    <Content Include="favicon.ico" />
+    <Content Include="robots.txt" />
     <Content Include="Scripts\BForms\Plugins\Select2\js\i18n\select2-ru.js" />
     <Content Include="Scripts\BForms\Plugins\Validation\i18n\bforms.validate-ru.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
@@ -487,12 +505,15 @@
     <Content Include="Scripts\Controllers\Member\Profile\Index.js" />
     <Content Include="Scripts\Controllers\Member\Section\Add.js" />
     <Content Include="Scripts\Controllers\Member\Section\Edit.js" />
+    <Content Include="Scripts\Controllers\Member\ZDevEdit\ZItem.js" />
+    <Content Include="Scripts\Controllers\Member\ZDevEdit\Index.js" />
     <Content Include="Scripts\Controllers\Root\Account\Register.js" />
     <Content Include="Scripts\Controllers\Root\Account\Manage.js" />
     <Content Include="Scripts\Controllers\Root\Account\Login.js" />
+    <Content Include="Scripts\Controllers\Root\Home\Error.js" />
     <Content Include="Scripts\Controllers\Root\Home\Contact.js" />
-    <Content Include="Scripts\Controllers\Root\Home\About.js" />
     <Content Include="Scripts\Controllers\Root\Home\Best.js" />
+    <Content Include="Scripts\Controllers\Root\Home\SearchPage.js" />
     <Content Include="Scripts\Controllers\Root\Home\Section.js" />
     <Content Include="Scripts\Controllers\Root\Home\Popular.js" />
     <Content Include="Scripts\Controllers\Root\Home\Index.js" />
@@ -513,7 +534,6 @@
     <Content Include="Content\formValidation.css" />
     <Content Include="Content\formValidation.min.css" />
     <Content Include="Content\img\logo.jpg" />
-    <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -550,10 +570,15 @@
     <Content Include="Areas\Member\Views\Section\_SectionFormFields.cshtml" />
     <Content Include="Areas\Member\Views\OldMedia\Index.cshtml" />
     <Content Include="Areas\Member\Views\OldMedia\_OldMediaGrid.cshtml" />
+    <Content Include="Areas\Member\Views\Article\Publications\_Search.cshtml" />
+    <Content Include="Areas\Member\Views\Article\Publications\_Toolbar.cshtml" />
     <None Include="Areas\Member\Views\Common\ClearCache.cshtml" />
     <Content Include="Areas\Member\Views\Profile\Readonly\_UserData.cshtml" />
     <Content Include="Areas\Member\Views\Profile\Readonly\_UserProfile.cshtml" />
     <Content Include="Areas\Member\Views\Profile\Editable\_UserData.cshtml" />
+    <Content Include="Areas\Member\Views\ZDevEdit\Index.cshtml" />
+    <Content Include="Areas\Member\Views\ZDevEdit\_ZDevGrid.cshtml" />
+    <Content Include="Areas\Member\Views\ZDevEdit\ZItem.cshtml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <Content Include="Scripts\BForms\Bundles\css\stylesheets.css" />
     <Content Include="Scripts\BForms\Bundles\fonts\glyphicons-halflings-regular.svg" />
@@ -688,14 +713,16 @@
     <Content Include="Scripts\ckeditor\plugins\codesnippet\lib\highlight\LICENSE" />
     <Content Include="Scripts\ckeditor\plugins\codesnippet\lib\highlight\README.md" />
     <Content Include="Scripts\ckeditor\plugins\codesnippet\lib\highlight\README.ru.md" />
+    <Content Include="Scripts\Controllers\Root\Home\SectionsPage.js" />
     <Content Include="Scripts\Controllers\Root\Post\Article.js" />
     <Content Include="Scripts\Controllers\Root\Post\Preview.js" />
+    <Content Include="Scripts\Controllers\Root\Home\Search.js" />
+    <Content Include="Scripts\Controllers\Root\ZDev\Index.js" />
     <Content Include="Scripts\fileman\conf.json" />
     <Content Include="Scripts\fileman\lang\en.json" />
     <Content Include="Scripts\fileman\lang\ru.json" />
     <Content Include="Scripts\ckeditor\skins\moono\readme.md" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Icon.png" />
     <Content Include="Scripts\BForms\Components\FileUpload\jquery.fileupload-validate.js" />
     <Content Include="Scripts\BForms\Widgets\ControlPanel\bforms.controlPanel.js" />
     <Content Include="Scripts\BForms\Widgets\FileUpload\bforms.fileUpload.js" />
@@ -1001,16 +1028,20 @@
     <Content Include="Scripts\FormValidation\formValidation.js" />
     <Content Include="Scripts\FormValidation\formValidation.min.js" />
     <Content Include="Scripts\FormValidation\formValidationru_RU.js" />
+    <Content Include="Scripts\imagesloaded.pkgd.min.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.bridget.js" />
+    <Content Include="Scripts\jquery-ias.min.js" />
+    <Content Include="Scripts\jquery.scrollUp.js" />
+    <Content Include="Scripts\jquery.scrollUp.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\jscroll.js" />
-    <Content Include="Scripts\jscroll.min.js" />
+    <Content Include="Scripts\masonry.pkgd.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
@@ -1022,6 +1053,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="sitemap.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1035,7 +1067,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
@@ -1059,11 +1090,17 @@
     <Content Include="Views\Post\Article.cshtml" />
     <Content Include="Views\Home\Section.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <None Include="Views\Common\NoPageFound.cshtml" />
+    <Content Include="Views\Home\SearchPage.cshtml" />
+    <Content Include="Views\Home\SectionsPage.cshtml" />
+    <Content Include="Views\OrderProject\Index.cshtml" />
+    <Content Include="Views\ZDev\Index.cshtml" />
+    <Content Include="Views\ZDev\_ZProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\fileman\tmp\" />
-    <Folder Include="Views\Common\" />
+    <Folder Include="Views\BaseWeb\" />
     <Folder Include="Views\Section\" />
   </ItemGroup>
   <ItemGroup>

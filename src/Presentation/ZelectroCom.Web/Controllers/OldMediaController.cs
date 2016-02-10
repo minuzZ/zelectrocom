@@ -9,10 +9,8 @@ using ZelectroCom.Web.Infrastructure.Helpers;
 
 namespace ZelectroCom.Web.Controllers
 {
-    public class OldMediaController : Controller
+    public class OldMediaController : BaseWebController
     {
-        private const string CacheKey = "OldMedia.Urls";
-
         private readonly IOldMediaService _oldMediaService;
         public OldMediaController(IOldMediaService oldMediaService)
         {

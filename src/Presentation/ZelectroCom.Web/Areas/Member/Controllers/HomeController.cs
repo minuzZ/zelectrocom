@@ -6,20 +6,10 @@ using System.Web.Mvc;
 
 namespace ZelectroCom.Web.Areas.Member.Controllers
 {
-    [Authorize(Roles = "Member")]
+    [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult ProfileSettings()
-        {
-            return View();
-        }
-
-        public ActionResult ProfileInfo()
         {
             return View();
         }

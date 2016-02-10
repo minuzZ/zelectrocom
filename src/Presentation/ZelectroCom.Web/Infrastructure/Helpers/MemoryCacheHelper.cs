@@ -52,6 +52,10 @@ namespace ZelectroCom.Web.Infrastructure.Helpers
             }
         }
 
+        //TODO: remove (temporary for output cache)
+        public static DateTime SectionsUpdateTime { get; set; }
+        public static DateTime ArticlesUpdateTime { get; set; }
+
         public static void RemoveCache(string cacheKey)
         {
             HttpRuntime.Cache.Remove(cacheKey);

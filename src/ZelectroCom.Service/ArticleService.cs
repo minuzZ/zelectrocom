@@ -60,14 +60,16 @@ namespace ZelectroCom.Service
             var drafts = _context.Articles.Where(x => x.Title.Contains(fts) || x.Text.Contains(fts));
             return drafts;
         }
-        
-        public IEnumerable<Article> GetArticlesForPage<TKey>(int pageSize, int page, Func<Article, TKey> orderByFunc,
-            IEnumerable<Article> articles = null, bool isAscOrder = false, int? sectionId = null)
+
+        public IEnumerable<Article> GetArticlesForPage<TKey>(int pageSize, int page, out bool isLastPage, out bool isFirstPage,
+            Func<Article, TKey> orderByFunc, IEnumerable<Article> articles = null, bool isAscOrder = false, int? sectionId = null)
         {
             IEnumerable<Article> res;
             int rangeStart;
             int rangeLength;
             int pageNumber = page;
+
+            isLastPage = isFirstPage = false;
 
             if (articles == null)
             {
@@ -83,6 +85,7 @@ namespace ZelectroCom.Service
 
             if (((pageNumber*pageSize) + pageSize) > postsCount)
             {
+                isLastPage = true;
                 rangeLength = postsCount%pageSize;
                 rangeStart = postsCount - rangeLength;
             }
@@ -91,6 +94,8 @@ namespace ZelectroCom.Service
                 rangeStart = (pageNumber*pageSize);
                 rangeLength = pageSize;
             }
+
+            isFirstPage = rangeStart == 0;
 
             if (isAscOrder)
             {

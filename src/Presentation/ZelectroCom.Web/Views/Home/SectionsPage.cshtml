@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ZelectroCom.Web.ViewModels.Section.SectionVm>
+@{
+    ViewBag.Title = "Разделы";
+    ViewBag.PageTitle = "Разделы сообщества";
+}
+
+@section Meta {
+    <meta name="robots" content="noindex">
+}
+
+<ul class="nav nav-pills nav-stacked">
+    @foreach (var item in Model)
+    {
+        //TEMP
+        if (item.Path == "zd")
+        {
+            <li role="presentation"><a href="@Url.Action("Index", "ZDev")">@item.Name</a></li>
+        }
+        else
+        {
+            if (item.Path != null)
+            {
+                <li role="presentation"><a href="@Url.Content("~/")@item.Path">@item.Name</a></li>
+            }
+            else
+            {
+                <li role="presentation"><a href="@Url.Action("Section", "Home", new { id = item.Id })">@item.Name</a></li>
+            }
+        }
+    }
+</ul>

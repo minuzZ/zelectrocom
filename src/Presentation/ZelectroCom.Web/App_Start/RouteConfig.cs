@@ -23,9 +23,9 @@ namespace ZelectroCom.Web
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                constraints: new { controller = "Account|Common|Home|Post|Search|Section" },
+                url: "{controller}/{action}/{page}",
+                defaults: new { controller = "Home", action = "Index", page = UrlParameter.Optional },
+                constraints: new { controller = "Account|Common|Home|Post|Search|Section|OrderProject|ZDev" },
                 namespaces: new[] { "ZelectroCom.Web.Controllers"}
             );
 

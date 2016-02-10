@@ -1,17 +1,21 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Контакты";
+    ViewBag.PageTitle = "Контактная информация";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+@section Meta {
+    <meta name="title" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+}
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+
+<br/>
+<ul>
+    <li>Нашли ошибку в работе сайта?</li>
+    <li>Есть интересная идея, которую мы могли бы реализовать?</li>
+    <li>Интересует разработка проекта (программная/аппаратная часть)?</li>
+    <li>... любые другие вопросы и предложения</li>
+</ul>
+<p>Отправляйте нам на: <a href="mailto:support@zelectro.cc">support@zelectro.cc</a></p>
+<p>Мы с интересом рассмотрим любые ваши предложения коммерческого и иного плана. Спасибо, что вы с нами!</p>

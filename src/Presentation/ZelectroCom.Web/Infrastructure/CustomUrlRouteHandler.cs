@@ -26,56 +26,82 @@ namespace ZelectroCom.Web.Infrastructure
 
     public class CustomUrlRouteHandler : System.Web.Mvc.MvcRouteHandler
     {
+        private bool TryParseUrl(string fullUrl, out string path, out int page)
+        {
+            bool result = true;
+            path = String.Empty;
+            page = 0;
+            if (string.IsNullOrEmpty(fullUrl))
+                return false;
+            string[] parts = fullUrl.Split('/');
+            path = parts[0];
+
+            if (parts.Length > 1)
+            {
+                result &= int.TryParse(parts[1], out page);
+            }
+
+            return result;
+        }
+
         protected override IHttpHandler GetHttpHandler(System.Web.Routing.RequestContext requestContext)
         {
             string controller = String.Empty;
             string action = String.Empty;
-            string id = String.Empty;
-
+            int page;
+            string path;
             CustomUrl customUrl = null;
 
-            var url = ((string)requestContext.RouteData.Values["url"]).ToLower();
+            var fullUrl = ((string)requestContext.RouteData.Values["url"]).ToLower();
 
-            if (CustomUrlCache.CustomUrls.ContainsKey(url))
+            if (TryParseUrl(fullUrl, out path, out page))
             {
-                customUrl = CustomUrlCache.CustomUrls[url];
+                if (CustomUrlCache.CustomUrls.ContainsKey(path))
+                {
+                    customUrl = CustomUrlCache.CustomUrls[path];
+                }
+                else
+                {
+                    ICustomUrlService customUrlService = (ICustomUrlService)DependencyResolver.Current.GetService(typeof(ICustomUrlService));
+
+                    customUrl = customUrlService.GetAll().FirstOrDefault(x => String.Equals(x.Url, path, StringComparison.CurrentCultureIgnoreCase));
+                    if (customUrl != null)
+                    {
+                        CustomUrlCache.CustomUrls.TryAdd(path, customUrl);
+                    }
+                }
+
+                if (customUrl != null)
+                {
+                    switch (customUrl.ContentType)
+                    {
+                        case ContentType.Article:
+                            controller = "Post";
+                            action = "Article";
+                            break;
+                        case ContentType.Section:
+                            controller = "Home";
+                            action = "Section";
+                            requestContext.RouteData.Values["page"] = page;
+                            break;
+                        default:
+                            throw new ArgumentException("Invalid ContentType");
+                    }
+                }
+            }
+
+            if (customUrl == null)
+            {
+                controller = "Common";
+                action = "NoPageFound";
             }
             else
             {
-                ICustomUrlService customUrlService = (ICustomUrlService)DependencyResolver.Current.GetService(typeof(ICustomUrlService));
-
-                customUrl = customUrlService.GetAll().FirstOrDefault(x => String.Equals(x.Url, url, StringComparison.CurrentCultureIgnoreCase));
-                if (customUrl != null)
-                {
-                    CustomUrlCache.CustomUrls.TryAdd(url, customUrl);
-                }
+                requestContext.RouteData.Values["id"] = customUrl.ContentId;
             }
-
-            if (customUrl != null)
-            {
-                switch (customUrl.ContentType)
-                {
-                    case ContentType.Article:
-                        controller = "Post";
-                        action = "Article";
-                        id = customUrl.ContentId.ToString();
-                        break;
-                    case ContentType.Section:
-                        controller = "Home";
-                        action = "Section";
-                        id = customUrl.ContentId.ToString();
-                        break;
-                    default:
-                        throw new ArgumentException("Invalid ContentType");
-                }
-            }
-
-            /*TODO: 404*/
-
             requestContext.RouteData.DataTokens.Add("namespaces", new string[] { "ZelectroCom.Web.Controllers" });
             requestContext.RouteData.Values["controller"] = controller;
             requestContext.RouteData.Values["action"] = action;
-            requestContext.RouteData.Values["id"] = id;
 
             return base.GetHttpHandler(requestContext);
         }

@@ -14,6 +14,7 @@ using ZelectroCom.Service;
 using ZelectroCom.Web.Areas.Member.ViewModels.Section;
 using ZelectroCom.Web.Infrastructure.Attributes;
 using ZelectroCom.Web.Infrastructure.Filters;
+using ZelectroCom.Web.Infrastructure.Helpers;
 
 namespace ZelectroCom.Web.Areas.Member.Controllers
 {
@@ -101,6 +102,8 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
 
                     _sectionService.Update(section);
                 }
+                //TODO: remove (temporary for output cache)
+                MemoryCacheHelper.SectionsUpdateTime = DateTime.Now;
             }
             catch (Exception ex)
             {
@@ -129,15 +132,17 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
             {
                 var model = Mapper.Map<SectionVm, Section>(section);
                 model.SectionState = SectionState.Active;
-                _sectionService.Create(model);
+                model = _sectionService.Create(model);
 
                 if (!string.IsNullOrEmpty(section.Path))
                 {
                     var customUrlModel = new CustomUrl();
-                    customUrlModel.Url = section.Path;
+                    customUrlModel.Url = model.Path;
                     customUrlModel.ContentType = ContentType.Section;
-                    customUrlModel.ContentId = section.Id;
+                    customUrlModel.ContentId = model.Id;
                     _customUrlService.Create(customUrlModel);
+                    //TODO: remove (temporary for output cache)
+                    MemoryCacheHelper.SectionsUpdateTime = DateTime.Now;
                 }
 
                 return RedirectToAction("Index");
@@ -190,6 +195,8 @@ namespace ZelectroCom.Web.Areas.Member.Controllers
                 }
 
                 _sectionService.Update(model);
+                //TODO: remove (temporary for output cache)
+                MemoryCacheHelper.SectionsUpdateTime = DateTime.Now;
 
                 return RedirectToAction("Index");
             }

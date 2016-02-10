@@ -258,4 +258,34 @@
   <data name="EditableUserDataVm_Description" xml:space="preserve">
     <value>О себе</value>
   </data>
+  <data name="SectionVm_Description" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="SectionVm_SeoTitle" xml:space="preserve">
+    <value>SEO заголовок</value>
+  </data>
+  <data name="SectionVm_SeoDescription" xml:space="preserve">
+    <value>SEO Описание</value>
+  </data>
+  <data name="SectionVm_SeoKeywords" xml:space="preserve">
+    <value>SEO ключевые слова</value>
+  </data>
+  <data name="ZDevVm_Title" xml:space="preserve">
+    <value>Заголовок</value>
+  </data>
+  <data name="ZDevVm_ImagePath" xml:space="preserve">
+    <value>Изображение</value>
+  </data>
+  <data name="ZDevVm_Description" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="ZDevVm_Url" xml:space="preserve">
+    <value>Ссылка</value>
+  </data>
+  <data name="ZDevVm_Order" xml:space="preserve">
+    <value>Порядок</value>
+  </data>
+  <data name="ZDevListVm_Grid" xml:space="preserve">
+    <value>Z разработки</value>
+  </data>
 </root>

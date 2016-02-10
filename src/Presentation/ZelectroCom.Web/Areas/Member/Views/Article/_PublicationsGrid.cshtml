@@ -3,8 +3,7 @@
 @using BForms.Grid
 @using ZelectroCom.Web.Areas.Member.ViewModels.Article
 
-@(
- Html.BsGridFor(m => m.Grid)
+@(Html.BsGridFor(m => m.Grid)
      .PagerSettings(new BsPagerSettings
     {
         Size = 10,
@@ -12,5 +11,4 @@
         ShowPrevNextButtons = true,
         HasPagesText = true,
         HasPageSizeSelector = false
-    })
-)
+    }))

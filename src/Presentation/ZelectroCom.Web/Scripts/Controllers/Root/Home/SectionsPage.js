@@ -1,0 +1,5 @@
+﻿require([
+        'jquery',
+        'bootstrap'
+], function ($) {
+})

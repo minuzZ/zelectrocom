@@ -1,0 +1,10 @@
+﻿@model int
+@{
+    ViewBag.PageTitle = ViewBag.Title = "Разработки Zelectro";
+    Layout = "~/Views/Shared/_LayoutOneCol.cshtml";
+}
+<div class="row"><div class="col-xs-12"><a href="@Url.Content("~/zd")" class="btn z-btn-primary">Список статей</a></div></div>
+
+<div class="row">
+    @Html.Action("ZProducts", new { page = Model })
+</div>
